@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Football Steps</string>
-    <string name="PREFS_NAME">OfflinePrefs</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="surname_hint">Surname</string>
+    <string name="create_offline_player_button">Create Player</string>
+
 </resources>

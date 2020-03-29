@@ -10,7 +10,7 @@ public class Position {
     public static final int ATTACKER = 4;
     public static final int NUMPOSITIONS = 4;
 
-    public String getPositionLongName(int pos) {
+    public static String getPositionLongName(int pos) {
         switch (pos) {
             case 1:
                 return "Goalkeeper";
@@ -24,7 +24,7 @@ public class Position {
         return "";
     }
 
-    public String getPositionShortName(int pos) {
+    public static String getPositionShortName(int pos) {
         switch (pos) {
             case 1:
                 return "GK";
@@ -38,5 +38,18 @@ public class Position {
         return "";
     }
 
+    public static int getPositionFromShortString(String pos) {
+        switch (pos) {
+            case "GK":
+                return 1;
+            case "DEF":
+                return 2;
+            case "MID":
+                return 3;
+            case "ATK":
+                return 4;
+        }
+        return 1;
+    }
 
 }

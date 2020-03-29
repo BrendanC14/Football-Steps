@@ -1,11 +1,19 @@
 package com.cutlerdevelopment.footballsteps.Constants;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * This is a constant class responsible for holding the default words, and also the key's to communicate with SharedPreferences
  */
 public class Words {
 
 
+    public static final List<String> TeamNames = Arrays.asList("Arsenal", "Liverpool", "Manchester City", "Leicester City", "Chelsea",
+            "Manchester United", "Wolves", "Sheffield United", "Tottenham Hotspur", "Burnley", "Crystal Palace", "Everton",
+            "Newcastle United", "Southampton", "Brighton", "West Ham", "Watford", "Bournemouth", "Aston Villa", "Norwich");
 
 
     //*****************************************SavedData*****************************************

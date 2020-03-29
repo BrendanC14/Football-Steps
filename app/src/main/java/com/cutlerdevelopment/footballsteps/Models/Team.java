@@ -9,6 +9,12 @@ import com.cutlerdevelopment.footballsteps.Constants.Colour;
 @Entity(tableName = "teams")
 public class Team {
 
+    public Team(int id, String name, int colour) {
+        this.id = id;
+        this.name = name;
+        this.colour = colour;
+    }
+
     @PrimaryKey
     static int id;
     public int getID() { return id; }
