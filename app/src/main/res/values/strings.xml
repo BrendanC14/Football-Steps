@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Football Steps</string>
-    <string name="newOfflineGame">New Career - Offline</string>
+    <string name="PREFS_NAME">OfflinePrefs</string>
 </resources>
