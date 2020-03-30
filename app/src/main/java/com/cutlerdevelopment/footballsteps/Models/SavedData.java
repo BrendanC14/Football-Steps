@@ -3,11 +3,67 @@ package com.cutlerdevelopment.footballsteps.Models;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.room.Dao;
+import androidx.room.Database;
+import androidx.room.Index;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
+import androidx.room.Update;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.cutlerdevelopment.footballsteps.Utils.Converters;
+
 /**
  * SavedData class is responsible for taking to the SharedPreferences and getting responses.
  * Contains methods responsible for retrieving and saving Strings, ints and booleans.
  */
 public class SavedData {
+
+    @Database(entities = {OfflinePlayer.class, Team.class}, version = 1)
+    @TypeConverters({Converters.class})
+    public static abstract class AppDatabase extends RoomDatabase {
+        public abstract MyDao myDao();
+    }
+
+    private static AppDatabase db;
+    public AppDatabase getDb() { return db; }
+
+    @Dao
+    public interface MyDao {
+
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        void insertOfflinePlayer(OfflinePlayer player);
+
+        @Query("SELECT * FROM offline_player")
+        OfflinePlayer[] selectOfflinePlayer();
+
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        void insertTeams(Team teams);
+        @Update
+        void updateTeam(Team teams);
+
+
+    }
+
+
+    public void saveOfflinePlayer(OfflinePlayer player) {
+        db.myDao().insertOfflinePlayer(player);
+    }
+    public OfflinePlayer loadOfflinePlayer() {
+        OfflinePlayer[] player = db.myDao().selectOfflinePlayer();
+        if (player.length > 0) {
+            return player[0];
+        }
+        return null;
+    }
+
+
+
+
 
 
     private static SavedData instance = null;
@@ -19,13 +75,14 @@ public class SavedData {
         if (instance != null) {
             return instance;
         }
-        instance = new SavedData();
-        return instance;
+        return null;
     }
 
-    private SavedData() {
-
+    private SavedData(Context context) {
+        instance = this;
+        db = Room.databaseBuilder(context, AppDatabase.class, "OfflinePlayerDB").allowMainThreadQueries().build();
     }
+
 
     public String getSavedString(String key, String defaultValue) {
         if (sharedPreferences == null) {
@@ -79,7 +136,7 @@ public class SavedData {
     }
 
     public static void createSavedDataInstance(Context c) {
-        sharedPreferences = c.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        new SavedData(c);
     }
 
 }

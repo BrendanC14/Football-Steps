@@ -6,17 +6,22 @@ import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 
-@Entity(tableName = "teams")
+@Entity
 public class Team {
 
     public Team(int id, String name, int colour) {
         this.id = id;
         this.name = name;
         this.colour = colour;
+
+    }
+
+    public Team() {
+        //Empty constructor for RommDB
     }
 
     @PrimaryKey
-    static int id;
+    int id;
     public int getID() { return id; }
 
 
@@ -24,6 +29,7 @@ public class Team {
     public String getName() {return  name; }
     public void setName(String newName) {
         name = newName;
+
     }
 
     private int colour;

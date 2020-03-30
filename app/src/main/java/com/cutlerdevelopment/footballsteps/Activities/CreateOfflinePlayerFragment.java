@@ -19,6 +19,7 @@ import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
 import com.cutlerdevelopment.footballsteps.Models.OfflinePlayer;
+import com.cutlerdevelopment.footballsteps.Models.SavedData;
 import com.cutlerdevelopment.footballsteps.R;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -41,6 +42,7 @@ public class CreateOfflinePlayerFragment extends Fragment {
 
     }
 
+    private Button continueButton;
     private TextInputLayout firstNameField;
     private TextInputLayout surnameField;
     private Spinner teamSpinner;
@@ -54,6 +56,13 @@ public class CreateOfflinePlayerFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_create_offline_player, container, false);
+
+        continueButton = rootView.findViewById(R.id.continueButton);
+        OfflinePlayer player = SavedData.getInstance().loadOfflinePlayer();
+        if (player != null) {
+            continueButton.setVisibility(View.VISIBLE);
+            continueButton.setText(getString(R.string.continue_offline_player_button, player.getFirstName(), player.getSurname()));
+        }
 
 
         firstNameField = rootView.findViewById(R.id.firstNameField);

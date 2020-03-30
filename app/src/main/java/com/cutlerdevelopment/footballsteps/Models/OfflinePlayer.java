@@ -1,11 +1,16 @@
 package com.cutlerdevelopment.footballsteps.Models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
 
 /**
  * OfflinePlayer class contains all the details about the player for the solo career.
  */
+@Entity(tableName = "offline_player", primaryKeys = {"firstName", "surname"})
 public class OfflinePlayer {
 
     private static OfflinePlayer instance = null;
@@ -58,22 +63,19 @@ public class OfflinePlayer {
         setFavTeam(favTeam);
 
         instance = this;
+        SavedData.getInstance().saveOfflinePlayer(this);
     }
 
     /**
      * Used when loading a player for the solo career. Doesn't take any variables as takes them from SavedPreferences
      */
-    private OfflinePlayer() {
-        this.firstName = SavedData.getInstance().getSavedString(Words.SD_OFFLINEPLAYER_FIRST_NAME_KEY, "");
-        this.surname = SavedData.getInstance().getSavedString(Words.SD_OFFLINEPLAYER_SURNAME_KEY, "");
-        this.age = SavedData.getInstance().getSavedInt(Words.SD_OFFLINEPLAYER_AGE_KEY, 0);
-        this.position = SavedData.getInstance().getSavedInt(Words.SD_OFFLINEPLAYER_POSITION_KEY, 0);
-        this.currTeam = OfflineGame.getInstance().getTeamFromID(SavedData.getInstance().getSavedInt(Words.SD_OFFLINEPLAYER_CURRTEAM_KEY, 0));
-        this.favTeam = OfflineGame.getInstance().getTeamFromID(SavedData.getInstance().getSavedInt(Words.SD_OFFLINEPLAYER_FAVTEAM_KEY, 0));
+    public OfflinePlayer() {
 
         instance = this;
     }
 
+
+    @NonNull
     private String firstName;
     public String getFirstName() { return firstName; }
     public void setFirstName(String fname) {
@@ -81,6 +83,7 @@ public class OfflinePlayer {
         SavedData.getInstance().saveString(Words.SD_OFFLINEPLAYER_FIRST_NAME_KEY, fname);
     }
 
+    @NonNull
     private String surname;
     public String getSurname() { return surname; }
     public void setSurname(String sname) {

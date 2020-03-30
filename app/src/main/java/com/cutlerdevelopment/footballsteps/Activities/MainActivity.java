@@ -19,13 +19,16 @@ public class MainActivity extends AppCompatActivity implements CreateOfflinePlay
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SavedData.createSavedDataInstance(this);
-        OfflineSettings.createOfflineSettingsInstance();
-        OfflineGame.getInstance();
     }
 
 
     public void ClickOfflineCareer(View view) {
+
+        SavedData.createSavedDataInstance(this);
+
+        OfflineSettings.createOfflineSettingsInstance();
+        OfflineGame.getInstance();
+
 
         CreateOfflinePlayerFragment fragment = new CreateOfflinePlayerFragment();
         getSupportFragmentManager()
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements CreateOfflinePlay
                 .addToBackStack(null)
                 .commit();
         fragment.setOnSubmittedListener(this);
+
 
     }
     @Override
