@@ -3,16 +3,13 @@ package com.cutlerdevelopment.footballsteps.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
-import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
-import com.cutlerdevelopment.footballsteps.Models.OfflineSettings;
 import com.cutlerdevelopment.footballsteps.Models.SavedData;
 import com.cutlerdevelopment.footballsteps.R;
 
-public class MainActivity extends AppCompatActivity implements CreateOfflinePlayerFragment.OnSubmittedListener {
+public class MainActivity extends AppCompatActivity implements CreateOfflinePlayerFragment.onFinishedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +23,6 @@ public class MainActivity extends AppCompatActivity implements CreateOfflinePlay
 
         SavedData.createSavedDataInstance(this);
 
-        OfflineSettings.createOfflineSettingsInstance();
-        OfflineGame.getInstance();
-
-
         CreateOfflinePlayerFragment fragment = new CreateOfflinePlayerFragment();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -41,7 +34,9 @@ public class MainActivity extends AppCompatActivity implements CreateOfflinePlay
 
     }
     @Override
-    public void onOfflinePlayerSubmitted() {
+    public void onFinishedListener() {
+
+
         Intent intent = new Intent(this, OfflineCareerMainMenu.class);
         startActivity(intent);
     }

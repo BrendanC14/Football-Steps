@@ -1,5 +1,8 @@
 package com.cutlerdevelopment.footballsteps.Models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
 
@@ -10,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+@Entity
 public class OfflineGame {
 
 
@@ -23,65 +27,40 @@ public class OfflineGame {
         return instance;
     }
 
-    private OfflineGame() {
-        startDate = new Date();
-        allTeams = new ArrayList<>();
-        populateAllTeams();
+    public OfflineGame() {
+
         instance = this;
     }
 
+    public void startNewGame() {
+
+        this.startDate = new Date();
+        Random r = new Random();
+        for (String teamName : Words.TeamNames) {
+            new Team(SavedData.getInstance().getNumRowsFromTeamTable() + 1,
+                    teamName, r.nextInt(Colour.NUMCOLOURS + 1) + 1);
+        }
+
+        SavedData.getInstance().saveObject(this);
+
+    }
+
+    @PrimaryKey
     private Date startDate;
     public Date getStartDate() { return startDate; }
+    public void setStartDate(Date date) { startDate = date; }
+    public void changeStartDate(Date date) {
+        startDate = date;
+        SavedData.getInstance().updateObject(this);
+    }
 
     private int season;
     public int getSeason() { return  season; }
-    public void setSeason(int newSeason) {
-        season  = newSeason;
+    public void setSeason(int newSeason) { season  = newSeason; }
+    public void changeSeason(int newSeason) {
+        season = newSeason;
+        SavedData.getInstance().updateObject(this);
     }
-
-    private List<Team> allTeams;
-    void populateAllTeams() {
-        Random r = new Random();
-        for (String teamName : Words.TeamNames) {
-            addTeam(new Team(getAllTeamsSize(), teamName, r.nextInt(Colour.NUMCOLOURS + 1) + 1));
-        }
-    }
-    public List<Team> getAllTeams() { return allTeams; }
-    public void addTeam(Team t) {
-        if (allTeams.contains(t)) {
-            //TODO: Throw a warning
-            return;
-        }
-        allTeams.add(t);
-    }
-    public void removeTeam(Team t) {
-        if (!allTeams.contains(t)) {
-            //TODO: Throw a warning
-            return;
-        }
-        allTeams.remove(t);
-    }
-    public Team getTeamFromID(int ID) {
-        for (Team t : allTeams) {
-            if (t.getID() == ID) {
-                return t;
-            }
-        }
-        return null;
-    }
-    public Team getTeamFromName(String name) {
-        for (Team t : allTeams) {
-            if (t.getName() == name) {
-                return t;
-            }
-        }
-        return null;
-    }
-    public int getAllTeamsSize() {return  allTeams.size(); }
-
-
-
-
 
     public Date formatDate(Date date) {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

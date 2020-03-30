@@ -2,12 +2,16 @@ package com.cutlerdevelopment.footballsteps.Models;
 
 import android.content.SharedPreferences;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.cutlerdevelopment.footballsteps.Constants.Numbers;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
 
 /**
  * OfflineSettings contains all of the settings for the offline solo game
  */
+@Entity
 public class OfflineSettings {
 
     private static OfflineSettings instance = null;
@@ -24,40 +28,31 @@ public class OfflineSettings {
     }
 
     /**
-     * Creates an instance of the settings using default information from Numbers class
+     * Creates a new instance of OfflineSettings.
      */
-    public static void createOfflineSettingsInstance() {
-        new OfflineSettings(false);
-    }
+    public OfflineSettings() {
 
-    /**
-     * Creates an instance of the settings loading from SharedPreferences
-     */
-    public static void loadOfflineSettingsInstance() {
-        new OfflineSettings(true);
-    }
-
-    /**
-     * When creating the settings we'll be told whether to load settings for an existing save or use default.
-     * If not loading existing settings instance will be populated using default information from Numbers class
-     * If loading existing settings instance will be populated using information from SharedPreferences.
-     * @param loadingExisting
-     */
-    private OfflineSettings(boolean loadingExisting) {
-        if (loadingExisting) {
-            startingAge = SavedData.getInstance().getSavedInt(Words.SD_OFFLINEPLAYER_STARTING_AGE_KEY, Numbers.DEFAULT_STARTING_AGE);
-        }
-        else {
-            setStartingAge(Numbers.DEFAULT_STARTING_AGE);
-        }
         instance = this;
     }
 
+    /**
+     * Assigns default settings to the Object and saves them.
+     */
+    public void assignDefaultSettings() {
+
+        this.startingAge = Numbers.DEFAULT_STARTING_AGE;
+
+        SavedData.getInstance().saveObject(this);
+
+    }
+
+    @PrimaryKey
     int startingAge;
     public int getStartingAge() { return startingAge; }
-    public void setStartingAge(int newAge) {
+    public void setStartingAge(int newAge) { startingAge = newAge; }
+    public void changeStartingAge(int newAge) {
         startingAge = newAge;
-        SavedData.getInstance().saveInt(Words.SD_OFFLINEPLAYER_STARTING_AGE_KEY, startingAge);
+        SavedData.getInstance().updateObject(this);
     }
 
 }

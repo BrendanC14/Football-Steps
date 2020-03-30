@@ -1,7 +1,5 @@
 package com.cutlerdevelopment.footballsteps.Activities;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,17 +12,16 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
 import com.cutlerdevelopment.footballsteps.Models.OfflinePlayer;
+import com.cutlerdevelopment.footballsteps.Models.OfflineSettings;
 import com.cutlerdevelopment.footballsteps.Models.SavedData;
 import com.cutlerdevelopment.footballsteps.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,9 +44,16 @@ public class CreateOfflinePlayerFragment extends Fragment {
     private TextInputLayout surnameField;
     private Spinner teamSpinner;
     private Spinner positionSpinner;
-    private TextView errorField;
     private Button submitButton;
 
+
+    public interface onFinishedListener {
+        void onFinishedListener();
+    }
+    onFinishedListener finishCallback;
+    public void setOnSubmittedListener(onFinishedListener callback) {
+        this.finishCallback = callback;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,15 +62,22 @@ public class CreateOfflinePlayerFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_create_offline_player, container, false);
 
         continueButton = rootView.findViewById(R.id.continueButton);
-        OfflinePlayer player = SavedData.getInstance().loadOfflinePlayer();
+        OfflinePlayer player = SavedData.getInstance().getOfflinePlayer();
         if (player != null) {
             continueButton.setVisibility(View.VISIBLE);
             continueButton.setText(getString(R.string.continue_offline_player_button, player.getFirstName(), player.getSurname()));
+            continueButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    continueCareer();
+                }
+            });
         }
-
+        else { continueButton.setVisibility(View.GONE); }
 
         firstNameField = rootView.findViewById(R.id.firstNameField);
         surnameField = rootView.findViewById(R.id.surnameField);
+
         List<String> teamList = Words.TeamNames;
         Collections.sort(teamList);
         ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(
@@ -86,7 +97,6 @@ public class CreateOfflinePlayerFragment extends Fragment {
         Button newOfflineGame = this.getActivity().findViewById(R.id.newOfflineGame);
         newOfflineGame.setEnabled(false);
 
-        errorField = rootView.findViewById(R.id.errorField);
         submitButton = rootView.findViewById(R.id.submitOfflinePlayer);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,15 +108,6 @@ public class CreateOfflinePlayerFragment extends Fragment {
         return rootView;
     }
 
-    public interface OnSubmittedListener {
-        void onOfflinePlayerSubmitted();
-    }
-    OnSubmittedListener callback;
-    public void setOnSubmittedListener(OnSubmittedListener callback) {
-        this.callback = callback;
-    }
-
-
     public void SubmitPlayer() {
 
         String firstName;
@@ -114,31 +115,34 @@ public class CreateOfflinePlayerFragment extends Fragment {
         String favTeam;
         String position;
 
-        try {
-            firstName = firstNameField.getEditText().getText().toString();
-        } catch (Exception e) {
-            errorField.setVisibility(View.VISIBLE);
-            errorField.setText(e.getMessage());
-            return;
-        }
 
-        try {
-            surname = surnameField.getEditText().getText().toString();
-        } catch (Exception e) {
-            errorField.setVisibility(View.VISIBLE);
-            errorField.setText(e.getMessage());
-            return;
-        }
+        firstName = firstNameField.getEditText().getText().toString();
+        surname = surnameField.getEditText().getText().toString();
 
-        errorField.setVisibility(View.GONE);
-        position = teamSpinner.getSelectedItem().toString();
+
+        position = positionSpinner.getSelectedItem().toString();
         favTeam = teamSpinner.getSelectedItem().toString();
 
-        OfflinePlayer.CreateOfflinePlayer(firstName, surname, Position.getPositionFromShortString(position),
-                OfflineGame.getInstance().getTeamFromName(favTeam));
+        SavedData.getInstance().resetDB();
+        OfflineGame game = new OfflineGame();
+        game.startNewGame();
+        OfflineSettings settings = new OfflineSettings();
+        settings.assignDefaultSettings();
+        new OfflinePlayer(firstName, surname, Position.getPositionFromShortString(position),
+                SavedData.getInstance().getIDFromName(favTeam));
 
         getFragmentManager().popBackStack();
-        callback.onOfflinePlayerSubmitted();
+        finishCallback.onFinishedListener();
 
+    }
+
+    public void continueCareer() {
+
+        SavedData.getInstance().getOfflinePlayer();
+        SavedData.getInstance().getOfflineGame();
+        SavedData.getInstance().getOfflineSettings();
+
+        getFragmentManager().popBackStack();
+        finishCallback.onFinishedListener();
     }
 }
