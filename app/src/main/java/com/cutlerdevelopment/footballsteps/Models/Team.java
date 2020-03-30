@@ -10,11 +10,18 @@ import com.cutlerdevelopment.footballsteps.Constants.Colour;
 @Entity
 public class Team {
 
+    /**
+     * Used when creating a new Team when a new game is created or a custom team is added
+     * @param id a unique id
+     * @param name name of the club
+     * @param colour colour of the club
+     */
     @Ignore
-    public Team(int id, String name, int colour) {
+    public Team(int id, String name, int colour, int league) {
         this.id = id;
         this.name = name;
         this.colour = colour;
+        this.league = league;
 
         SavedData.getInstance().saveObject(this);
     }
@@ -47,6 +54,14 @@ public class Team {
             colour = newColour;
             SavedData.getInstance().updateObject(this);
         }
+    }
+
+    private int league;
+    public int getLeague() { return league; }
+    public void setLeague(int newLeague) { this.league = league; }
+    public void changeLeague(int newLeague) {
+        this.league = newLeague;
+        SavedData.getInstance().updateObject(league);
     }
 
 }

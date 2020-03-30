@@ -46,14 +46,14 @@ public class SavedData {
     /**
      * App Database class is the Room Database that contains the instances of the Dao interfaces.
      */
-    @Database(entities = {OfflinePlayer.class, Team.class, OfflineSettings.class, OfflineGame.class}, version = 1)
+    @Database(entities = {OfflinePlayer.class, Team.class, OfflineSettings.class, OfflineGame.class, Fixture.class}, version = 1)
     @TypeConverters({Converters.class})
     public static abstract class AppDatabase extends RoomDatabase {
         public abstract OfflinePlayerDao offlinePlayerDao();
-        public abstract TeamDao teamDao();
         public abstract OfflineSettingsDao offlineSettingsDao();
         public abstract OfflineGameDao offlineGameDao();
-        
+        public abstract TeamDao teamDao();
+        public abstract FixtureDao fixtureDao();
     }
 
     private static AppDatabase db;
@@ -123,11 +123,36 @@ public class SavedData {
 
         @Query("SELECT * FROM team")
         Team[] selectAllTeams();
+        @Query("SELECT * FROM team WHERE league = :league")
+        Team[] selectAllTeamsInLeague(int league);
         @Query("SELECT * FROM team WHERE id = :teamID")
         Team selectTeamFromID(int teamID);
         @Query("SELECT * FROM team WHERE name = :teamName")
         Team selectTeamFromName(String teamName);
         @Query("SELECT COUNT(id) FROM team")
+        int getRowCount();
+    }
+
+    @Dao
+    public interface FixtureDao {
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        void insertFixtures(Fixture fixture);
+        @Update
+        void updateFixture(Fixture fixture);
+        @Delete
+        void deleteFixture(Fixture fixture);
+
+        @Query("SELECT * FROM fixture")
+        Fixture[] selectAllFixtures();
+        @Query("SELECT * FROM fixture WHERE id = :fixtureID")
+        Fixture selectFixtureFromID(int fixtureID);
+        @Query("SELECT * FROM fixture WHERE week = :week AND league = :league")
+        Fixture[] selectAllFixturesInLeagueFromWeek(int week, int league);
+        @Query("SELECT * FROM fixture WHERE homeTeamID = :teamID OR awayTeamID = :teamID")
+        Fixture[] selectAllFixturesFromTeam(int teamID);
+        @Query("SELECT * FROM fixture WHERE week = :week AND (homeTeamID = :teamID OR awayTeamID = :teamID)")
+        Fixture selectFixtureForWeekWithTeam(int week, int teamID);
+        @Query("SELECT COUNT(id) FROM fixture")
         int getRowCount();
     }
     /**
@@ -151,6 +176,10 @@ public class SavedData {
             OfflineGame game = (OfflineGame) obj;
             db.offlineGameDao().insertOfflineGame(game);
         }
+        else if (obj instanceof Fixture) {
+            Fixture fix = (Fixture) obj;
+            db.fixtureDao().insertFixtures(fix);
+        }
     }
 
     /**
@@ -173,6 +202,10 @@ public class SavedData {
         else if (obj instanceof OfflineGame) {
             OfflineGame game = (OfflineGame) obj;
             db.offlineGameDao().updateOfflineGame(game);
+        }
+        else if (obj instanceof Fixture) {
+            Fixture fix = (Fixture) obj;
+            db.fixtureDao().updateFixture(fix);
         }
     }
 
@@ -202,7 +235,7 @@ public class SavedData {
     public List<Team> getAllTeams() {
         return Arrays.asList(db.teamDao().selectAllTeams());
     }
-
+    public List<Team> getAllTeamsInLeague(int league) { return Arrays.asList(db.teamDao().selectAllTeamsInLeague(league));}
     public Team getTeamFromID(int ID) {
         return db.teamDao().selectTeamFromID(ID);
     }
@@ -212,10 +245,16 @@ public class SavedData {
     public int getIDFromName(String name) {
         return db.teamDao().selectTeamFromName(name).getID();
     }
-
     public int getNumRowsFromTeamTable() {
         return db.teamDao().getRowCount();
     }
+
+    public List<Fixture> getAllFixtures() { return Arrays.asList(db.fixtureDao().selectAllFixtures());}
+    public Fixture getFixtureFromID(int ID) {return db.fixtureDao().selectFixtureFromID(ID); }
+    public List<Fixture> getWeeksFixtureFromLeague(int week, int league) { return Arrays.asList(db.fixtureDao().selectAllFixturesInLeagueFromWeek(week, league)); }
+    public List<Fixture> getFixturesForTeam(int teamID) { return Arrays.asList(db.fixtureDao().selectAllFixturesFromTeam(teamID)); }
+    public Fixture getTeamsFixtureForWeek(int week, int teamID) { return db.fixtureDao().selectFixtureForWeekWithTeam(week, teamID); }
+    public int getNumRowsFromFixtureTable() { return db.fixtureDao().getRowCount(); }
 
     public void resetDB() {
         db.clearAllTables();

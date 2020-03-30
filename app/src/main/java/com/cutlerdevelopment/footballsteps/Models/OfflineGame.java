@@ -9,6 +9,7 @@ import com.cutlerdevelopment.footballsteps.Constants.Words;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -38,8 +39,11 @@ public class OfflineGame {
         Random r = new Random();
         for (String teamName : Words.TeamNames) {
             new Team(SavedData.getInstance().getNumRowsFromTeamTable() + 1,
-                    teamName, r.nextInt(Colour.NUMCOLOURS + 1) + 1);
+                    teamName, r.nextInt(Colour.NUMCOLOURS + 1) + 1, 1);
         }
+
+
+        createFixtures();
 
         SavedData.getInstance().saveObject(this);
 
@@ -65,6 +69,55 @@ public class OfflineGame {
     public Date formatDate(Date date) {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         return new Date(formatter.format(date));
+    }
+
+    void createFixtures() {
+
+        List<Integer> availableWeeks = new ArrayList<>();
+        for (int i = 1; i < 20; i++) {
+            availableWeeks.add(i);
+        }
+        Collections.shuffle(availableWeeks);
+        int round;
+
+        for (int gameweek = 0; gameweek < 19; gameweek++) {
+            round = availableWeeks.get(0);
+            availableWeeks.remove(0);
+            for (int match = 0; match < 10; match++) {
+                int homeTeam = ((gameweek + match) % 19) + 1;
+                int awayTeam = ((gameweek - match + 19) % 19) +1;
+
+                if (match == 0) {awayTeam = 19; }
+                new Fixture(SavedData.getInstance().getNumRowsFromFixtureTable(),
+                        homeTeam,
+                        awayTeam,
+                        round,
+                        1);
+            }
+        }
+
+        availableWeeks = new ArrayList<>();
+        for (int i = 20; i < 39; i++) {
+            availableWeeks.add(i);
+        }
+        Collections.shuffle(availableWeeks);
+
+        for (int gameweek = 0; gameweek < 19; gameweek++) {
+            round = availableWeeks.get(0);
+            availableWeeks.remove(0);
+            for (int match = 0; match < 10; match++) {
+                int homeTeam = ((gameweek - match + 19) % 19) + 1;
+                int awayTeam = ((gameweek + match) % 19) + 1;
+
+                if (match == 0) { homeTeam = 19; }
+                new Fixture(SavedData.getInstance().getNumRowsFromFixtureTable(),
+                        homeTeam,
+                        awayTeam,
+                        round,
+                        1);
+            }
+        }
+
     }
 
 }
