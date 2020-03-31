@@ -4,5 +4,19 @@
     <string name="surname_hint">Surname</string>
     <string name="create_offline_player_button">Create Player</string>
     <string name="continue_offline_player_button">Continue with %1$s %2$s</string>
+    <string name="main_menu_name">%1s %2s</string>
+    <string name="main_menu_appearances_header">Apps</string>
+    <string name="main_menu_saves_header">Saves</string>
+    <string name="main_menu_conceded_header">Cncd</string>
+    <string name="main_menu_tackles_header">Tckls</string>
+    <string name="main_menu_passes_header">Pass</string>
+    <string name="main_menu_assists_header">Assts</string>
+    <string name="main_menu_goals_header">Gls</string>
+    <string name="main_menu_offsides_header">Offsd</string>
+    <string name="main_menu_matches_button">Matches</string>
+
+    <string name="match_item_VS">VS</string>
+    <string name="match_performance_header">Performance</string>
+    <string name="steps">steps</string>
 
 </resources>

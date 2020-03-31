@@ -40,6 +40,7 @@ public class OfflinePlayer {
         this.surname = sname;
         this.position = pos;
         this.favTeamID = favTeamID;
+        this.currTeamID = favTeamID;
 
         instance = this;
         SavedData.getInstance().saveObject(this);
@@ -111,5 +112,71 @@ public class OfflinePlayer {
     public Team getFavTeam() {
         return SavedData.getInstance().getTeamFromID(favTeamID);
     }
+
+    private int appearances;
+    public int getAppearances() { return appearances; }
+    public void setAppearances(int apps) { this.appearances = apps; }
+    public void addAppearance() {
+        this.appearances++;
+        SavedData.getInstance().updateObject(this);
+    }
+
+    private int saves;
+    public int getSaves() { return saves; }
+    public void setSaves(int saves) { this.saves = saves; }
+    public void addSaves(int numSaves) {
+        this.saves += numSaves;
+        SavedData.getInstance().updateObject(this);
+    }
+
+    private int conceded;
+    public int getConceded() { return conceded; }
+    public void setConceded(int conc) { this.conceded = conc; }
+    public void addConceded(int numConceded) {
+        this.conceded += numConceded;
+        SavedData.getInstance().updateObject(this);
+    }
+
+    private int tackles;
+    public int getTackles() { return tackles; }
+    public void setTackles(int tacks) { this.tackles = tacks; }
+    public void addTackles(int numTackles) {
+        this.tackles += numTackles;
+        SavedData.getInstance().updateObject(this);
+    }
+
+    private int passes;
+    public int getPasses() { return passes; }
+    public void setPasses(int tacks) { this.passes = tacks; }
+    public void addPasses(int numPasses) {
+        this.passes += numPasses;
+        SavedData.getInstance().updateObject(this);
+    }
+
+    private int assists;
+    public int getAssists() { return assists; }
+    public void setAssists(int ass) { this.assists = ass; }
+    public void addAssists(int numAssists) {
+        this.assists += numAssists;
+        SavedData.getInstance().updateObject(this);
+    }
+
+    private int goals;
+    public int getGoals() { return goals; }
+    public void setGoals(int gls) { this.goals = gls; }
+    public void addGoals(int numGoals) {
+        this.goals += numGoals;
+        SavedData.getInstance().updateObject(this);
+    }
+
+    private int offsides;
+    public int getOffsides() { return offsides; }
+    public void setOffsides(int offs) { this.offsides = offs; }
+    public void addOffsides(int numOffside) {
+        this.offsides += numOffside;
+        SavedData.getInstance().updateObject(this);
+    }
+
+
 
 }

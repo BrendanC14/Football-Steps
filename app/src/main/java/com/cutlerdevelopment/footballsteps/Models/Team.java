@@ -50,7 +50,7 @@ public class Team {
     public int getColour() { return colour;}
     public void setColour(int newColour) { colour = newColour; }
     public void changeColour(int newColour) {
-        if (newColour >= 1 && newColour <= Colour.NUMCOLOURS) {
+        if (newColour >= 1 && newColour <= Colour.NUM_TEAM_COLOURS) {
             colour = newColour;
             SavedData.getInstance().updateObject(this);
         }

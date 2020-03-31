@@ -1,5 +1,7 @@
 package com.cutlerdevelopment.footballsteps.Models;
 
+import android.text.format.DateUtils;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -9,6 +11,7 @@ import com.cutlerdevelopment.footballsteps.Constants.Words;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +42,7 @@ public class OfflineGame {
         Random r = new Random();
         for (String teamName : Words.TeamNames) {
             new Team(SavedData.getInstance().getNumRowsFromTeamTable() + 1,
-                    teamName, r.nextInt(Colour.NUMCOLOURS + 1) + 1, 1);
+                    teamName, Colour.getDefaultColourForTeam(teamName), 1);
         }
 
 
@@ -66,9 +69,9 @@ public class OfflineGame {
         SavedData.getInstance().updateObject(this);
     }
 
-    public Date formatDate(Date date) {
+    public String formatDate(Date date) {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return new Date(formatter.format(date));
+        return formatter.format(date);
     }
 
     void createFixtures() {
@@ -88,10 +91,16 @@ public class OfflineGame {
                 int awayTeam = ((gameweek - match + 19) % 19) +1;
 
                 if (match == 0) {awayTeam = 19; }
+
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(startDate);
+                cal.add(Calendar.DATE, gameweek);
+                Date matchDate = cal.getTime();
                 new Fixture(SavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,
                         round,
+                        matchDate,
                         1);
             }
         }
@@ -110,10 +119,16 @@ public class OfflineGame {
                 int awayTeam = ((gameweek + match) % 19) + 1;
 
                 if (match == 0) { homeTeam = 19; }
+
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(startDate);
+                cal.add(Calendar.DATE, gameweek);
+                Date matchDate = cal.getTime();
                 new Fixture(SavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,
                         round,
+                        matchDate,
                         1);
             }
         }

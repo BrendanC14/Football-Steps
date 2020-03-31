@@ -1,58 +1,95 @@
 package com.cutlerdevelopment.footballsteps.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
-import com.cutlerdevelopment.footballsteps.Models.Fixture;
-import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
+import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Models.OfflinePlayer;
-import com.cutlerdevelopment.footballsteps.Models.SavedData;
 import com.cutlerdevelopment.footballsteps.R;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-public class OfflineCareerMainMenu extends AppCompatActivity {
+public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineCareerMatchesMenu.onBackPressed {
 
-    TextView firstNameField;
-    TextView surnameField;
+    LinearLayout shirtColour;
+    TextView nameField;
     TextView positionField;
-    TextView favNameField;
-    ListView fixturesField;
+    TextView clubField;
 
+    TextView appearancesField;
+    TextView statsHeader1;
+    TextView statsField1;
+    TextView statsHeader2;
+    TextView statsField2;
+
+    Button matchesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_career_main_menu);
 
-        firstNameField = findViewById(R.id.mainMenuFirstName);
-        surnameField = findViewById(R.id.mainMenuSurname);
+        shirtColour = findViewById(R.id.mainMenuShirtColour);
+        nameField = findViewById(R.id.mainMenuName);
         positionField = findViewById(R.id.mainMenuPosition);
-        favNameField = findViewById(R.id.mainMenuFavTeam);
-        fixturesField = findViewById(R.id.fixturesList);
+        clubField = findViewById(R.id.mainMenuClub);
+        matchesButton = findViewById(R.id.playerMatchesButton);
 
         OfflinePlayer player = OfflinePlayer.getInstance();
+        int teamColour = player.getCurrTeam().getColour();
 
-        firstNameField.setText(player.getFirstName());
-        surnameField.setText(player.getSurname());
+        shirtColour.setBackgroundColor(ContextCompat.getColor(this, Colour.getBackgroundColour(teamColour)));
+        nameField.setText(getString(R.string.main_menu_name, player.getFirstName(), player.getSurname()));
         positionField.setText(Position.getPositionLongName(player.getPosition()));
-        favNameField.setText(player.getFavTeam().getName());
+        clubField.setText(player.getCurrTeam().getName());
 
-        List<Fixture> fixtures = SavedData.getInstance().getFixturesForTeam(1);
-        List<String> items = new ArrayList<>();
-        for (Fixture f : fixtures) {
-            items.add(String.valueOf(f.getWeek()) + " " +
-                    SavedData.getInstance().getTeamFromID(f.getHomeTeamID()).getName() + " vs " +
-                    SavedData.getInstance().getTeamFromID(f.getAwayTeamID()).getName());
+        appearancesField = findViewById(R.id.mainMenuAppsField);
+        statsHeader1 = findViewById(R.id.mainMenuStatsHeader1);
+        statsField1 = findViewById(R.id.mainMenuStatsField1);
+        statsHeader2 = findViewById(R.id.mainMenuStatsHeader2);
+        statsField2 = findViewById(R.id.mainMenuStatsField2);
+
+        appearancesField.setText(String.valueOf(player.getAppearances()));
+
+
+        Map<Map<Integer, Integer>, Map<Integer, Integer>> statsMap = Words.getFirstHeaderAndStat();
+
+        for (HashMap.Entry<Map<Integer, Integer>, Map<Integer, Integer>> pairOfMaps : statsMap.entrySet()) {
+            for (HashMap.Entry<Integer, Integer> firstMap : pairOfMaps.getKey().entrySet()) {
+                statsHeader1.setText(getText(firstMap.getKey()));
+                statsField1.setText(String.valueOf(firstMap.getValue()));
+            }
+            for (HashMap.Entry<Integer, Integer> secondMap : pairOfMaps.getValue().entrySet()) {
+                statsHeader2.setText(getText(secondMap.getKey()));
+                statsField2.setText(String.valueOf(secondMap.getValue()));
+            }
         }
-        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
-        fixturesField.setAdapter(itemsAdapter);
 
+    }
+
+    public void openMatchesFragment(View view) {
+        OfflineCareerMatchesMenu fragment = new OfflineCareerMatchesMenu();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.matchFragmentContainer, fragment, "fragmentTag")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        matchesButton.setEnabled(true);
+        this.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }

@@ -39,6 +39,7 @@ public class CreateOfflinePlayerFragment extends Fragment {
 
     }
 
+    Button newOfflineGame;
     private Button continueButton;
     private TextInputLayout firstNameField;
     private TextInputLayout surnameField;
@@ -61,7 +62,14 @@ public class CreateOfflinePlayerFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_create_offline_player, container, false);
 
+        newOfflineGame = this.getActivity().findViewById(R.id.newOfflineGame);
         continueButton = rootView.findViewById(R.id.continueButton);
+        firstNameField = rootView.findViewById(R.id.firstNameField);
+        surnameField = rootView.findViewById(R.id.surnameField);
+        teamSpinner = rootView.findViewById(R.id.teamSpinner);
+        positionSpinner = rootView.findViewById(R.id.positionSpinner);
+        submitButton = rootView.findViewById(R.id.submitOfflinePlayer);
+
         OfflinePlayer player = SavedData.getInstance().getOfflinePlayer();
         if (player != null) {
             continueButton.setVisibility(View.VISIBLE);
@@ -75,14 +83,10 @@ public class CreateOfflinePlayerFragment extends Fragment {
         }
         else { continueButton.setVisibility(View.GONE); }
 
-        firstNameField = rootView.findViewById(R.id.firstNameField);
-        surnameField = rootView.findViewById(R.id.surnameField);
-
         List<String> teamList = Words.TeamNames;
         Collections.sort(teamList);
         ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(
                 this.getActivity(), R.layout.spinner_item, teamList);
-        teamSpinner = rootView.findViewById(R.id.teamSpinner);
         teamSpinner.setAdapter(teamAdapter);
 
         List<String> positionList = new ArrayList<>();
@@ -91,13 +95,10 @@ public class CreateOfflinePlayerFragment extends Fragment {
         }
         ArrayAdapter<String> positionAdapter = new ArrayAdapter<>(
                 this.getActivity(), R.layout.spinner_item, positionList);
-        positionSpinner = rootView.findViewById(R.id.positionSpinner);
         positionSpinner.setAdapter(positionAdapter);
 
-        Button newOfflineGame = this.getActivity().findViewById(R.id.newOfflineGame);
         newOfflineGame.setEnabled(false);
 
-        submitButton = rootView.findViewById(R.id.submitOfflinePlayer);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
