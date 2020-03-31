@@ -4,6 +4,8 @@ import com.cutlerdevelopment.footballsteps.Models.OfflinePlayer;
 import com.cutlerdevelopment.footballsteps.R;
 
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -57,18 +59,13 @@ public class Words {
         return new HashMap<>();
     }
 
-    //*****************************************SavedData*****************************************
-    //Player
-    public static final String SD_OFFLINEPLAYER_FIRST_NAME_KEY = "OPFirstName";
-    public static final String SD_OFFLINEPLAYER_SURNAME_KEY = "OPSurname";
-    public static final String SD_OFFLINEPLAYER_AGE_KEY = "OPAge";
-    public static final String SD_OFFLINEPLAYER_POSITION_KEY = "OPPosition";
-    public static final String SD_OFFLINEPLAYER_CURRTEAM_KEY = "OPCurrTeam";
-    public static final String SD_OFFLINEPLAYER_FAVTEAM_KEY = "OPFavTeam";
-
-
-    //Settings
-    public static final String SD_OFFLINEPLAYER_STARTING_AGE_KEY = "OPStartingAge";
+    public static String getNumberWithCommas(int num) {
+        DecimalFormat df = new DecimalFormat();
+        DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+        dfs.setGroupingSeparator(',');
+        df.setDecimalFormatSymbols(dfs);
+        return df.format(num);
+    }
 
 
 }

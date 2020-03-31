@@ -2,8 +2,12 @@ package com.cutlerdevelopment.footballsteps.Models;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Update;
 
 import com.cutlerdevelopment.footballsteps.Constants.Position;
+
+import java.util.Date;
+import java.util.HashMap;
 
 /**
  * OfflinePlayer class contains all the details about the player for the solo career.

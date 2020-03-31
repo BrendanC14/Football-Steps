@@ -8,14 +8,14 @@ public class MatchFragmentItem {
 
     private String matchDate;
     private String homeTeam;
-    private String homeScore;
-    private String awayScore;
+    private String homeScore = "N/A";
+    private String awayScore = "N/A";
     private String awayTeam;
     private CharSequence perfHeader1;
     private String perfStat1;
     private CharSequence perfHeader2;
     private String perfStat2;
-    private String numSteps;
+    private String numSteps = "N/A";
     private int result;
 
     public String getMatchDate() { return matchDate; }

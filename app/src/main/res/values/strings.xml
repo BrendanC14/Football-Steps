@@ -18,5 +18,6 @@
     <string name="match_item_VS">VS</string>
     <string name="match_performance_header">Performance</string>
     <string name="steps">steps</string>
+    <string name="match_not_played_score">N/A</string>
 
 </resources>

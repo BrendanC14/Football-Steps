@@ -19,12 +19,15 @@ import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Models.Fixture;
 import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
 import com.cutlerdevelopment.footballsteps.Models.OfflinePlayer;
+import com.cutlerdevelopment.footballsteps.Models.PlayerActivity;
 import com.cutlerdevelopment.footballsteps.Models.SavedData;
 import com.cutlerdevelopment.footballsteps.R;
+import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 import com.cutlerdevelopment.footballsteps.Utils.MatchFragmentItem;
 import com.cutlerdevelopment.footballsteps.Utils.MatchFragmentItemAdapter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +37,8 @@ public class OfflineCareerMatchesMenu extends Fragment {
         // Required empty public constructor
     }
 
-    GridView matchGrid;
-    Button matchesButton;
+    private GridView matchGrid;
+    private Button matchesButton;
 
     public interface onBackPressed {
         void onBackPressed();
@@ -65,10 +68,8 @@ public class OfflineCareerMatchesMenu extends Fragment {
         final ArrayList<MatchFragmentItem> myFixtureItems = new ArrayList<>();
         for (Fixture f : SavedData.getInstance().getFixturesForTeam(player.getCurrTeamID())) {
             MatchFragmentItem item = new MatchFragmentItem();
-            item.setMatchDate(OfflineGame.getInstance().formatDate(f.getDate()));
+            item.setMatchDate(DateHelper.formatDate(f.getDate()));
             item.setHomeTeam(SavedData.getInstance().getTeamFromID(f.getHomeTeamID()).getName());
-            item.setHomeScore(String.valueOf(f.getHomeScore()));
-            item.setAwayScore(String.valueOf(f.getAwayScore()));
             item.setAwayTeam(SavedData.getInstance().getTeamFromID(f.getAwayTeamID()).getName());
 
             Map<Map<Integer, Integer>, Map<Integer, Integer>> statsMap = Words.getFirstHeaderAndStat();
@@ -83,8 +84,18 @@ public class OfflineCareerMatchesMenu extends Fragment {
                     item.setPerfStat2(String.valueOf(secondMap.getValue()));
                 }
             }
-            item.setNumSteps(String.valueOf(1000));
-            item.setResult(f.getMatchResultForTeam(player.getCurrTeamID()));
+
+            if (f.matchPlayed()) {
+                item.setHomeScore(String.valueOf(f.getHomeScore()));
+                item.setAwayScore(String.valueOf(f.getAwayScore()));
+                item.setResult(f.getMatchResultForTeam(player.getCurrTeamID()));
+            }
+
+            Date today = new Date();
+            PlayerActivity thisDatesActivity = SavedData.getInstance().getPlayerActivityOnDate(f.getDate());
+            if (DateHelper.getDaysBetween(f.getDate(), today) < 0 && thisDatesActivity != null) {
+                item.setNumSteps(Words.getNumberWithCommas(thisDatesActivity.getSteps()));
+            }
             myFixtureItems.add(item);
         }
 
@@ -96,5 +107,6 @@ public class OfflineCareerMatchesMenu extends Fragment {
         return rootView;
 
    }
+
 
 }

@@ -7,19 +7,6 @@
     android:background="@drawable/pitch"
     tools:context=".Activities.OfflineCareerMainMenu">
 
-    <Button
-        android:id="@+id/playerMatchesButton"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
-        android:background="#FFFFFF"
-        android:onClick="openMatchesFragment"
-        android:text="@string/main_menu_matches_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainMenuStatsBar" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainMenuTopBanner"
         android:layout_width="match_parent"
@@ -159,6 +146,38 @@
             app:layout_constraintTop_toBottomOf="@+id/mainMenuStatsHeader2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainMenuBottomBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/matchFragmentContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/refreshStepsButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/refreshbutton"
+            android:onClick="onRefreshSteps"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/playerMatchesButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:background="#FFFFFF"
+        android:onClick="openMatchesFragment"
+        android:text="@string/main_menu_matches_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainMenuStatsBar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/matchFragmentContainer"

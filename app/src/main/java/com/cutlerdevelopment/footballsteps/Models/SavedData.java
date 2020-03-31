@@ -16,6 +16,7 @@ import androidx.room.Update;
 import com.cutlerdevelopment.footballsteps.Utils.Converters;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,12 +47,14 @@ public class SavedData {
     /**
      * App Database class is the Room Database that contains the instances of the Dao interfaces.
      */
-    @Database(entities = {OfflinePlayer.class, Team.class, OfflineSettings.class, OfflineGame.class, Fixture.class}, version = 1)
+    @Database(entities = {OfflinePlayer.class, Team.class, OfflineSettings.class,
+            OfflineGame.class, Fixture.class, PlayerActivity.class}, version = 1)
     @TypeConverters({Converters.class})
     public static abstract class AppDatabase extends RoomDatabase {
         public abstract OfflinePlayerDao offlinePlayerDao();
         public abstract OfflineSettingsDao offlineSettingsDao();
         public abstract OfflineGameDao offlineGameDao();
+        public abstract PlayerActivityDao playerActivityDao();
         public abstract TeamDao teamDao();
         public abstract FixtureDao fixtureDao();
     }
@@ -106,6 +109,24 @@ public class SavedData {
 
         @Query("SELECT * FROM offlinegame")
         OfflineGame[] selectOfflineGame();
+    }
+
+    @Dao public interface PlayerActivityDao {
+
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        void insertPlayerActivity(PlayerActivity activity);
+        @Update
+        void updatePlayerActivity(PlayerActivity activity);
+        @Delete
+        void deletePlayerActivity(PlayerActivity activity);
+
+        @Query("SELECT * FROM playeractivity")
+        PlayerActivity[] selectAllPlayerActivity();
+        @Query("SELECT * FROM playeractivity WHERE date BETWEEN :date AND :date")
+        PlayerActivity selectPlayerActivityWithDate(Date date);
+        @Query("SELECT * FROM playeractivity ORDER BY date DESC LIMIT 1")
+        PlayerActivity selectLastAddedActivity();
+
     }
 
     /**
@@ -164,10 +185,6 @@ public class SavedData {
             OfflinePlayer player = (OfflinePlayer) obj;
             db.offlinePlayerDao().insertOfflinePlayer(player);
         }
-        else if (obj instanceof Team) {
-            Team team = (Team) obj;
-            db.teamDao().insertTeams(team);
-        }
         else if (obj instanceof OfflineSettings) {
             OfflineSettings settings = (OfflineSettings) obj;
             db.offlineSettingsDao().insertOfflineSettings(settings);
@@ -175,6 +192,14 @@ public class SavedData {
         else if (obj instanceof OfflineGame) {
             OfflineGame game = (OfflineGame) obj;
             db.offlineGameDao().insertOfflineGame(game);
+        }
+        else if (obj instanceof PlayerActivity) {
+            PlayerActivity activity = (PlayerActivity) obj;
+            db.playerActivityDao().insertPlayerActivity(activity);
+        }
+        else if (obj instanceof Team) {
+            Team team = (Team) obj;
+            db.teamDao().insertTeams(team);
         }
         else if (obj instanceof Fixture) {
             Fixture fix = (Fixture) obj;
@@ -191,10 +216,6 @@ public class SavedData {
             OfflinePlayer player = (OfflinePlayer) obj;
             db.offlinePlayerDao().updateOfflinePlayer(player);
         }
-        else if (obj instanceof Team) {
-            Team team = (Team) obj;
-            db.teamDao().updateTeam(team);
-        }
         else if (obj instanceof OfflineSettings) {
             OfflineSettings settings = (OfflineSettings) obj;
             db.offlineSettingsDao().updateOfflineSettings(settings);
@@ -202,6 +223,14 @@ public class SavedData {
         else if (obj instanceof OfflineGame) {
             OfflineGame game = (OfflineGame) obj;
             db.offlineGameDao().updateOfflineGame(game);
+        }
+        else if (obj instanceof  PlayerActivity) {
+            PlayerActivity activity = (PlayerActivity) obj;
+            db.playerActivityDao().updatePlayerActivity(activity);
+        }
+        else if (obj instanceof Team) {
+            Team team = (Team) obj;
+            db.teamDao().updateTeam(team);
         }
         else if (obj instanceof Fixture) {
             Fixture fix = (Fixture) obj;
@@ -231,6 +260,15 @@ public class SavedData {
         return null;
     }
 
+    public List<PlayerActivity> getAllPlayerActivities() {
+        return Arrays.asList(db.playerActivityDao().selectAllPlayerActivity());
+    }
+    public PlayerActivity getPlayerActivityOnDate(Date date) {
+        return db.playerActivityDao().selectPlayerActivityWithDate(date);
+    }
+    public PlayerActivity getLastAddedActivity() {
+        return db.playerActivityDao().selectLastAddedActivity();
+    }
 
     public List<Team> getAllTeams() {
         return Arrays.asList(db.teamDao().selectAllTeams());

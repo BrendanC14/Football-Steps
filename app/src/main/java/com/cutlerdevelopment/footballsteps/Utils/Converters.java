@@ -6,6 +6,7 @@ import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
 import com.cutlerdevelopment.footballsteps.Models.Team;
 
 import java.util.Date;
+import java.util.Map;
 
 public class Converters {
 
@@ -17,5 +18,6 @@ public class Converters {
     public static Long dateToTimestamp(Date date) {
         return date ==null ? null : date.getTime();
     }
+
 
 }

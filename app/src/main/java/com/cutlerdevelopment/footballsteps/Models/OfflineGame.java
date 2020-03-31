@@ -1,12 +1,12 @@
 package com.cutlerdevelopment.footballsteps.Models;
 
-import android.text.format.DateUtils;
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
+import com.cutlerdevelopment.footballsteps.Mocks.GoogleFITAPIMock;
+import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -27,19 +28,22 @@ public class OfflineGame {
         if (instance != null) {
             return instance;
         }
-        instance = new OfflineGame();
-        return instance;
+        return null;
     }
 
     public OfflineGame() {
 
+        //refreshPlayerActivity();
         instance = this;
     }
 
     public void startNewGame() {
 
-        this.startDate = new Date();
-        Random r = new Random();
+        Date today = new Date();
+
+        //TODO: Take out hardcoding once tested
+        this.startDate = DateHelper.addDays(today, -14);
+
         for (String teamName : Words.TeamNames) {
             new Team(SavedData.getInstance().getNumRowsFromTeamTable() + 1,
                     teamName, Colour.getDefaultColourForTeam(teamName), 1);
@@ -69,10 +73,6 @@ public class OfflineGame {
         SavedData.getInstance().updateObject(this);
     }
 
-    public String formatDate(Date date) {
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return formatter.format(date);
-    }
 
     void createFixtures() {
 
@@ -92,10 +92,7 @@ public class OfflineGame {
 
                 if (match == 0) {awayTeam = 19; }
 
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(startDate);
-                cal.add(Calendar.DATE, gameweek);
-                Date matchDate = cal.getTime();
+                Date matchDate = DateHelper.addDays(startDate, gameweek);
                 new Fixture(SavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,
@@ -133,6 +130,30 @@ public class OfflineGame {
             }
         }
 
+    }
+
+    public void refreshPlayerActivity() {
+        Date lastActivityDate = startDate;
+
+        PlayerActivity lastActivity = SavedData.getInstance().getLastAddedActivity();
+        if (lastActivity != null) {
+            lastActivityDate = lastActivity.getDate();
+        }
+
+        Date today = new Date();
+        int daysBetween = DateHelper.getDaysBetween(lastActivityDate,today);
+        if (daysBetween < 0) {
+            List<Date> datesToCheck = new ArrayList<>();
+            for (int i = daysBetween; i < 0; i++) {
+                datesToCheck.add(DateHelper.addDays(today, i));
+            }
+            //TODO: Integrate real service
+            HashMap<Date, Integer> dateStepMap = GoogleFITAPIMock.getInstance().getStepsForDates(datesToCheck);
+
+            for (HashMap.Entry<Date, Integer> pair : dateStepMap.entrySet()) {
+                new PlayerActivity(pair.getKey(), pair.getValue());
+            }
+        }
     }
 
 }

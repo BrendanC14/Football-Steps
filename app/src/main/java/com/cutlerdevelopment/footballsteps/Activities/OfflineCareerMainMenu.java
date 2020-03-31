@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
+import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
 import com.cutlerdevelopment.footballsteps.Models.OfflinePlayer;
 import com.cutlerdevelopment.footballsteps.R;
 
@@ -35,10 +36,15 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
 
     Button matchesButton;
 
+
+    Button refreshStepsButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_career_main_menu);
+
+
 
         shirtColour = findViewById(R.id.mainMenuShirtColour);
         nameField = findViewById(R.id.mainMenuName);
@@ -91,5 +97,11 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
     public void onBackPressed() {
         matchesButton.setEnabled(true);
         this.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    public void onRefreshSteps(View view) {
+
+        OfflineGame.getInstance().refreshPlayerActivity();
+
     }
 }

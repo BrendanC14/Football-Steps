@@ -22,6 +22,9 @@ public class Fixture {
         this.date = date;
         this.league = league;
 
+        this.homeScore = -1;
+        this.awayScore = -1;
+
         SavedData.getInstance().saveObject(this);
     }
 
@@ -98,11 +101,16 @@ public class Fixture {
     }
 
     public int getMatchResultForTeam(int teamID) {
+        if (homeScore < 0) { return -1; }
         if (homeScore == awayScore) { return MatchResult.DRAW; }
         boolean homeTeamWon = homeScore > awayScore;
 
         if (teamID == homeTeamID) { return homeTeamWon ? MatchResult.WIN : MatchResult.LOSE; }
         else { return homeTeamWon ? MatchResult.LOSE : MatchResult.WIN; }
 
+    }
+
+    public boolean matchPlayed() {
+         return homeScore >= 0;
     }
 }
