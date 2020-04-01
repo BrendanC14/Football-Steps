@@ -4,19 +4,17 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
+import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Mocks.GoogleFITAPIMock;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 @Entity
 public class OfflineGame {
@@ -44,9 +42,19 @@ public class OfflineGame {
         //TODO: Take out hardcoding once tested
         this.startDate = DateHelper.addDays(today, -14);
 
-        for (String teamName : Words.TeamNames) {
-            new Team(SavedData.getInstance().getNumRowsFromTeamTable() + 1,
-                    teamName, Colour.getDefaultColourForTeam(teamName), 1);
+        for (String teamName : Words.teamNames) {
+            Team t = new Team(teamName, Colour.getDefaultColourForTeam(teamName), 1);
+            new OfflineAIPlayer(t.getID(), Position.GOALKEEPER);
+            for (int i = 0; i < 4; i++) {
+                new OfflineAIPlayer(t.getID(), Position.DEFENDER);
+            }
+            new OfflineAIPlayer(t.getID(), Position.DEFENSIVE_MIDFIELDER);
+            for (int i = 0; i < 4; i++) {
+                new OfflineAIPlayer(t.getID(), Position.MIDFIELDER);
+            }
+            for (int i = 0; i < 2; i++) {
+                new OfflineAIPlayer(t.getID(), Position.ATTACKER);
+            }
         }
 
 
@@ -148,10 +156,12 @@ public class OfflineGame {
                 datesToCheck.add(DateHelper.addDays(today, i));
             }
             //TODO: Integrate real service
-            HashMap<Date, Integer> dateStepMap = GoogleFITAPIMock.getInstance().getStepsForDates(datesToCheck);
+            HashMap<Date, HashMap<Integer, Integer>> dateNumbersMap = GoogleFITAPIMock.getInstance().getStepsForDates(datesToCheck);
 
-            for (HashMap.Entry<Date, Integer> pair : dateStepMap.entrySet()) {
-                new PlayerActivity(pair.getKey(), pair.getValue());
+            for (HashMap.Entry<Date, HashMap<Integer, Integer>> pair : dateNumbersMap.entrySet()) {
+                for (HashMap.Entry<Integer, Integer> numberPair : pair.getValue().entrySet()) {
+                    new PlayerActivity(pair.getKey(), numberPair.getKey(), numberPair.getValue());
+                }
             }
         }
     }

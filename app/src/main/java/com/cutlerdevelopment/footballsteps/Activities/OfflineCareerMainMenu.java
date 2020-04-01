@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +15,9 @@ import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
 import com.cutlerdevelopment.footballsteps.Models.OfflinePlayer;
+import com.cutlerdevelopment.footballsteps.Models.SavedData;
 import com.cutlerdevelopment.footballsteps.R;
+import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,9 +36,8 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
     TextView statsField2;
 
     Button matchesButton;
+    Button playNextMatchButton;
 
-
-    Button refreshStepsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,7 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
         positionField = findViewById(R.id.mainMenuPosition);
         clubField = findViewById(R.id.mainMenuClub);
         matchesButton = findViewById(R.id.playerMatchesButton);
+        playNextMatchButton = findViewById(R.id.playNextMatchButton);
 
         OfflinePlayer player = OfflinePlayer.getInstance();
         int teamColour = player.getCurrTeam().getColour();
@@ -59,6 +60,7 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
         nameField.setText(getString(R.string.main_menu_name, player.getFirstName(), player.getSurname()));
         positionField.setText(Position.getPositionLongName(player.getPosition()));
         clubField.setText(player.getCurrTeam().getName());
+        checkPlayNextMatchButton();
 
         appearancesField = findViewById(R.id.mainMenuAppsField);
         statsHeader1 = findViewById(R.id.mainMenuStatsHeader1);
@@ -97,11 +99,28 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
     public void onBackPressed() {
         matchesButton.setEnabled(true);
         this.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        checkPlayNextMatchButton();
+    }
+
+    public void playNextMatch(View view) {
+
+    }
+
+    void checkPlayNextMatchButton() {
+        if (SavedData.getInstance().getLastAddedActivity() != null) {
+            int daysBetween = DateHelper.getDaysBetween(OfflinePlayer.getInstance().getDateLastMatchPlayed(), SavedData.getInstance().getLastAddedActivity().getDate());
+
+
+            if (daysBetween < 0) {
+                playNextMatchButton.setEnabled(true);
+            }
+        }
     }
 
     public void onRefreshSteps(View view) {
 
         OfflineGame.getInstance().refreshPlayerActivity();
+        checkPlayNextMatchButton();
 
     }
 }

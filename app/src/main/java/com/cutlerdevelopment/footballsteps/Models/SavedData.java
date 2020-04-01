@@ -48,7 +48,7 @@ public class SavedData {
      * App Database class is the Room Database that contains the instances of the Dao interfaces.
      */
     @Database(entities = {OfflinePlayer.class, Team.class, OfflineSettings.class,
-            OfflineGame.class, Fixture.class, PlayerActivity.class}, version = 1)
+            OfflineGame.class, Fixture.class, PlayerActivity.class, OfflineAIPlayer.class}, version = 1)
     @TypeConverters({Converters.class})
     public static abstract class AppDatabase extends RoomDatabase {
         public abstract OfflinePlayerDao offlinePlayerDao();
@@ -56,6 +56,7 @@ public class SavedData {
         public abstract OfflineGameDao offlineGameDao();
         public abstract PlayerActivityDao playerActivityDao();
         public abstract TeamDao teamDao();
+        public abstract OfflineAIPlayerDao offlineAIPlayerDao();
         public abstract FixtureDao fixtureDao();
     }
 
@@ -155,6 +156,26 @@ public class SavedData {
     }
 
     @Dao
+    public interface  OfflineAIPlayerDao {
+
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        void insertOfflineAIPlayer(OfflineAIPlayer offlineAIPlayer);
+        @Update
+        void updateOfflineAIPlayer(OfflineAIPlayer offlineAIPlayer);
+        @Delete
+        void deleteOfflineAIPlayer(OfflineAIPlayer offlineAIPlayer);
+
+        @Query("SELECT * FROM offlineaiplayer")
+        OfflineAIPlayer[] selectAllOfflineAIPlayers();
+        @Query("SELECT * FROM offlineaiplayer WHERE currTeamID = :teamID")
+        OfflineAIPlayer[] selectOfflinePlayerForTeamID(int teamID);
+        @Query("SELECT * FROM offlineaiplayer WHERE currTeamID = :teamID AND position = :pos")
+        OfflineAIPlayer[] selectOfflinePlayerForTeamIDWithPos(int teamID, int pos);
+        @Query("SELECT COUNT(id) FROM offlineaiplayer")
+        int getRowCount();
+
+    }
+    @Dao
     public interface FixtureDao {
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         void insertFixtures(Fixture fixture);
@@ -201,6 +222,10 @@ public class SavedData {
             Team team = (Team) obj;
             db.teamDao().insertTeams(team);
         }
+        else if (obj instanceof OfflineAIPlayer) {
+            OfflineAIPlayer player = (OfflineAIPlayer) obj;
+            db.offlineAIPlayerDao().insertOfflineAIPlayer(player);
+        }
         else if (obj instanceof Fixture) {
             Fixture fix = (Fixture) obj;
             db.fixtureDao().insertFixtures(fix);
@@ -231,6 +256,10 @@ public class SavedData {
         else if (obj instanceof Team) {
             Team team = (Team) obj;
             db.teamDao().updateTeam(team);
+        }
+        else if (obj instanceof OfflineAIPlayer) {
+            OfflineAIPlayer player = (OfflineAIPlayer) obj;
+            db.offlineAIPlayerDao().updateOfflineAIPlayer(player);
         }
         else if (obj instanceof Fixture) {
             Fixture fix = (Fixture) obj;
@@ -285,6 +314,19 @@ public class SavedData {
     }
     public int getNumRowsFromTeamTable() {
         return db.teamDao().getRowCount();
+    }
+
+    public List<OfflineAIPlayer> getAllOfflineAIPlayers() {
+        return Arrays.asList(db.offlineAIPlayerDao().selectAllOfflineAIPlayers());
+    }
+    public List<OfflineAIPlayer> getAllOfflinePlayerFromTeam(int teamID) {
+        return Arrays.asList(db.offlineAIPlayerDao().selectOfflinePlayerForTeamID(teamID));
+    }
+    public List<OfflineAIPlayer> getAllOfflinePlayerOfPositionFromTeam(int teamID, int pos) {
+        return Arrays.asList(db.offlineAIPlayerDao().selectOfflinePlayerForTeamIDWithPos(teamID, pos));
+    }
+    public int getNumRowsFromOfflineAIPlayerTable() {
+        return db.offlineAIPlayerDao().getRowCount();
     }
 
     public List<Fixture> getAllFixtures() { return Arrays.asList(db.fixtureDao().selectAllFixtures());}

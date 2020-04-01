@@ -39,6 +39,7 @@ public class OfflineCareerMatchesMenu extends Fragment {
 
     private GridView matchGrid;
     private Button matchesButton;
+    private Button playNextGameButton;
 
     public interface onBackPressed {
         void onBackPressed();
@@ -62,8 +63,11 @@ public class OfflineCareerMatchesMenu extends Fragment {
         matchesButton = this.getActivity().findViewById(R.id.playerMatchesButton);
         OfflinePlayer player = OfflinePlayer.getInstance();
         matchGrid = rootView.findViewById(R.id.matchGridLayout);
+        playNextGameButton = this.getActivity().findViewById(R.id.playNextMatchButton);
+
 
         matchesButton.setEnabled(false);
+        playNextGameButton.setEnabled(false);
 
         final ArrayList<MatchFragmentItem> myFixtureItems = new ArrayList<>();
         for (Fixture f : SavedData.getInstance().getFixturesForTeam(player.getCurrTeamID())) {

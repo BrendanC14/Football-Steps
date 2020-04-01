@@ -2,12 +2,11 @@ package com.cutlerdevelopment.footballsteps.Models;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.Update;
 
 import com.cutlerdevelopment.footballsteps.Constants.Position;
+import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * OfflinePlayer class contains all the details about the player for the solo career.
@@ -45,6 +44,8 @@ public class OfflinePlayer {
         this.position = pos;
         this.favTeamID = favTeamID;
         this.currTeamID = favTeamID;
+
+        this.dateLastMatchPlayed = DateHelper.addDays(OfflineGame.getInstance().getStartDate(), -1);
 
         instance = this;
         SavedData.getInstance().saveObject(this);
@@ -115,6 +116,14 @@ public class OfflinePlayer {
     }
     public Team getFavTeam() {
         return SavedData.getInstance().getTeamFromID(favTeamID);
+    }
+
+    public Date dateLastMatchPlayed;
+    public Date getDateLastMatchPlayed() { return dateLastMatchPlayed; }
+    public void setDateLastMatchPlayed(Date date) { this.dateLastMatchPlayed = date; }
+    public void changeLastMatchPlayed(Date date) {
+        this.dateLastMatchPlayed = date;
+        SavedData.getInstance().updateObject(this);
     }
 
     private int appearances;

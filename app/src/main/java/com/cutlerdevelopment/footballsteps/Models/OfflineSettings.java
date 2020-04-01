@@ -1,12 +1,9 @@
 package com.cutlerdevelopment.footballsteps.Models;
 
-import android.content.SharedPreferences;
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.Numbers;
-import com.cutlerdevelopment.footballsteps.Constants.Words;
 
 /**
  * OfflineSettings contains all of the settings for the offline solo game
@@ -42,17 +39,35 @@ public class OfflineSettings {
 
         this.startingAge = Numbers.DEFAULT_STARTING_AGE;
 
+
         SavedData.getInstance().saveObject(this);
 
     }
 
     @PrimaryKey
-    int startingAge;
+    private int startingAge;
     public int getStartingAge() { return startingAge; }
     public void setStartingAge(int newAge) { startingAge = newAge; }
     public void changeStartingAge(int newAge) {
         startingAge = newAge;
         SavedData.getInstance().updateObject(this);
     }
+
+    private int stepDifficultyModifier;
+    public int getStepDifficultyModifier() { return stepDifficultyModifier; }
+    public void setStepDifficultyModifier(int diff) {this.stepDifficultyModifier = diff; }
+    public void changeStepDifficultyModifier(int diff) {
+        this.stepDifficultyModifier = diff;
+        SavedData.getInstance().updateObject(this);
+    }
+
+    private int minuteDifficultyModifier;
+    public int getMinuteDifficultyModifier() { return minuteDifficultyModifier; }
+    public void setMinuteDifficultyModifier(int diff) {this.minuteDifficultyModifier = diff; }
+    public void changeMinuteDifficultyModifier(int diff) {
+        this.minuteDifficultyModifier = diff;
+        SavedData.getInstance().updateObject(this);
+    }
+
 
 }

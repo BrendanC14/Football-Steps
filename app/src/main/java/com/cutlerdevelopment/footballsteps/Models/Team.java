@@ -12,13 +12,12 @@ public class Team {
 
     /**
      * Used when creating a new Team when a new game is created or a custom team is added
-     * @param id a unique id
      * @param name name of the club
      * @param colour colour of the club
      */
     @Ignore
-    public Team(int id, String name, int colour, int league) {
-        this.id = id;
+    public Team(String name, int colour, int league) {
+        this.id = SavedData.getInstance().getNumRowsFromTeamTable() + 1;
         this.name = name;
         this.colour = colour;
         this.league = league;

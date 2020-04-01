@@ -19,5 +19,6 @@
     <string name="match_performance_header">Performance</string>
     <string name="steps">steps</string>
     <string name="match_not_played_score">N/A</string>
+    <string name="play_next_match_button">Play Next Match</string>
 
 </resources>

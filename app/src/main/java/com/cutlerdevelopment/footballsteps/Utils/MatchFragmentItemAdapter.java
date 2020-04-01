@@ -57,11 +57,6 @@ public class MatchFragmentItemAdapter extends BaseAdapter {
         TextView homeScore = convertView.findViewById(R.id.matchHomeScore);
         TextView awayScore = convertView.findViewById(R.id.matchAwayScore);
         TextView awayTeam = convertView.findViewById(R.id.matchAwayTeam);
-        TextView perfHeader1 = convertView.findViewById(R.id.matchPerfHeader1);
-        TextView perfStat1 = convertView.findViewById(R.id.matchPerfStat1);
-        TextView perfHeader2 = convertView.findViewById(R.id.matchPerfHeader2);
-        TextView perfStat2 = convertView.findViewById(R.id.matchPerfStat2);
-        TextView stepsField = convertView.findViewById(R.id.matchSteps);
 
         MatchFragmentItem currentItem = (MatchFragmentItem) getItem(i);
 
@@ -70,11 +65,6 @@ public class MatchFragmentItemAdapter extends BaseAdapter {
         homeScore.setText(currentItem.getHomeScore());
         awayScore.setText(currentItem.getAwayScore());
         awayTeam.setText(currentItem.getAwayTeam());
-        perfHeader1.setText(currentItem.getPerfHeader1());
-        perfStat1.setText(currentItem.getPerfStat1());
-        perfHeader2.setText(currentItem.getPerfHeader2());
-        perfStat2.setText(currentItem.getPerfStat2());
-        stepsField.setText(currentItem.getNumSteps());
 
         if (currentItem.getResult() == MatchResult.WIN) {
             background.setBackgroundColor(ContextCompat.getColor(context, Colour.WIN_BGROUND_COLOUR));

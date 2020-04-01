@@ -14,10 +14,11 @@ import java.util.Date;
 public class PlayerActivity {
 
     @Ignore
-    public PlayerActivity(Date date, int steps) {
+    public PlayerActivity(Date date, int steps, int activeMinutes) {
 
         this.date = date;
         this.steps = steps;
+        this.activeMinutes = activeMinutes;
 
         SavedData.getInstance().saveObject(this);
     }
@@ -43,6 +44,14 @@ public class PlayerActivity {
     public void setSteps(int steps) { this.steps = steps; }
     public void changeSteps(int steps) {
         this.steps = steps;
+        SavedData.getInstance().updateObject(this);
+    }
+
+    private int activeMinutes;
+    public int getActiveMinutes() { return  activeMinutes; }
+    public void setActiveMinutes(int mins) {this.activeMinutes = mins; }
+    public void changeActiveMinutes(int mins) {
+        this.activeMinutes = mins;
         SavedData.getInstance().updateObject(this);
     }
 }

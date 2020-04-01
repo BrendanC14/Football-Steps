@@ -179,6 +179,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainMenuStatsBar" />
 
+    <Button
+        android:id="@+id/playNextMatchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#89D828"
+        android:enabled="false"
+        android:onClick="playNextMatch"
+        android:text="@string/play_next_match_button"
+        app:layout_constraintBottom_toTopOf="@+id/mainMenuBottomBanner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/matchFragmentContainer"
         android:layout_width="match_parent"

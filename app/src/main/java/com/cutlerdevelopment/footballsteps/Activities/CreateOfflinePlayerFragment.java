@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
@@ -83,7 +82,7 @@ public class CreateOfflinePlayerFragment extends Fragment {
         }
         else { continueButton.setVisibility(View.GONE); }
 
-        List<String> teamList = Words.TeamNames;
+        List<String> teamList = Words.teamNames;
         Collections.sort(teamList);
         ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(
                 this.getActivity(), R.layout.spinner_item, teamList);
@@ -125,15 +124,17 @@ public class CreateOfflinePlayerFragment extends Fragment {
         favTeam = teamSpinner.getSelectedItem().toString();
 
         SavedData.getInstance().resetDB();
-        OfflineGame game = new OfflineGame();
-        game.startNewGame();
+
+
         OfflineSettings settings = new OfflineSettings();
         settings.assignDefaultSettings();
+        OfflineGame game = new OfflineGame();
+        game.startNewGame();
         new OfflinePlayer(firstName, surname, Position.getPositionFromShortString(position),
                 SavedData.getInstance().getIDFromName(favTeam));
 
-        getFragmentManager().popBackStack();
         finishCallback.onFinishedListener();
+        getFragmentManager().popBackStack();
 
     }
 
@@ -143,7 +144,7 @@ public class CreateOfflinePlayerFragment extends Fragment {
         SavedData.getInstance().getOfflineGame();
         SavedData.getInstance().getOfflineSettings();
 
-        getFragmentManager().popBackStack();
         finishCallback.onFinishedListener();
+        getFragmentManager().popBackStack();
     }
 }
