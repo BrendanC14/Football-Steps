@@ -1,29 +1,32 @@
-package com.cutlerdevelopment.footballsteps.Models;
+package com.cutlerdevelopment.footballsteps.Models.ProCareer;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
 import com.cutlerdevelopment.footballsteps.Constants.Position;
+import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
+import com.cutlerdevelopment.footballsteps.Models.SavedData;
+import com.cutlerdevelopment.footballsteps.Models.Team;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
 import java.util.Date;
 
 /**
- * OfflinePlayer class contains all the details about the player for the solo career.
+ * OfflineUserPlayer class contains all the details about the player for the solo career.
  * In this class all the setters are used solely for the RoomDB creating the class.
  * If changes need to be made to the variables use the change methods instead.
  * This is so that the changes will update the db but the setters don't.
  */
 @Entity(tableName = "offline_player", primaryKeys = {"firstName", "surname"})
-public class OfflinePlayer {
+public class OfflineUserPlayer {
 
-    private static OfflinePlayer instance = null;
+    private static OfflineUserPlayer instance = null;
 
     /**
-     * Returns the current instance of OfflinePlayer. If instance not created will return null
-     * @return the OfflinePlayer instance
+     * Returns the current instance of OfflineUserPlayer. If instance not created will return null
+     * @return the OfflineUserPlayer instance
      */
-    public static OfflinePlayer getInstance() {
+    public static OfflineUserPlayer getInstance() {
         if (instance != null) {
             return instance;
         }
@@ -37,7 +40,7 @@ public class OfflinePlayer {
      * @param pos is the chosen position as an integer. Can be used with Position class
      * @param favTeamID is the chosen favourite team ID
      */
-    public OfflinePlayer(String fname, String sname, int pos, int favTeamID) {
+    public OfflineUserPlayer(String fname, String sname, int pos, int favTeamID) {
 
         this.firstName = fname;
         this.surname = sname;
@@ -54,7 +57,7 @@ public class OfflinePlayer {
     /**
      * Used when loading a player for the solo career. Doesn't take any variables as takes them from RoomDB
      */
-    public OfflinePlayer() {
+    public OfflineUserPlayer() {
 
         instance = this;
     }

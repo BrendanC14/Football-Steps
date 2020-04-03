@@ -1,7 +1,5 @@
 package com.cutlerdevelopment.footballsteps.Activities;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,15 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.cutlerdevelopment.footballsteps.Constants.Words;
-import com.cutlerdevelopment.footballsteps.Models.Fixture;
-import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
-import com.cutlerdevelopment.footballsteps.Models.OfflinePlayer;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineUserPlayer;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.Fixture;
 import com.cutlerdevelopment.footballsteps.Models.PlayerActivity;
 import com.cutlerdevelopment.footballsteps.Models.SavedData;
 import com.cutlerdevelopment.footballsteps.R;
@@ -27,8 +21,10 @@ import com.cutlerdevelopment.footballsteps.Utils.MatchFragmentItem;
 import com.cutlerdevelopment.footballsteps.Utils.MatchFragmentItemAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OfflineCareerMatchesMenu extends Fragment {
@@ -61,7 +57,7 @@ public class OfflineCareerMatchesMenu extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_offline_career_matches_menu, container, false);
 
         matchesButton = this.getActivity().findViewById(R.id.playerMatchesButton);
-        OfflinePlayer player = OfflinePlayer.getInstance();
+        OfflineUserPlayer player = OfflineUserPlayer.getInstance();
         matchGrid = rootView.findViewById(R.id.matchGridLayout);
         playNextGameButton = this.getActivity().findViewById(R.id.playNextMatchButton);
 
@@ -70,7 +66,9 @@ public class OfflineCareerMatchesMenu extends Fragment {
         playNextGameButton.setEnabled(false);
 
         final ArrayList<MatchFragmentItem> myFixtureItems = new ArrayList<>();
-        for (Fixture f : SavedData.getInstance().getFixturesForTeam(player.getCurrTeamID())) {
+        List<Fixture> allFixtures = SavedData.getInstance().getAllFixtures();
+        Collections.sort(allFixtures);
+        for (Fixture f : allFixtures) {
             MatchFragmentItem item = new MatchFragmentItem();
             item.setMatchDate(DateHelper.formatDate(f.getDate()));
             item.setHomeTeam(SavedData.getInstance().getTeamFromID(f.getHomeTeamID()).getName());
@@ -92,7 +90,9 @@ public class OfflineCareerMatchesMenu extends Fragment {
             if (f.matchPlayed()) {
                 item.setHomeScore(String.valueOf(f.getHomeScore()));
                 item.setAwayScore(String.valueOf(f.getAwayScore()));
-                item.setResult(f.getMatchResultForTeam(player.getCurrTeamID()));
+                if (f.getHomeTeamID() == player.getCurrTeamID() || f.getAwayTeamID() == player.getCurrTeamID()) {
+                    //item.setResult(f.getMatchResultForTeam(player.getCurrTeamID()));
+                }
             }
 
             Date today = new Date();

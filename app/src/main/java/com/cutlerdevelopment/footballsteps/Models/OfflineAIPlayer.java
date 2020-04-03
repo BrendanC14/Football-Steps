@@ -21,15 +21,15 @@ public class OfflineAIPlayer {
      * Used when creating a new OfflineAIPlayer when a new game is created or a custom team is added
      */
     @Ignore
-    public OfflineAIPlayer(int clubID, int position) {
+    public OfflineAIPlayer(int clubID, int position, int stepReduction, int minReduction) {
 
         this.ID = SavedData.getInstance().getNumRowsFromOfflineAIPlayerTable() + 1;
         this.firstName = Words.getRandomFirstName();
         this.surname = Words.getRandomSurname();
         this.currTeamID = clubID;
         Pair<Integer, Integer> pair = Numbers.getRandomStartingNumbers(getCurrTeam().getLeague());
-        this.averageSteps = pair.first;
-        this.averageMinutes = pair.second;
+        this.averageSteps = pair.first + stepReduction;
+        this.averageMinutes = pair.second + minReduction;
 
         this.position = position;
 
@@ -96,7 +96,7 @@ public class OfflineAIPlayer {
     }
     public Team getCurrTeam() { return SavedData.getInstance().getTeamFromID(currTeamID); }
 
-    public int averageSteps;
+    private int averageSteps;
     public int getAverageSteps() { return averageSteps; }
     public void setAverageSteps(int steps) {this.averageSteps = steps; }
     public void refreshAverageSteps(int newAverageSteps) {
@@ -106,7 +106,7 @@ public class OfflineAIPlayer {
         SavedData.getInstance().updateObject(this);
     }
 
-    public int averageMinutes;
+    private int averageMinutes;
     public int getAverageMinutes() { return averageMinutes; }
     public void setAverageMinutes(int minutes) {this.averageMinutes = minutes; }
     public void refreshAverageMinutes(int newAverageMinutes) {

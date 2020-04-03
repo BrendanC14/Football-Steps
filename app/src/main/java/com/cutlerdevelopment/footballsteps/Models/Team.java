@@ -6,6 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
+import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
 
 @Entity
 public class Team {
@@ -17,7 +18,7 @@ public class Team {
      */
     @Ignore
     public Team(String name, int colour, int league) {
-        this.id = SavedData.getInstance().getNumRowsFromTeamTable() + 1;
+        this.ID = SavedData.getInstance().getNumRowsFromTeamTable() + 1;
         this.name = name;
         this.colour = colour;
         this.league = league;
@@ -33,8 +34,9 @@ public class Team {
     }
 
     @PrimaryKey
-    int id;
-    public int getID() { return id; }
+    private int ID;
+    public int getID() { return ID; }
+    public void setID(int id) { this.ID = id;}
 
 
     private String name;
@@ -63,4 +65,57 @@ public class Team {
         SavedData.getInstance().updateObject(league);
     }
 
+    private int points;
+    public int getPoints() { return points;}
+    public void setPoints(int pts) { this.points = pts; }
+    public void addPoints(int pts) { points += pts; }
+
+    private int wins;
+    public int getWins() { return wins; }
+    public void setWins(int w) { this.wins = w; }
+    public void addWin() {
+        wins++;
+        addPoints(OfflineSettings.getInstance().getPointsForWin());
+    }
+
+    private int draws;
+    public int getDraws() { return draws; }
+    public void setDraws(int d) { this.draws = d; }
+    public void addDraw() {
+        draws++;
+        addPoints(OfflineSettings.getInstance().getPointsForDraw());
+    }
+
+    private int losses;
+    public int getLosses() { return losses; }
+    public void setLosses(int l) { this.losses = l; }
+    public void addLoss() {
+        losses++;
+        addPoints(OfflineSettings.getInstance().getPointsForLoss());
+    }
+
+    private int scored;
+    public int getScored() { return this.scored; }
+    public void setScored(int scored) {this.scored = scored; }
+    public void addGoals(int goals) {
+        this.scored += goals;
+
+    }
+
+    private int conceded;
+    public int getConceded() { return this.conceded; }
+    public void setConceded(int conceded) { this.conceded = conceded; }
+    public void concedeGoals( int conceded) { this.conceded += conceded; }
+
+    public void playMatch(int matchResult, int scored, int conceded) {
+        addGoals(scored);
+        concedeGoals(conceded);
+        if (matchResult == MatchResult.DRAW) { addDraw(); }
+        else if (matchResult == MatchResult.WIN) { addWin(); }
+        else { addLoss(); }
+
+        SavedData.getInstance().updateObject(this);
+
+
+    }
 }

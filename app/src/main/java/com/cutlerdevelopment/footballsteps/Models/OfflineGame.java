@@ -4,13 +4,15 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
+import com.cutlerdevelopment.footballsteps.Constants.Numbers;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Mocks.GoogleFITAPIMock;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineUserPlayer;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.Fixture;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -42,21 +44,22 @@ public class OfflineGame {
         //TODO: Take out hardcoding once tested
         this.startDate = DateHelper.addDays(today, -14);
 
+
         for (String teamName : Words.teamNames) {
             Team t = new Team(teamName, Colour.getDefaultColourForTeam(teamName), 1);
-            new OfflineAIPlayer(t.getID(), Position.GOALKEEPER);
+            new OfflineAIPlayer(t.getID(), Position.GOALKEEPER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             for (int i = 0; i < 4; i++) {
-                new OfflineAIPlayer(t.getID(), Position.DEFENDER);
+                new OfflineAIPlayer(t.getID(), Position.DEFENDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             }
-            new OfflineAIPlayer(t.getID(), Position.DEFENSIVE_MIDFIELDER);
-            for (int i = 0; i < 4; i++) {
-                new OfflineAIPlayer(t.getID(), Position.MIDFIELDER);
-            }
+            new OfflineAIPlayer(t.getID(), Position.DEFENSIVE_MIDFIELDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             for (int i = 0; i < 2; i++) {
-                new OfflineAIPlayer(t.getID(), Position.ATTACKER);
+                new OfflineAIPlayer(t.getID(), Position.MIDFIELDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             }
-        }
+            for (int i = 0; i < 3; i++) {
+                new OfflineAIPlayer(t.getID(), Position.ATTACKER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
+            }
 
+        }
 
         createFixtures();
 
@@ -81,11 +84,17 @@ public class OfflineGame {
         SavedData.getInstance().updateObject(this);
     }
 
+    public void deleteAIPlayerFromPlayersTeam() {
+        OfflineUserPlayer player = OfflineUserPlayer.getInstance();
+        Team t = player.getCurrTeam();
+        OfflineAIPlayer extraPlayer = SavedData.getInstance().getAllOfflinePlayerOfPositionFromTeam(t.getID(), player.getPosition()).get(0);
+        SavedData.getInstance().deleteObject(extraPlayer);
+    }
 
     void createFixtures() {
 
         List<Integer> availableWeeks = new ArrayList<>();
-        for (int i = 1; i < 20; i++) {
+        for (int i = 0; i < 19; i++) {
             availableWeeks.add(i);
         }
         Collections.shuffle(availableWeeks);
@@ -98,9 +107,9 @@ public class OfflineGame {
                 int homeTeam = ((gameweek + match) % 19) + 1;
                 int awayTeam = ((gameweek - match + 19) % 19) +1;
 
-                if (match == 0) {awayTeam = 19; }
+                if (match == 0) {awayTeam = 20; }
 
-                Date matchDate = DateHelper.addDays(startDate, gameweek);
+                Date matchDate = DateHelper.addDays(startDate, round);
                 new Fixture(SavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,
@@ -123,12 +132,9 @@ public class OfflineGame {
                 int homeTeam = ((gameweek - match + 19) % 19) + 1;
                 int awayTeam = ((gameweek + match) % 19) + 1;
 
-                if (match == 0) { homeTeam = 19; }
+                if (match == 0) { homeTeam = 20; }
 
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(startDate);
-                cal.add(Calendar.DATE, gameweek);
-                Date matchDate = cal.getTime();
+                Date matchDate = DateHelper.addDays(startDate, round);
                 new Fixture(SavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,

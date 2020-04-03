@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
-import com.cutlerdevelopment.footballsteps.Models.OfflinePlayer;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineUserPlayer;
 import com.cutlerdevelopment.footballsteps.Models.OfflineSettings;
 import com.cutlerdevelopment.footballsteps.Models.SavedData;
 import com.cutlerdevelopment.footballsteps.R;
@@ -69,7 +69,7 @@ public class CreateOfflinePlayerFragment extends Fragment {
         positionSpinner = rootView.findViewById(R.id.positionSpinner);
         submitButton = rootView.findViewById(R.id.submitOfflinePlayer);
 
-        OfflinePlayer player = SavedData.getInstance().getOfflinePlayer();
+        OfflineUserPlayer player = SavedData.getInstance().getOfflinePlayer();
         if (player != null) {
             continueButton.setVisibility(View.VISIBLE);
             continueButton.setText(getString(R.string.continue_offline_player_button, player.getFirstName(), player.getSurname()));
@@ -130,8 +130,9 @@ public class CreateOfflinePlayerFragment extends Fragment {
         settings.assignDefaultSettings();
         OfflineGame game = new OfflineGame();
         game.startNewGame();
-        new OfflinePlayer(firstName, surname, Position.getPositionFromShortString(position),
+        new OfflineUserPlayer(firstName, surname, Position.getPositionFromShortString(position),
                 SavedData.getInstance().getIDFromName(favTeam));
+        game.deleteAIPlayerFromPlayersTeam();
 
         finishCallback.onFinishedListener();
         getFragmentManager().popBackStack();

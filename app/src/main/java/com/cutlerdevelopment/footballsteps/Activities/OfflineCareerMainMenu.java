@@ -13,12 +13,15 @@ import android.widget.TextView;
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineUserPlayer;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.Fixture;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflinePlayerMatchEngine;
 import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
-import com.cutlerdevelopment.footballsteps.Models.OfflinePlayer;
 import com.cutlerdevelopment.footballsteps.Models.SavedData;
 import com.cutlerdevelopment.footballsteps.R;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +47,7 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_career_main_menu);
 
-
+        OfflineGame.getInstance().refreshPlayerActivity();
 
         shirtColour = findViewById(R.id.mainMenuShirtColour);
         nameField = findViewById(R.id.mainMenuName);
@@ -53,7 +56,7 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
         matchesButton = findViewById(R.id.playerMatchesButton);
         playNextMatchButton = findViewById(R.id.playNextMatchButton);
 
-        OfflinePlayer player = OfflinePlayer.getInstance();
+        OfflineUserPlayer player = OfflineUserPlayer.getInstance();
         int teamColour = player.getCurrTeam().getColour();
 
         shirtColour.setBackgroundColor(ContextCompat.getColor(this, Colour.getBackgroundColour(teamColour)));
@@ -104,15 +107,26 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
 
     public void playNextMatch(View view) {
 
+        Date nextMatchDate = DateHelper.addDays(OfflineUserPlayer.getInstance().dateLastMatchPlayed, 1);
+        for (Fixture f : SavedData.getInstance().getWeeksFixtureFromLeague(nextMatchDate, 1)) {
+
+            OfflinePlayerMatchEngine.getInstance().playPlayersMatch(f);
+
+        }
+        checkPlayNextMatchButton();
+
     }
 
     void checkPlayNextMatchButton() {
         if (SavedData.getInstance().getLastAddedActivity() != null) {
-            int daysBetween = DateHelper.getDaysBetween(OfflinePlayer.getInstance().getDateLastMatchPlayed(), SavedData.getInstance().getLastAddedActivity().getDate());
+            int daysBetween = DateHelper.getDaysBetween(OfflineUserPlayer.getInstance().getDateLastMatchPlayed(), SavedData.getInstance().getLastAddedActivity().getDate());
 
 
             if (daysBetween < 0) {
                 playNextMatchButton.setEnabled(true);
+            }
+            else {
+                playNextMatchButton.setEnabled(false);
             }
         }
     }

@@ -1,17 +1,17 @@
-package com.cutlerdevelopment.footballsteps.Models;
+package com.cutlerdevelopment.footballsteps.Models.SharedModels;
 
-import androidx.room.Dao;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-import androidx.room.Update;
 
 import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
+import com.cutlerdevelopment.footballsteps.Models.SavedData;
+import com.cutlerdevelopment.footballsteps.Models.Team;
 
 import java.util.Date;
 
 @Entity
-public class Fixture {
+public class Fixture implements Comparable<Fixture> {
 
     @Ignore
     public Fixture(int id, int homeTeamID, int awayTeamID, int week, Date date, int league) {
@@ -73,6 +73,13 @@ public class Fixture {
         this.homeScore = homeScore;
         this.awayScore = awayScore;
 
+        Team homeTeam = SavedData.getInstance().getTeamFromID(homeTeamID);
+        Team awayTeam = SavedData.getInstance().getTeamFromID(awayTeamID);
+
+        homeTeam.playMatch(getMatchResultForTeam(homeTeamID), homeScore, awayScore);
+        awayTeam.playMatch(getMatchResultForTeam(awayTeamID), awayScore, homeScore);
+
+
         SavedData.getInstance().updateObject(this);
     }
 
@@ -112,5 +119,10 @@ public class Fixture {
 
     public boolean matchPlayed() {
          return homeScore >= 0;
+    }
+
+    @Override
+    public int compareTo(Fixture f) {
+        return this.getDate().compareTo(f.getDate());
     }
 }

@@ -39,6 +39,10 @@ public class OfflineSettings {
 
         this.startingAge = Numbers.DEFAULT_STARTING_AGE;
 
+        this.pointsForWin = Numbers.POINTS_FOR_WIN;
+        this.pointsForDraw = Numbers.POINTS_FOR_DRAW;
+        this. pointsForLoss = Numbers.POINTS_FOR_LOSS;
+
 
         SavedData.getInstance().saveObject(this);
 
@@ -66,6 +70,30 @@ public class OfflineSettings {
     public void setMinuteDifficultyModifier(int diff) {this.minuteDifficultyModifier = diff; }
     public void changeMinuteDifficultyModifier(int diff) {
         this.minuteDifficultyModifier = diff;
+        SavedData.getInstance().updateObject(this);
+    }
+
+    private int pointsForWin;
+    public int getPointsForWin() { return  pointsForWin; }
+    public void setPointsForWin(int pts) { this.pointsForWin = pts; }
+    public void changePointsForWin(int pts) {
+        this.pointsForWin = pts;
+        SavedData.getInstance().updateObject(this);
+    }
+
+    private int pointsForDraw;
+    public int getPointsForDraw() { return  pointsForDraw; }
+    public void setPointsForDraw(int pts) { this.pointsForDraw = pts; }
+    public void changePointsForDraw(int pts) {
+        this.pointsForDraw = pts;
+        SavedData.getInstance().updateObject(this);
+    }
+
+    private int pointsForLoss;
+    public int getPointsForLoss() { return  pointsForLoss; }
+    public void setPointsForLoss(int pts) { this.pointsForLoss = pts; }
+    public void changePointsForLoss(int pts) {
+        this.pointsForLoss = pts;
         SavedData.getInstance().updateObject(this);
     }
 
