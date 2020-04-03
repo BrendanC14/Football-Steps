@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Models;
+package com.cutlerdevelopment.footballsteps.Models.SharedModels;
 
 
 import androidx.room.Entity;
@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProSettings;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
 
 @Entity
 public class Team {
@@ -75,7 +77,7 @@ public class Team {
     public void setWins(int w) { this.wins = w; }
     public void addWin() {
         wins++;
-        addPoints(OfflineSettings.getInstance().getPointsForWin());
+        addPoints(ProSettings.getInstance().getPointsForWin());
     }
 
     private int draws;
@@ -83,7 +85,7 @@ public class Team {
     public void setDraws(int d) { this.draws = d; }
     public void addDraw() {
         draws++;
-        addPoints(OfflineSettings.getInstance().getPointsForDraw());
+        addPoints(ProSettings.getInstance().getPointsForDraw());
     }
 
     private int losses;
@@ -91,7 +93,7 @@ public class Team {
     public void setLosses(int l) { this.losses = l; }
     public void addLoss() {
         losses++;
-        addPoints(OfflineSettings.getInstance().getPointsForLoss());
+        addPoints(ProSettings.getInstance().getPointsForLoss());
     }
 
     private int scored;

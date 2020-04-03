@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Activities;
+package com.cutlerdevelopment.footballsteps.ActivitiesFragments;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -13,11 +13,11 @@ import android.widget.TextView;
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineUserPlayer;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProUsersPlayer;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProGame;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.Fixture;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflinePlayerMatchEngine;
-import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
-import com.cutlerdevelopment.footballsteps.Models.SavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProMatchEngine;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
 import com.cutlerdevelopment.footballsteps.R;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineCareerMatchesMenu.onBackPressed {
+public class ActProMainMenu extends AppCompatActivity implements FragProMatchesMenu.onBackPressed {
 
     LinearLayout shirtColour;
     TextView nameField;
@@ -45,9 +45,9 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_offline_career_main_menu);
+        setContentView(R.layout.activity_pro_main_menu);
 
-        OfflineGame.getInstance().refreshPlayerActivity();
+        ProGame.getInstance().refreshPlayerActivity();
 
         shirtColour = findViewById(R.id.mainMenuShirtColour);
         nameField = findViewById(R.id.mainMenuName);
@@ -56,7 +56,7 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
         matchesButton = findViewById(R.id.playerMatchesButton);
         playNextMatchButton = findViewById(R.id.playNextMatchButton);
 
-        OfflineUserPlayer player = OfflineUserPlayer.getInstance();
+        ProUsersPlayer player = ProUsersPlayer.getInstance();
         int teamColour = player.getCurrTeam().getColour();
 
         shirtColour.setBackgroundColor(ContextCompat.getColor(this, Colour.getBackgroundColour(teamColour)));
@@ -90,7 +90,7 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
     }
 
     public void openMatchesFragment(View view) {
-        OfflineCareerMatchesMenu fragment = new OfflineCareerMatchesMenu();
+        FragProMatchesMenu fragment = new FragProMatchesMenu();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.matchFragmentContainer, fragment, "fragmentTag")
@@ -107,10 +107,10 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
 
     public void playNextMatch(View view) {
 
-        Date nextMatchDate = DateHelper.addDays(OfflineUserPlayer.getInstance().dateLastMatchPlayed, 1);
+        Date nextMatchDate = DateHelper.addDays(ProUsersPlayer.getInstance().dateLastMatchPlayed, 1);
         for (Fixture f : SavedData.getInstance().getWeeksFixtureFromLeague(nextMatchDate, 1)) {
 
-            OfflinePlayerMatchEngine.getInstance().playPlayersMatch(f);
+            ProMatchEngine.getInstance().playPlayersMatch(f);
 
         }
         checkPlayNextMatchButton();
@@ -119,7 +119,7 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
 
     void checkPlayNextMatchButton() {
         if (SavedData.getInstance().getLastAddedActivity() != null) {
-            int daysBetween = DateHelper.getDaysBetween(OfflineUserPlayer.getInstance().getDateLastMatchPlayed(), SavedData.getInstance().getLastAddedActivity().getDate());
+            int daysBetween = DateHelper.getDaysBetween(ProUsersPlayer.getInstance().getDateLastMatchPlayed(), SavedData.getInstance().getLastAddedActivity().getDate());
 
 
             if (daysBetween < 0) {
@@ -133,7 +133,7 @@ public class OfflineCareerMainMenu extends AppCompatActivity implements OfflineC
 
     public void onRefreshSteps(View view) {
 
-        OfflineGame.getInstance().refreshPlayerActivity();
+        ProGame.getInstance().refreshPlayerActivity();
         checkPlayNextMatchButton();
 
     }

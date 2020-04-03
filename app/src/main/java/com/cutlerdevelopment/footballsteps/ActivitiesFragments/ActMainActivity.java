@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Activities;
+package com.cutlerdevelopment.footballsteps.ActivitiesFragments;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.cutlerdevelopment.footballsteps.Models.SavedData;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
 import com.cutlerdevelopment.footballsteps.R;
 
-public class MainActivity extends AppCompatActivity implements CreateOfflinePlayerFragment.onFinishedListener {
+public class ActMainActivity extends AppCompatActivity implements FragCreateProPlayer.onFinishedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements CreateOfflinePlay
 
         SavedData.createSavedDataInstance(this);
 
-        CreateOfflinePlayerFragment fragment = new CreateOfflinePlayerFragment();
+        FragCreateProPlayer fragment = new FragCreateProPlayer();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_container, fragment, "fragmentTag")
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements CreateOfflinePlay
     public void onFinishedListener() {
 
 
-        Intent intent = new Intent(this, OfflineCareerMainMenu.class);
+        Intent intent = new Intent(this, ActProMainMenu.class);
         startActivity(intent);
     }
 }

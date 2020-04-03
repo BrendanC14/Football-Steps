@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Models;
+package com.cutlerdevelopment.footballsteps.Models.ProCareer;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -8,8 +8,10 @@ import com.cutlerdevelopment.footballsteps.Constants.Numbers;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Mocks.GoogleFITAPIMock;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineUserPlayer;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.PlayerActivity;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.Fixture;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.Team;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
 import java.util.ArrayList;
@@ -19,19 +21,19 @@ import java.util.HashMap;
 import java.util.List;
 
 @Entity
-public class OfflineGame {
+public class ProGame {
 
 
 
-    private static OfflineGame instance = null;
-    public static OfflineGame getInstance() {
+    private static ProGame instance = null;
+    public static ProGame getInstance() {
         if (instance != null) {
             return instance;
         }
         return null;
     }
 
-    public OfflineGame() {
+    public ProGame() {
 
         //refreshPlayerActivity();
         instance = this;
@@ -47,16 +49,16 @@ public class OfflineGame {
 
         for (String teamName : Words.teamNames) {
             Team t = new Team(teamName, Colour.getDefaultColourForTeam(teamName), 1);
-            new OfflineAIPlayer(t.getID(), Position.GOALKEEPER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
+            new ProAIPlayer(t.getID(), Position.GOALKEEPER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             for (int i = 0; i < 4; i++) {
-                new OfflineAIPlayer(t.getID(), Position.DEFENDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
+                new ProAIPlayer(t.getID(), Position.DEFENDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             }
-            new OfflineAIPlayer(t.getID(), Position.DEFENSIVE_MIDFIELDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
+            new ProAIPlayer(t.getID(), Position.DEFENSIVE_MIDFIELDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             for (int i = 0; i < 2; i++) {
-                new OfflineAIPlayer(t.getID(), Position.MIDFIELDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
+                new ProAIPlayer(t.getID(), Position.MIDFIELDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             }
             for (int i = 0; i < 3; i++) {
-                new OfflineAIPlayer(t.getID(), Position.ATTACKER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
+                new ProAIPlayer(t.getID(), Position.ATTACKER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             }
 
         }
@@ -85,9 +87,9 @@ public class OfflineGame {
     }
 
     public void deleteAIPlayerFromPlayersTeam() {
-        OfflineUserPlayer player = OfflineUserPlayer.getInstance();
+        ProUsersPlayer player = ProUsersPlayer.getInstance();
         Team t = player.getCurrTeam();
-        OfflineAIPlayer extraPlayer = SavedData.getInstance().getAllOfflinePlayerOfPositionFromTeam(t.getID(), player.getPosition()).get(0);
+        ProAIPlayer extraPlayer = SavedData.getInstance().getAllOfflinePlayerOfPositionFromTeam(t.getID(), player.getPosition()).get(0);
         SavedData.getInstance().deleteObject(extraPlayer);
     }
 

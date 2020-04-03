@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Activities;
+package com.cutlerdevelopment.footballsteps.ActivitiesFragments;
 
 import android.os.Bundle;
 
@@ -11,14 +11,14 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.cutlerdevelopment.footballsteps.Constants.Words;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineUserPlayer;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProUsersPlayer;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.Fixture;
-import com.cutlerdevelopment.footballsteps.Models.PlayerActivity;
-import com.cutlerdevelopment.footballsteps.Models.SavedData;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.PlayerActivity;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
 import com.cutlerdevelopment.footballsteps.R;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
-import com.cutlerdevelopment.footballsteps.Utils.MatchFragmentItem;
-import com.cutlerdevelopment.footballsteps.Utils.MatchFragmentItemAdapter;
+import com.cutlerdevelopment.footballsteps.Utils.ViewItems.ProMatchItem;
+import com.cutlerdevelopment.footballsteps.Utils.ViewAdapters.ProMatchItemAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,9 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OfflineCareerMatchesMenu extends Fragment {
+public class FragProMatchesMenu extends Fragment {
 
-    public OfflineCareerMatchesMenu() {
+    public FragProMatchesMenu() {
         // Required empty public constructor
     }
 
@@ -54,10 +54,10 @@ public class OfflineCareerMatchesMenu extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_offline_career_matches_menu, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_pro_matches_menu, container, false);
 
         matchesButton = this.getActivity().findViewById(R.id.playerMatchesButton);
-        OfflineUserPlayer player = OfflineUserPlayer.getInstance();
+        ProUsersPlayer player = ProUsersPlayer.getInstance();
         matchGrid = rootView.findViewById(R.id.matchGridLayout);
         playNextGameButton = this.getActivity().findViewById(R.id.playNextMatchButton);
 
@@ -65,11 +65,11 @@ public class OfflineCareerMatchesMenu extends Fragment {
         matchesButton.setEnabled(false);
         playNextGameButton.setEnabled(false);
 
-        final ArrayList<MatchFragmentItem> myFixtureItems = new ArrayList<>();
+        final ArrayList<ProMatchItem> myFixtureItems = new ArrayList<>();
         List<Fixture> allFixtures = SavedData.getInstance().getAllFixtures();
         Collections.sort(allFixtures);
         for (Fixture f : allFixtures) {
-            MatchFragmentItem item = new MatchFragmentItem();
+            ProMatchItem item = new ProMatchItem();
             item.setMatchDate(DateHelper.formatDate(f.getDate()));
             item.setHomeTeam(SavedData.getInstance().getTeamFromID(f.getHomeTeamID()).getName());
             item.setAwayTeam(SavedData.getInstance().getTeamFromID(f.getAwayTeamID()).getName());
@@ -104,7 +104,7 @@ public class OfflineCareerMatchesMenu extends Fragment {
         }
 
 
-        MatchFragmentItemAdapter adapter = new MatchFragmentItemAdapter(getActivity().getApplicationContext(), myFixtureItems);
+        ProMatchItemAdapter adapter = new ProMatchItemAdapter(getActivity().getApplicationContext(), myFixtureItems);
         matchGrid.setAdapter(adapter);
         matchGrid.setNumColumns(2);
 

@@ -2,11 +2,10 @@ package com.cutlerdevelopment.footballsteps.Models.ProCareer;
 
 import com.cutlerdevelopment.footballsteps.Constants.Numbers;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
-import com.cutlerdevelopment.footballsteps.Models.OfflineAIPlayer;
-import com.cutlerdevelopment.footballsteps.Models.PlayerActivity;
-import com.cutlerdevelopment.footballsteps.Models.SavedData;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.PlayerActivity;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.Fixture;
-import com.cutlerdevelopment.footballsteps.Models.Team;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.Team;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,18 +13,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class OfflinePlayerMatchEngine {
+public class ProMatchEngine {
 
-    private static OfflinePlayerMatchEngine instance = null;
-    public static OfflinePlayerMatchEngine getInstance() {
+    private static ProMatchEngine instance = null;
+    public static ProMatchEngine getInstance() {
         if (instance != null) {
             return instance;
         }
-        instance = new OfflinePlayerMatchEngine();
+        instance = new ProMatchEngine();
         return instance;
     }
 
-    public OfflinePlayerMatchEngine() {
+    public ProMatchEngine() {
 
         instance = this;
     }
@@ -52,7 +51,7 @@ public class OfflinePlayerMatchEngine {
     public void playPlayersMatch(Fixture f) {
         thisFixture = f;
         SavedData sd = SavedData.getInstance();
-        OfflineUserPlayer player = OfflineUserPlayer.getInstance();
+        ProUsersPlayer player = ProUsersPlayer.getInstance();
         homeTeam = SavedData.getInstance().getTeamFromID(f.getHomeTeamID());
         awayTeam = SavedData.getInstance().getTeamFromID(f.getAwayTeamID());
         HashMap<Integer, String> eventSteps = new HashMap<>();
@@ -70,13 +69,13 @@ public class OfflinePlayerMatchEngine {
             minuteList.add(i);
         }
 
-        List<OfflineAIPlayer> homePlayers = sd.getAllOfflinePlayerFromTeam(homeTeam.getID());
-        List<OfflineAIPlayer> awayPlayers = sd.getAllOfflinePlayerFromTeam(awayTeam.getID());
+        List<ProAIPlayer> homePlayers = sd.getAllOfflinePlayerFromTeam(homeTeam.getID());
+        List<ProAIPlayer> awayPlayers = sd.getAllOfflinePlayerFromTeam(awayTeam.getID());
 
-        for (OfflineAIPlayer aiPlayer : homePlayers) {
+        for (ProAIPlayer aiPlayer : homePlayers) {
             addAIPlayerToLists(aiPlayer);
         }
-        for (OfflineAIPlayer aiPlayer : awayPlayers) {
+        for (ProAIPlayer aiPlayer : awayPlayers) {
             addAIPlayerToLists(aiPlayer);
         }
         if (player.getCurrTeamID() == homeTeam.getID() || player.getCurrTeamID() == awayTeam.getID()) {
@@ -179,12 +178,12 @@ public class OfflinePlayerMatchEngine {
 
 
         f.updateScores(homeGoals, awayGoals);
-        OfflineUserPlayer.getInstance().dateLastMatchPlayed = f.getDate();
+        ProUsersPlayer.getInstance().dateLastMatchPlayed = f.getDate();
 
     }
 
 
-    void addAIPlayerToLists(OfflineAIPlayer aiPlayer) {
+    void addAIPlayerToLists(ProAIPlayer aiPlayer) {
         Random r = new Random();
         int stepAdjustment = r.nextInt(Numbers.MATCH_STEP_ADJUSTMENT * 2) - Numbers.MATCH_STEP_ADJUSTMENT;
         double stepScore = aiPlayer.getAverageSteps() + stepAdjustment;
@@ -217,7 +216,7 @@ public class OfflinePlayerMatchEngine {
         }
     }
 
-    void addPlayerToList(OfflineUserPlayer player) {
+    void addPlayerToList(ProUsersPlayer player) {
 
         PlayerActivity activity = SavedData.getInstance().getPlayerActivityOnDate(thisFixture.getDate());
 

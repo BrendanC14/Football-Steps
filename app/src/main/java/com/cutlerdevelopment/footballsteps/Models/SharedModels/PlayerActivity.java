@@ -1,8 +1,10 @@
-package com.cutlerdevelopment.footballsteps.Models;
+package com.cutlerdevelopment.footballsteps.Models.SharedModels;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
 
 import java.util.Date;
 

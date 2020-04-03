@@ -1,10 +1,10 @@
-package com.cutlerdevelopment.footballsteps.Utils;
+package com.cutlerdevelopment.footballsteps.Utils.ViewItems;
 
 import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
 
 import java.util.Date;
 
-public class MatchFragmentItem {
+public class ProMatchItem {
 
     private String matchDate;
     private String homeTeam;

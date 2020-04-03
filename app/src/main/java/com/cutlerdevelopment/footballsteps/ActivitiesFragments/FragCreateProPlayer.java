@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Activities;
+package com.cutlerdevelopment.footballsteps.ActivitiesFragments;
 
 import android.os.Bundle;
 
@@ -13,10 +13,10 @@ import android.widget.Spinner;
 
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
-import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineUserPlayer;
-import com.cutlerdevelopment.footballsteps.Models.OfflineSettings;
-import com.cutlerdevelopment.footballsteps.Models.SavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProGame;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProUsersPlayer;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProSettings;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
 import com.cutlerdevelopment.footballsteps.R;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -25,9 +25,9 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class CreateOfflinePlayerFragment extends Fragment {
+public class FragCreateProPlayer extends Fragment {
 
-    public CreateOfflinePlayerFragment() {
+    public FragCreateProPlayer() {
         // Required empty public constructor
     }
 
@@ -59,7 +59,7 @@ public class CreateOfflinePlayerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_create_offline_player, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_create_pro_player, container, false);
 
         newOfflineGame = this.getActivity().findViewById(R.id.newOfflineGame);
         continueButton = rootView.findViewById(R.id.continueButton);
@@ -69,7 +69,7 @@ public class CreateOfflinePlayerFragment extends Fragment {
         positionSpinner = rootView.findViewById(R.id.positionSpinner);
         submitButton = rootView.findViewById(R.id.submitOfflinePlayer);
 
-        OfflineUserPlayer player = SavedData.getInstance().getOfflinePlayer();
+        ProUsersPlayer player = SavedData.getInstance().getOfflinePlayer();
         if (player != null) {
             continueButton.setVisibility(View.VISIBLE);
             continueButton.setText(getString(R.string.continue_offline_player_button, player.getFirstName(), player.getSurname()));
@@ -126,11 +126,11 @@ public class CreateOfflinePlayerFragment extends Fragment {
         SavedData.getInstance().resetDB();
 
 
-        OfflineSettings settings = new OfflineSettings();
+        ProSettings settings = new ProSettings();
         settings.assignDefaultSettings();
-        OfflineGame game = new OfflineGame();
+        ProGame game = new ProGame();
         game.startNewGame();
-        new OfflineUserPlayer(firstName, surname, Position.getPositionFromShortString(position),
+        new ProUsersPlayer(firstName, surname, Position.getPositionFromShortString(position),
                 SavedData.getInstance().getIDFromName(favTeam));
         game.deleteAIPlayerFromPlayersTeam();
 

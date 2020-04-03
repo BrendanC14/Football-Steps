@@ -1,23 +1,24 @@
-package com.cutlerdevelopment.footballsteps.Models;
+package com.cutlerdevelopment.footballsteps.Models.ProCareer;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.Numbers;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
 
 /**
- * OfflineSettings contains all of the settings for the offline solo game
+ * ProSettings contains all of the settings for the offline solo game
  */
 @Entity
-public class OfflineSettings {
+public class ProSettings {
 
-    private static OfflineSettings instance = null;
+    private static ProSettings instance = null;
 
     /**
-     * Returns the current instance of OfflineSettings. If instance not created will return null
-     * @return the OfflineSettings instance
+     * Returns the current instance of ProSettings. If instance not created will return null
+     * @return the ProSettings instance
      */
-    public static OfflineSettings getInstance() {
+    public static ProSettings getInstance() {
         if (instance != null) {
             return instance;
         }
@@ -25,9 +26,9 @@ public class OfflineSettings {
     }
 
     /**
-     * Creates a new instance of OfflineSettings.
+     * Creates a new instance of ProSettings.
      */
-    public OfflineSettings() {
+    public ProSettings() {
 
         instance = this;
     }

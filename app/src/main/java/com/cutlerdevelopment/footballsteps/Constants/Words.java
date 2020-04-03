@@ -1,6 +1,6 @@
 package com.cutlerdevelopment.footballsteps.Constants;
 
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineUserPlayer;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProUsersPlayer;
 import com.cutlerdevelopment.footballsteps.R;
 
 import java.text.DecimalFormat;
@@ -51,7 +51,7 @@ public class Words {
         return surnames.get(0);
     }
     public static Map<Map<Integer, Integer>, Map<Integer, Integer>> getFirstHeaderAndStat() {
-        OfflineUserPlayer player = OfflineUserPlayer.getInstance();
+        ProUsersPlayer player = ProUsersPlayer.getInstance();
         HashMap<Integer, Integer> map1 = new HashMap<>();
         HashMap<Integer, Integer> map2 = new HashMap<>();
 

@@ -4,29 +4,28 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
 import com.cutlerdevelopment.footballsteps.Constants.Position;
-import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
-import com.cutlerdevelopment.footballsteps.Models.SavedData;
-import com.cutlerdevelopment.footballsteps.Models.Team;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.Team;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
 import java.util.Date;
 
 /**
- * OfflineUserPlayer class contains all the details about the player for the solo career.
+ * ProUsersPlayer class contains all the details about the player for the solo career.
  * In this class all the setters are used solely for the RoomDB creating the class.
  * If changes need to be made to the variables use the change methods instead.
  * This is so that the changes will update the db but the setters don't.
  */
 @Entity(tableName = "offline_player", primaryKeys = {"firstName", "surname"})
-public class OfflineUserPlayer {
+public class ProUsersPlayer {
 
-    private static OfflineUserPlayer instance = null;
+    private static ProUsersPlayer instance = null;
 
     /**
-     * Returns the current instance of OfflineUserPlayer. If instance not created will return null
-     * @return the OfflineUserPlayer instance
+     * Returns the current instance of ProUsersPlayer. If instance not created will return null
+     * @return the ProUsersPlayer instance
      */
-    public static OfflineUserPlayer getInstance() {
+    public static ProUsersPlayer getInstance() {
         if (instance != null) {
             return instance;
         }
@@ -40,7 +39,7 @@ public class OfflineUserPlayer {
      * @param pos is the chosen position as an integer. Can be used with Position class
      * @param favTeamID is the chosen favourite team ID
      */
-    public OfflineUserPlayer(String fname, String sname, int pos, int favTeamID) {
+    public ProUsersPlayer(String fname, String sname, int pos, int favTeamID) {
 
         this.firstName = fname;
         this.surname = sname;
@@ -48,7 +47,7 @@ public class OfflineUserPlayer {
         this.favTeamID = favTeamID;
         this.currTeamID = favTeamID;
 
-        this.dateLastMatchPlayed = DateHelper.addDays(OfflineGame.getInstance().getStartDate(), -1);
+        this.dateLastMatchPlayed = DateHelper.addDays(ProGame.getInstance().getStartDate(), -1);
 
         instance = this;
         SavedData.getInstance().saveObject(this);
@@ -57,7 +56,7 @@ public class OfflineUserPlayer {
     /**
      * Used when loading a player for the solo career. Doesn't take any variables as takes them from RoomDB
      */
-    public OfflineUserPlayer() {
+    public ProUsersPlayer() {
 
         instance = this;
     }

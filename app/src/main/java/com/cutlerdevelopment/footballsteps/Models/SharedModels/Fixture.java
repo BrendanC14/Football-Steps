@@ -5,8 +5,6 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
-import com.cutlerdevelopment.footballsteps.Models.SavedData;
-import com.cutlerdevelopment.footballsteps.Models.Team;
 
 import java.util.Date;
 

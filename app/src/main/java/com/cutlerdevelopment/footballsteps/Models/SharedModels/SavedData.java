@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Models;
+package com.cutlerdevelopment.footballsteps.Models.SharedModels;
 
 import android.content.Context;
 
@@ -13,8 +13,10 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.room.Update;
 
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineUserPlayer;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.Fixture;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProAIPlayer;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProGame;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProSettings;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProUsersPlayer;
 import com.cutlerdevelopment.footballsteps.Utils.Converters;
 
 import java.util.Arrays;
@@ -49,8 +51,8 @@ public class SavedData {
     /**
      * App Database class is the Room Database that contains the instances of the Dao interfaces.
      */
-    @Database(entities = {OfflineUserPlayer.class, Team.class, OfflineSettings.class,
-            OfflineGame.class, Fixture.class, PlayerActivity.class, OfflineAIPlayer.class}, version = 1)
+    @Database(entities = {ProUsersPlayer.class, Team.class, ProSettings.class,
+            ProGame.class, Fixture.class, PlayerActivity.class, ProAIPlayer.class}, version = 1)
     @TypeConverters({Converters.class})
     public static abstract class AppDatabase extends RoomDatabase {
         public abstract OfflinePlayerDao offlinePlayerDao();
@@ -65,22 +67,22 @@ public class SavedData {
     private static AppDatabase db;
 
     /**
-     * The Dao interface responsible for the OfflineUserPlayer table
+     * The Dao interface responsible for the ProUsersPlayer table
      */
     @Dao
     public interface OfflinePlayerDao {
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        void insertOfflinePlayer(OfflineUserPlayer player);
+        void insertOfflinePlayer(ProUsersPlayer player);
 
         @Update
-        void updateOfflinePlayer(OfflineUserPlayer player);
+        void updateOfflinePlayer(ProUsersPlayer player);
 
         @Delete
-        void deleteOfflinePlayer(OfflineUserPlayer player);
+        void deleteOfflinePlayer(ProUsersPlayer player);
 
         @Query("SELECT * FROM OfflineUserPlayer")
-        OfflineUserPlayer[] selectOfflinePlayer();
+        ProUsersPlayer[] selectOfflinePlayer();
 
     }
 
@@ -89,14 +91,14 @@ public class SavedData {
     public interface OfflineSettingsDao {
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        void insertOfflineSettings(OfflineSettings settings);
+        void insertOfflineSettings(ProSettings settings);
         @Update
-        void updateOfflineSettings(OfflineSettings settings);
+        void updateOfflineSettings(ProSettings settings);
         @Delete
-        void deleteOfflineSettings(OfflineSettings settings);
+        void deleteOfflineSettings(ProSettings settings);
 
-        @Query("SELECT * FROM offlinesettings")
-        OfflineSettings[] selectOfflineSettings();
+        @Query("SELECT * FROM ProSettings")
+        ProSettings[] selectOfflineSettings();
 
     }
 
@@ -104,14 +106,14 @@ public class SavedData {
     public interface  OfflineGameDao {
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        void insertOfflineGame(OfflineGame game);
+        void insertOfflineGame(ProGame game);
         @Update
-        void updateOfflineGame(OfflineGame game);
+        void updateOfflineGame(ProGame game);
         @Delete
-        void deleteOfflineGame(OfflineGame game);
+        void deleteOfflineGame(ProGame game);
 
-        @Query("SELECT * FROM offlinegame")
-        OfflineGame[] selectOfflineGame();
+        @Query("SELECT * FROM ProGame")
+        ProGame[] selectOfflineGame();
     }
 
     @Dao public interface PlayerActivityDao {
@@ -161,19 +163,19 @@ public class SavedData {
     public interface  OfflineAIPlayerDao {
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        void insertOfflineAIPlayer(OfflineAIPlayer offlineAIPlayer);
+        void insertOfflineAIPlayer(ProAIPlayer proAIPlayer);
         @Update
-        void updateOfflineAIPlayer(OfflineAIPlayer offlineAIPlayer);
+        void updateOfflineAIPlayer(ProAIPlayer proAIPlayer);
         @Delete
-        void deleteOfflineAIPlayer(OfflineAIPlayer offlineAIPlayer);
+        void deleteOfflineAIPlayer(ProAIPlayer proAIPlayer);
 
-        @Query("SELECT * FROM offlineaiplayer")
-        OfflineAIPlayer[] selectAllOfflineAIPlayers();
-        @Query("SELECT * FROM offlineaiplayer WHERE currTeamID = :teamID")
-        OfflineAIPlayer[] selectOfflinePlayerForTeamID(int teamID);
-        @Query("SELECT * FROM offlineaiplayer WHERE currTeamID = :teamID AND position = :pos")
-        OfflineAIPlayer[] selectOfflinePlayerForTeamIDWithPos(int teamID, int pos);
-        @Query("SELECT COUNT(id) FROM offlineaiplayer")
+        @Query("SELECT * FROM ProAIPlayer")
+        ProAIPlayer[] selectAllOfflineAIPlayers();
+        @Query("SELECT * FROM ProAIPlayer WHERE currTeamID = :teamID")
+        ProAIPlayer[] selectOfflinePlayerForTeamID(int teamID);
+        @Query("SELECT * FROM ProAIPlayer WHERE currTeamID = :teamID AND position = :pos")
+        ProAIPlayer[] selectOfflinePlayerForTeamIDWithPos(int teamID, int pos);
+        @Query("SELECT COUNT(id) FROM ProAIPlayer")
         int getRowCount();
 
     }
@@ -204,16 +206,16 @@ public class SavedData {
      * @param obj the obj to be saved
      */
     public void saveObject(Object obj) {
-        if (obj instanceof OfflineUserPlayer) {
-            OfflineUserPlayer player = (OfflineUserPlayer) obj;
+        if (obj instanceof ProUsersPlayer) {
+            ProUsersPlayer player = (ProUsersPlayer) obj;
             db.offlinePlayerDao().insertOfflinePlayer(player);
         }
-        else if (obj instanceof OfflineSettings) {
-            OfflineSettings settings = (OfflineSettings) obj;
+        else if (obj instanceof ProSettings) {
+            ProSettings settings = (ProSettings) obj;
             db.offlineSettingsDao().insertOfflineSettings(settings);
         }
-        else if (obj instanceof OfflineGame) {
-            OfflineGame game = (OfflineGame) obj;
+        else if (obj instanceof ProGame) {
+            ProGame game = (ProGame) obj;
             db.offlineGameDao().insertOfflineGame(game);
         }
         else if (obj instanceof PlayerActivity) {
@@ -224,8 +226,8 @@ public class SavedData {
             Team team = (Team) obj;
             db.teamDao().insertTeams(team);
         }
-        else if (obj instanceof OfflineAIPlayer) {
-            OfflineAIPlayer player = (OfflineAIPlayer) obj;
+        else if (obj instanceof ProAIPlayer) {
+            ProAIPlayer player = (ProAIPlayer) obj;
             db.offlineAIPlayerDao().insertOfflineAIPlayer(player);
         }
         else if (obj instanceof Fixture) {
@@ -239,16 +241,16 @@ public class SavedData {
      * @param obj the object to be updated
      */
     public void updateObject(Object obj) {
-        if (obj instanceof OfflineUserPlayer) {
-            OfflineUserPlayer player = (OfflineUserPlayer) obj;
+        if (obj instanceof ProUsersPlayer) {
+            ProUsersPlayer player = (ProUsersPlayer) obj;
             db.offlinePlayerDao().updateOfflinePlayer(player);
         }
-        else if (obj instanceof OfflineSettings) {
-            OfflineSettings settings = (OfflineSettings) obj;
+        else if (obj instanceof ProSettings) {
+            ProSettings settings = (ProSettings) obj;
             db.offlineSettingsDao().updateOfflineSettings(settings);
         }
-        else if (obj instanceof OfflineGame) {
-            OfflineGame game = (OfflineGame) obj;
+        else if (obj instanceof ProGame) {
+            ProGame game = (ProGame) obj;
             db.offlineGameDao().updateOfflineGame(game);
         }
         else if (obj instanceof  PlayerActivity) {
@@ -259,8 +261,8 @@ public class SavedData {
             Team team = (Team) obj;
             db.teamDao().updateTeam(team);
         }
-        else if (obj instanceof OfflineAIPlayer) {
-            OfflineAIPlayer player = (OfflineAIPlayer) obj;
+        else if (obj instanceof ProAIPlayer) {
+            ProAIPlayer player = (ProAIPlayer) obj;
             db.offlineAIPlayerDao().updateOfflineAIPlayer(player);
         }
         else if (obj instanceof Fixture) {
@@ -269,22 +271,22 @@ public class SavedData {
         }
     }
 
-    public OfflineUserPlayer getOfflinePlayer() {
-        OfflineUserPlayer[] player = db.offlinePlayerDao().selectOfflinePlayer();
+    public ProUsersPlayer getOfflinePlayer() {
+        ProUsersPlayer[] player = db.offlinePlayerDao().selectOfflinePlayer();
         if (player.length > 0) {
             return player[0];
         }
         return null;
     }
-    public OfflineSettings getOfflineSettings() {
-        OfflineSettings settings[] = db.offlineSettingsDao().selectOfflineSettings();
+    public ProSettings getOfflineSettings() {
+        ProSettings settings[] = db.offlineSettingsDao().selectOfflineSettings();
         if (settings.length >0) {
             return settings[0];
         }
         return null;
     }
-    public OfflineGame getOfflineGame() {
-        OfflineGame game[] = db.offlineGameDao().selectOfflineGame();
+    public ProGame getOfflineGame() {
+        ProGame game[] = db.offlineGameDao().selectOfflineGame();
         if (game.length >0) {
             return game[0];
         }
@@ -292,16 +294,16 @@ public class SavedData {
     }
 
     public void deleteObject(Object obj) {
-        if (obj instanceof OfflineUserPlayer) {
-            OfflineUserPlayer player = (OfflineUserPlayer) obj;
+        if (obj instanceof ProUsersPlayer) {
+            ProUsersPlayer player = (ProUsersPlayer) obj;
             db.offlinePlayerDao().deleteOfflinePlayer(player);
         }
-        else if (obj instanceof OfflineSettings) {
-            OfflineSettings settings = (OfflineSettings) obj;
+        else if (obj instanceof ProSettings) {
+            ProSettings settings = (ProSettings) obj;
             db.offlineSettingsDao().deleteOfflineSettings(settings);
         }
-        else if (obj instanceof OfflineGame) {
-            OfflineGame game = (OfflineGame) obj;
+        else if (obj instanceof ProGame) {
+            ProGame game = (ProGame) obj;
             db.offlineGameDao().deleteOfflineGame(game);
         }
         else if (obj instanceof  PlayerActivity) {
@@ -312,8 +314,8 @@ public class SavedData {
             Team team = (Team) obj;
             db.teamDao().deleteTeam(team);
         }
-        else if (obj instanceof OfflineAIPlayer) {
-            OfflineAIPlayer player = (OfflineAIPlayer) obj;
+        else if (obj instanceof ProAIPlayer) {
+            ProAIPlayer player = (ProAIPlayer) obj;
             db.offlineAIPlayerDao().deleteOfflineAIPlayer(player);
         }
         else if (obj instanceof Fixture) {
@@ -349,13 +351,13 @@ public class SavedData {
         return db.teamDao().getRowCount();
     }
 
-    public List<OfflineAIPlayer> getAllOfflineAIPlayers() {
+    public List<ProAIPlayer> getAllOfflineAIPlayers() {
         return Arrays.asList(db.offlineAIPlayerDao().selectAllOfflineAIPlayers());
     }
-    public List<OfflineAIPlayer> getAllOfflinePlayerFromTeam(int teamID) {
+    public List<ProAIPlayer> getAllOfflinePlayerFromTeam(int teamID) {
         return Arrays.asList(db.offlineAIPlayerDao().selectOfflinePlayerForTeamID(teamID));
     }
-    public List<OfflineAIPlayer> getAllOfflinePlayerOfPositionFromTeam(int teamID, int pos) {
+    public List<ProAIPlayer> getAllOfflinePlayerOfPositionFromTeam(int teamID, int pos) {
         return Arrays.asList(db.offlineAIPlayerDao().selectOfflinePlayerForTeamIDWithPos(teamID, pos));
     }
     public int getNumRowsFromOfflineAIPlayerTable() {

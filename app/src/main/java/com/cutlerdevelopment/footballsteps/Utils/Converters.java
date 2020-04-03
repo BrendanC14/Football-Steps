@@ -2,11 +2,7 @@ package com.cutlerdevelopment.footballsteps.Utils;
 
 import androidx.room.TypeConverter;
 
-import com.cutlerdevelopment.footballsteps.Models.OfflineGame;
-import com.cutlerdevelopment.footballsteps.Models.Team;
-
 import java.util.Date;
-import java.util.Map;
 
 public class Converters {
 

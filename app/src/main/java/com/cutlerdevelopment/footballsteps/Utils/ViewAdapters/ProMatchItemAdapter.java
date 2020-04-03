@@ -1,12 +1,10 @@
-package com.cutlerdevelopment.footballsteps.Utils;
+package com.cutlerdevelopment.footballsteps.Utils.ViewAdapters;
 
 import android.content.Context;
-import android.service.autofill.FieldClassification;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,16 +13,17 @@ import androidx.core.content.ContextCompat;
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
 import com.cutlerdevelopment.footballsteps.R;
+import com.cutlerdevelopment.footballsteps.Utils.ViewItems.ProMatchItem;
 
 import java.util.ArrayList;
 
-public class MatchFragmentItemAdapter extends BaseAdapter {
+public class ProMatchItemAdapter extends BaseAdapter {
 
-    private ArrayList<MatchFragmentItem> singleRow;
+    private ArrayList<ProMatchItem> singleRow;
     private LayoutInflater thisInflater;
     private Context context;
 
-    public MatchFragmentItemAdapter(Context context, ArrayList<MatchFragmentItem> aRow) {
+    public ProMatchItemAdapter(Context context, ArrayList<ProMatchItem> aRow) {
         this.singleRow = aRow;
         this.context = context;
         thisInflater = (thisInflater.from(context));
@@ -48,7 +47,7 @@ public class MatchFragmentItemAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = thisInflater.inflate(R.layout.match_fragment_item, parent, false);
+            convertView = thisInflater.inflate(R.layout.pro_match_item, parent, false);
         }
 
         ConstraintLayout background = convertView.findViewById(R.id.matchFragmentItemBground);
@@ -58,7 +57,7 @@ public class MatchFragmentItemAdapter extends BaseAdapter {
         TextView awayScore = convertView.findViewById(R.id.matchAwayScore);
         TextView awayTeam = convertView.findViewById(R.id.matchAwayTeam);
 
-        MatchFragmentItem currentItem = (MatchFragmentItem) getItem(i);
+        ProMatchItem currentItem = (ProMatchItem) getItem(i);
 
         dateField.setText(currentItem.getMatchDate());
         homeTeam.setText(currentItem.getHomeTeam());

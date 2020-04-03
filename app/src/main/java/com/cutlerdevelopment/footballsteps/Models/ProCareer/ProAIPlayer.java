@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Models;
+package com.cutlerdevelopment.footballsteps.Models.ProCareer;
 
 import android.util.Pair;
 
@@ -9,19 +9,18 @@ import androidx.room.PrimaryKey;
 import com.cutlerdevelopment.footballsteps.Constants.Numbers;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
-import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
-
-import java.util.Date;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.Team;
 
 @Entity
-public class OfflineAIPlayer {
+public class ProAIPlayer {
 
 
     /**
-     * Used when creating a new OfflineAIPlayer when a new game is created or a custom team is added
+     * Used when creating a new ProAIPlayer when a new game is created or a custom team is added
      */
     @Ignore
-    public OfflineAIPlayer(int clubID, int position, int stepReduction, int minReduction) {
+    public ProAIPlayer(int clubID, int position, int stepReduction, int minReduction) {
 
         this.ID = SavedData.getInstance().getNumRowsFromOfflineAIPlayerTable() + 1;
         this.firstName = Words.getRandomFirstName();
@@ -40,7 +39,7 @@ public class OfflineAIPlayer {
     /**
      * Used when loading a player for the solo career. Doesn't take any variables as takes them from RoomDB
      */
-    public OfflineAIPlayer() {
+    public ProAIPlayer() {
 
     }
 
