@@ -19,6 +19,7 @@ public class Numbers {
 
 
     //Settings
+    public static final int MAX_NUM_STEPS_TARGET = 20;
     public static final int POINTS_FOR_WIN = 3;
     public static final int POINTS_FOR_DRAW = 1;
     public static final int POINTS_FOR_LOSS = 0;

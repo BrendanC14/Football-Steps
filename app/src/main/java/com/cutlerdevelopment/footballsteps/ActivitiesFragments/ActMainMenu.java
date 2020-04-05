@@ -8,8 +8,10 @@ import android.view.View;
 
 import com.cutlerdevelopment.footballsteps.R;
 import com.cutlerdevelopment.footballsteps.Utils.Dialogs.NewOfflineCareerDialogFragment;
+import com.cutlerdevelopment.footballsteps.Utils.Dialogs.NewOfflineTeamDialogFragment;
 
-public class ActMainMenu extends AppCompatActivity implements NewOfflineCareerDialogFragment.NewOfflineCareerDialogListener {
+public class ActMainMenu extends AppCompatActivity implements NewOfflineCareerDialogFragment.NewOfflineCareerDialogListener,
+        NewOfflineTeamDialogFragment.NewOfflineTeamDialogListener {
 
     boolean teamModeSelected;
     boolean targetModeSelected;
@@ -21,8 +23,8 @@ public class ActMainMenu extends AppCompatActivity implements NewOfflineCareerDi
     }
 
     public void showNewOfflineCareerDialog(View view) {
-        DialogFragment dialog = new NewOfflineCareerDialogFragment();
-        dialog.show(getSupportFragmentManager(), "NewOfflineCareerDialogFragment");
+        DialogFragment careerDialog = new NewOfflineCareerDialogFragment();
+        careerDialog.show(getSupportFragmentManager(), "NewOfflineCareerDialogFragment");
     }
 
     @Override
@@ -32,8 +34,18 @@ public class ActMainMenu extends AppCompatActivity implements NewOfflineCareerDi
         targetModeSelected = targetMode;
 
         if (teamModeSelected) {
+            DialogFragment teamDialog = new NewOfflineTeamDialogFragment();
+            Bundle args = new Bundle();
+            args.putBoolean("targetMode", targetMode);
+            teamDialog.setArguments(args);
+            teamDialog.show(getSupportFragmentManager(), "NewOfflineTeamDialogFragment");
 
         }
+    }
+
+    @Override
+    public void teamCreated(DialogFragment dialog, String name, String colour, int steps) {
+
     }
 
 }

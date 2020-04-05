@@ -15,11 +15,98 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/newOfflineTeamHeader"
         style="@style/default_header_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="149dp"
-        tools:layout_editor_absoluteY="120dp" />
+        android:text="@string/new_offline_team_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/newOfflineTeamClubName"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:fontFamily="@font/cherry_cream_soda"
+        android:gravity="center"
+        android:hint="@string/new_offline_team_team_name_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newOfflineTeamHeader">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cherry_cream_soda"
+            android:gravity="center"
+            android:hint="@string/new_offline_team_team_name_hint" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/newOfflineTeamColourSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:fontFamily="@font/cherry_cream_soda"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newOfflineTeamClubName" />
+
+    <Spinner
+        android:id="@+id/newOfflineTeamNumStepsSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/cherry_cream_soda"
+        android:gravity="right"
+        app:layout_constraintStart_toEndOf="@+id/newOfflineTeamCentreDivider"
+        app:layout_constraintTop_toBottomOf="@+id/newOfflineTeamColourSpinner" />
+
+    <TextView
+        android:id="@+id/thousandsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cherry_cream_soda"
+        android:text="@string/new_offline_team_thousands"
+        app:layout_constraintBottom_toBottomOf="@+id/newOfflineTeamNumStepsSpinner"
+        app:layout_constraintStart_toEndOf="@+id/newOfflineTeamNumStepsSpinner"
+        app:layout_constraintTop_toTopOf="@+id/newOfflineTeamNumStepsSpinner" />
+
+    <TextView
+        android:id="@+id/newOfflineTeamNumStepsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cherry_cream_soda"
+        android:text="@string/new_offline_team_num_steps_header"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/newOfflineTeamNumStepsSpinner"
+        app:layout_constraintEnd_toStartOf="@+id/newOfflineTeamNumStepsSpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/newOfflineTeamNumStepsSpinner" />
+
+    <Button
+        android:id="@+id/newOfflineTeamConfirmButton"
+        style="@style/button_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/new_offline_team_confirm_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thousandsText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

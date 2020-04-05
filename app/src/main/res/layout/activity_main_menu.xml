@@ -9,6 +9,7 @@
 
     <Button
         android:id="@+id/newOfflineGame"
+        style="@style/tshirt_style"
         android:layout_width="175dp"
         android:layout_height="150dp"
         android:layout_marginStart="8dp"
@@ -16,31 +17,15 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="@drawable/newofflinegame"
+        android:background="@drawable/redshirt"
         android:onClick="showNewOfflineCareerDialog"
+        android:text="@string/main_menu_new_offline_career_button"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="34sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#00F8F8F8"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/main_menu_new_offline_career_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
