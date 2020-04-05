@@ -16,7 +16,7 @@ import java.util.Date;
  * If changes need to be made to the variables use the change methods instead.
  * This is so that the changes will update the db but the setters don't.
  */
-@Entity(tableName = "offline_player", primaryKeys = {"firstName", "surname"})
+@Entity(primaryKeys = {"firstName", "surname"})
 public class ProUsersPlayer {
 
     private static ProUsersPlayer instance = null;

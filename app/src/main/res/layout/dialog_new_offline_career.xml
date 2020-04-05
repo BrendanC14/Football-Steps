@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/newOfflineCentreDivider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/newOfflineCareerHeader"
+        android:text="@string/new_offline_career_header"
+        app:fontFamily="@font/cherry_cream_soda"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/default_header_text" />
+
+    <Button
+        android:id="@+id/newOfflineCareerTeamButton"
+        android:layout_width="150dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/emptybadge"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingBottom="25dp"
+        android:text="@string/new_offline_career_team_button"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:fontFamily="@font/cherry_cream_soda"
+        app:layout_constraintEnd_toStartOf="@+id/newOfflineCentreDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newOfflineCareerHeader" />
+
+    <ImageView
+        android:id="@+id/teamModeBackground"
+        android:layout_width="150dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toStartOf="@+id/newOfflineCentreDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newOfflineCareerHeader"
+        app:srcCompat="@drawable/blackborder" />
+
+    <Button
+        android:id="@+id/newOffCareerPlayerButton"
+        android:layout_width="150dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/emptyshirt"
+        android:includeFontPadding="true"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="25dp"
+        android:text="@string/new_offline_career_player_button"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:fontFamily="@font/cherry_cream_soda"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/newOfflineCentreDivider"
+        app:layout_constraintTop_toBottomOf="@+id/newOfflineCareerHeader" />
+
+    <ImageView
+        android:id="@+id/playerModeBackground"
+        android:layout_width="150dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#000000"
+        android:contentDescription="TODO"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/newOfflineCentreDivider"
+        app:layout_constraintTop_toBottomOf="@+id/newOfflineCareerHeader"
+        app:srcCompat="@drawable/blackborder" />
+
+    <TextView
+        android:id="@+id/teamPlayerInformationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="left"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/new_offline_career_player_mode_info"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:fontFamily="@font/cherry_cream_soda"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newOfflineCareerTeamButton" />
+
+    <Button
+        android:id="@+id/newOfflineCareerTargetButton"
+        android:layout_width="150dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/target"
+        android:text="@string/ne_offline_career_target_mode"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:fontFamily="@font/cherry_cream_soda"
+        app:layout_constraintEnd_toStartOf="@+id/newOfflineCentreDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teamPlayerInformationText" />
+
+    <ImageView
+        android:id="@+id/targetModeBackground"
+        android:layout_width="150dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="24dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toStartOf="@+id/newOfflineCentreDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teamPlayerInformationText"
+        app:srcCompat="@drawable/blackborder" />
+
+    <Button
+        android:id="@+id/newOfflineCareerScaledButton"
+        android:layout_width="150dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/scaled"
+        android:text="@string/ne_offline_career_scaled_mode"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:fontFamily="@font/cherry_cream_soda"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/newOfflineCentreDivider"
+        app:layout_constraintTop_toBottomOf="@+id/teamPlayerInformationText" />
+
+    <ImageView
+        android:id="@+id/scaledModeBackground"
+        android:layout_width="150dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="24dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/newOfflineCentreDivider"
+        app:layout_constraintTop_toBottomOf="@+id/teamPlayerInformationText"
+        app:srcCompat="@drawable/blackborder" />
+
+    <TextView
+        android:id="@+id/targetScaledInformationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="left"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/new_offline_career_scaled_mode_info"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:fontFamily="@font/cherry_cream_soda"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newOfflineCareerTargetButton" />
+
+    <Button
+        android:id="@+id/newOffCareerConfirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/new_offline_career_confirm_button"
+        app:fontFamily="@font/cherry_cream_soda"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/targetScaledInformationText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

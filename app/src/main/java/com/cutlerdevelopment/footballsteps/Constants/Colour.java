@@ -34,6 +34,8 @@ public class Colour {
     public static final int DRAW_BGROUND_COLOUR = android.R.color.holo_orange_light;
     public static final int LOSE_BGROUND_COLOUR = android.R.color.holo_red_light;
 
+    public static final int MODE_SELECTED_BACKGROUND_COLOUR = android.R.color.holo_green_dark;
+    public static final int MODE_DEFAULT_BACKGROUND_COLOUR = android.R.color.black;
 
 
     public static String getColourName(int colour) {

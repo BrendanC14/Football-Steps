@@ -48,7 +48,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/centreDivider"
+        app:layout_constraintEnd_toStartOf="@+id/newOfflineCentreDivider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/matchItemDateField" />
 
@@ -62,7 +62,7 @@
         android:layout_marginRight="8dp"
         android:text="@string/match_not_played_score"
         android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/centreDivider"
+        app:layout_constraintEnd_toStartOf="@+id/newOfflineCentreDivider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/matchHomeTeam" />
 
@@ -77,7 +77,7 @@
         android:layout_marginRight="8dp"
         android:text="@string/match_item_VS"
         android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/centreDivider"
+        app:layout_constraintEnd_toStartOf="@+id/newOfflineCentreDivider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/matchHomeScore" />
 
@@ -92,7 +92,7 @@
         android:layout_marginRight="8dp"
         android:text="@string/match_not_played_score"
         android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/centreDivider"
+        app:layout_constraintEnd_toStartOf="@+id/newOfflineCentreDivider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/matchVS" />
 
@@ -107,12 +107,12 @@
         android:layout_marginBottom="8dp"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/centreDivider"
+        app:layout_constraintEnd_toStartOf="@+id/newOfflineCentreDivider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/matchAwayScore" />
 
     <TextView
-        android:id="@+id/centreDivider"
+        android:id="@+id/newOfflineCentreDivider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

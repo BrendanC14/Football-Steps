@@ -16,6 +16,10 @@ public class ActMainActivity extends AppCompatActivity implements FragCreateProP
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //TODO: Get rid of this Activity
+        Intent intent = new Intent(this, ActMainMenu.class);
+        startActivity(intent);
+
     }
 
 

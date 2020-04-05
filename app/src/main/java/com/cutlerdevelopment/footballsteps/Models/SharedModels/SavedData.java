@@ -81,7 +81,7 @@ public class SavedData {
         @Delete
         void deleteOfflinePlayer(ProUsersPlayer player);
 
-        @Query("SELECT * FROM OfflineUserPlayer")
+        @Query("SELECT * FROM ProUsersPlayer")
         ProUsersPlayer[] selectOfflinePlayer();
 
     }

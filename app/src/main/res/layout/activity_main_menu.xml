@@ -17,6 +17,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/newofflinegame"
+        android:onClick="showNewOfflineCareerDialog"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
