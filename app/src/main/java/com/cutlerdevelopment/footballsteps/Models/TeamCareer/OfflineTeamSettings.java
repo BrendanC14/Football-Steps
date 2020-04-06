@@ -1,8 +1,11 @@
 package com.cutlerdevelopment.footballsteps.Models.TeamCareer;
 
-import com.cutlerdevelopment.footballsteps.Constants.Numbers;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import com.cutlerdevelopment.footballsteps.Constants.Numbers;
+
+@Entity
 public class OfflineTeamSettings {
 
 
@@ -30,25 +33,33 @@ public class OfflineTeamSettings {
     /**
      * Assigns default settings to the Object and saves them.
      */
-    public void assignDefaultSettings() {
+    public void assignDefaultSettings(int stepTarget) {
 
-
+        this.stepTarget = stepTarget;
         this.pointsForWin = Numbers.POINTS_FOR_WIN;
         this.pointsForDraw = Numbers.POINTS_FOR_DRAW;
         this. pointsForLoss = Numbers.POINTS_FOR_LOSS;
 
 
-        SavedData.getInstance().saveObject(this);
+        OfflineTeamSavedData.getInstance().saveObject(this);
 
     }
 
+    @PrimaryKey
+    private int stepTarget;
+    public int getStepTarget() { return stepTarget; }
+    public void setStepTarget(int target) { this.stepTarget = target; }
+    public void changeStepTarget(int newTarget) {
+        this.stepTarget = newTarget;
+        OfflineTeamSavedData.getInstance().updateObject(this);
+    }
 
     private int pointsForWin;
     public int getPointsForWin() { return  pointsForWin; }
     public void setPointsForWin(int pts) { this.pointsForWin = pts; }
     public void changePointsForWin(int pts) {
         this.pointsForWin = pts;
-        SavedData.getInstance().updateObject(this);
+        OfflineTeamSavedData.getInstance().updateObject(this);
     }
 
     private int pointsForDraw;
@@ -56,7 +67,7 @@ public class OfflineTeamSettings {
     public void setPointsForDraw(int pts) { this.pointsForDraw = pts; }
     public void changePointsForDraw(int pts) {
         this.pointsForDraw = pts;
-        SavedData.getInstance().updateObject(this);
+        OfflineTeamSavedData.getInstance().updateObject(this);
     }
 
     private int pointsForLoss;
@@ -64,6 +75,6 @@ public class OfflineTeamSettings {
     public void setPointsForLoss(int pts) { this.pointsForLoss = pts; }
     public void changePointsForLoss(int pts) {
         this.pointsForLoss = pts;
-        SavedData.getInstance().updateObject(this);
+        OfflineTeamSavedData.getInstance().updateObject(this);
     }
 }

@@ -2,10 +2,8 @@ package com.cutlerdevelopment.footballsteps.Models.ProCareer;
 
 import com.cutlerdevelopment.footballsteps.Constants.Numbers;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.AppSavedData;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.PlayerActivity;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.Fixture;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.Team;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,10 +27,10 @@ public class ProMatchEngine {
         instance = this;
     }
 
-    Fixture thisFixture;
+    ProFixture thisFixture;
 
-    private Team homeTeam;
-    private Team awayTeam;
+    private ProAITeam homeTeam;
+    private ProAITeam awayTeam;
 
     private List<ProMatchPlayer> homeDefensivePlayers;
     private  List<ProMatchPlayer> homeAttackingPlayers;
@@ -48,12 +46,12 @@ public class ProMatchEngine {
     private int homeGoals;
     private int awayGoals;
 
-    public void playPlayersMatch(Fixture f) {
+    public void playPlayersMatch(ProFixture f) {
         thisFixture = f;
-        SavedData sd = SavedData.getInstance();
-        ProUsersPlayer player = ProUsersPlayer.getInstance();
-        homeTeam = SavedData.getInstance().getTeamFromID(f.getHomeTeamID());
-        awayTeam = SavedData.getInstance().getTeamFromID(f.getAwayTeamID());
+        OfflineProSavedData sd = OfflineProSavedData.getInstance();
+        UserPlayer player = UserPlayer.getInstance();
+        homeTeam = OfflineProSavedData.getInstance().getTeamFromID(f.getHomeTeamID());
+        awayTeam = OfflineProSavedData.getInstance().getTeamFromID(f.getAwayTeamID());
         HashMap<Integer, String> eventSteps = new HashMap<>();
 
         homeDefensivePlayers = new ArrayList<>();
@@ -178,7 +176,7 @@ public class ProMatchEngine {
 
 
         f.updateScores(homeGoals, awayGoals);
-        ProUsersPlayer.getInstance().dateLastMatchPlayed = f.getDate();
+        UserPlayer.getInstance().dateLastMatchPlayed = f.getDate();
 
     }
 
@@ -216,9 +214,9 @@ public class ProMatchEngine {
         }
     }
 
-    void addPlayerToList(ProUsersPlayer player) {
+    void addPlayerToList(UserPlayer player) {
 
-        PlayerActivity activity = SavedData.getInstance().getPlayerActivityOnDate(thisFixture.getDate());
+        PlayerActivity activity = AppSavedData.getInstance().getPlayerActivityOnDate(thisFixture.getDate());
 
         double stepScore = 0;//activity.getSteps() / Numbers.NUM_STEPS_FOR_MATCH_CALC;
         double minuteScore =0;// activity.getActiveMinutes() / Numbers.NUM_MINUTES_FOR_MATCH_CALC;

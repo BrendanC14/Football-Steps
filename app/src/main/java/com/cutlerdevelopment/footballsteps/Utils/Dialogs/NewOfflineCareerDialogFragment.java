@@ -3,9 +3,13 @@ package com.cutlerdevelopment.footballsteps.Utils.Dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,7 +51,17 @@ public class NewOfflineCareerDialogFragment extends DialogFragment {
         super.onAttach(context);
         listener = (NewOfflineCareerDialogListener) context;
     }
-
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.dialog_new_offline_team, container, false);
+        // Set transparent background and no title
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        }
+        return view;
+    }
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -64,6 +78,7 @@ public class NewOfflineCareerDialogFragment extends DialogFragment {
         scaledModeButton = newOfflineCareerView.findViewById(R.id.newOfflineCareerScaledButton);
         scaledModeBackground = newOfflineCareerView.findViewById(R.id.scaledModeBackground);
         confirmButton = newOfflineCareerView.findViewById(R.id.newOffCareerConfirmButton);
+
 
         teamPlayerInfoText.setVisibility(View.GONE);
         scaledTargetInfoText.setVisibility(View.GONE);

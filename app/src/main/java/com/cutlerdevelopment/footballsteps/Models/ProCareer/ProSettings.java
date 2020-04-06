@@ -4,7 +4,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.Numbers;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
 
 /**
  * ProSettings contains all of the settings for the offline solo game
@@ -45,7 +44,7 @@ public class ProSettings {
         this. pointsForLoss = Numbers.POINTS_FOR_LOSS;
 
 
-        SavedData.getInstance().saveObject(this);
+        OfflineProSavedData.getInstance().saveObject(this);
 
     }
 
@@ -55,7 +54,7 @@ public class ProSettings {
     public void setStartingAge(int newAge) { startingAge = newAge; }
     public void changeStartingAge(int newAge) {
         startingAge = newAge;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int stepDifficultyModifier;
@@ -63,7 +62,7 @@ public class ProSettings {
     public void setStepDifficultyModifier(int diff) {this.stepDifficultyModifier = diff; }
     public void changeStepDifficultyModifier(int diff) {
         this.stepDifficultyModifier = diff;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int minuteDifficultyModifier;
@@ -71,7 +70,7 @@ public class ProSettings {
     public void setMinuteDifficultyModifier(int diff) {this.minuteDifficultyModifier = diff; }
     public void changeMinuteDifficultyModifier(int diff) {
         this.minuteDifficultyModifier = diff;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int pointsForWin;
@@ -79,7 +78,7 @@ public class ProSettings {
     public void setPointsForWin(int pts) { this.pointsForWin = pts; }
     public void changePointsForWin(int pts) {
         this.pointsForWin = pts;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int pointsForDraw;
@@ -87,7 +86,7 @@ public class ProSettings {
     public void setPointsForDraw(int pts) { this.pointsForDraw = pts; }
     public void changePointsForDraw(int pts) {
         this.pointsForDraw = pts;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int pointsForLoss;
@@ -95,7 +94,7 @@ public class ProSettings {
     public void setPointsForLoss(int pts) { this.pointsForLoss = pts; }
     public void changePointsForLoss(int pts) {
         this.pointsForLoss = pts;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
 

@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineProSavedData;
 
 import java.util.Date;
 
@@ -22,7 +22,7 @@ public class PlayerActivity {
         this.steps = steps;
         this.activeMinutes = activeMinutes;
 
-        SavedData.getInstance().saveObject(this);
+        OfflineProSavedData.getInstance().saveObject(this);
     }
 
     /**
@@ -38,7 +38,7 @@ public class PlayerActivity {
     public void setDate(Date date) { this.date = date; }
     public void changeDate(Date date) {
         this.date = date;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int steps;
@@ -46,7 +46,7 @@ public class PlayerActivity {
     public void setSteps(int steps) { this.steps = steps; }
     public void changeSteps(int steps) {
         this.steps = steps;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int activeMinutes;
@@ -54,6 +54,6 @@ public class PlayerActivity {
     public void setActiveMinutes(int mins) {this.activeMinutes = mins; }
     public void changeActiveMinutes(int mins) {
         this.activeMinutes = mins;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 }

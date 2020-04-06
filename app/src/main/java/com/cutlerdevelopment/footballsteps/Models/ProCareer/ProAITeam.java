@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Models.SharedModels;
+package com.cutlerdevelopment.footballsteps.Models.ProCareer;
 
 
 import androidx.room.Entity;
@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineProSavedData;
 import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProSettings;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
 
 @Entity
-public class Team {
+public class ProAITeam {
 
     /**
      * Used when creating a new Team when a new game is created or a custom team is added
@@ -19,19 +19,19 @@ public class Team {
      * @param colour colour of the club
      */
     @Ignore
-    public Team(String name, int colour, int league) {
-        this.ID = SavedData.getInstance().getNumRowsFromTeamTable() + 1;
+    public ProAITeam(String name, int colour, int league) {
+        this.ID = OfflineProSavedData.getInstance().getNumRowsFromTeamTable() + 1;
         this.name = name;
         this.colour = colour;
         this.league = league;
 
-        SavedData.getInstance().saveObject(this);
+        OfflineProSavedData.getInstance().saveObject(this);
     }
 
     /**
      * Used when loading a player for the solo career. Doesn't take any variables as takes them from RoomDB
      */
-    public Team() {
+    public ProAITeam() {
 
     }
 
@@ -46,7 +46,7 @@ public class Team {
     public void setName(String newName) { name = newName; }
     public void changeName(String newName) {
         name = newName;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int colour;
@@ -55,7 +55,7 @@ public class Team {
     public void changeColour(int newColour) {
         if (newColour >= 1 && newColour <= Colour.NUM_TEAM_COLOURS) {
             colour = newColour;
-            SavedData.getInstance().updateObject(this);
+            OfflineProSavedData.getInstance().updateObject(this);
         }
     }
 
@@ -64,7 +64,7 @@ public class Team {
     public void setLeague(int newLeague) { this.league = league; }
     public void changeLeague(int newLeague) {
         this.league = newLeague;
-        SavedData.getInstance().updateObject(league);
+        OfflineProSavedData.getInstance().updateObject(league);
     }
 
     private int points;
@@ -116,7 +116,7 @@ public class Team {
         else if (matchResult == MatchResult.WIN) { addWin(); }
         else { addLoss(); }
 
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
 
 
     }

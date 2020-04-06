@@ -1,15 +1,15 @@
-package com.cutlerdevelopment.footballsteps.Models.ProCareer;
+package com.cutlerdevelopment.footballsteps.Models.TeamCareer;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
-import com.cutlerdevelopment.footballsteps.Constants.Numbers;
-import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Mocks.GoogleFITAPIMock;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.AppSavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProFixture;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.PlayerActivity;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProAITeam;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
 import java.util.ArrayList;
@@ -19,19 +19,17 @@ import java.util.HashMap;
 import java.util.List;
 
 @Entity
-public class ProGame {
+public class TeamGame {
 
-
-
-    private static ProGame instance = null;
-    public static ProGame getInstance() {
+    private static TeamGame instance = null;
+    public static TeamGame getInstance() {
         if (instance != null) {
             return instance;
         }
         return null;
     }
 
-    public ProGame() {
+    public TeamGame() {
 
         //refreshPlayerActivity();
         instance = this;
@@ -46,24 +44,11 @@ public class ProGame {
 
 
         for (String teamName : Words.teamNames) {
-            ProAITeam t = new ProAITeam(teamName, Colour.getDefaultColourForTeam(teamName), 1);
-            new ProAIPlayer(t.getID(), Position.GOALKEEPER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
-            for (int i = 0; i < 4; i++) {
-                new ProAIPlayer(t.getID(), Position.DEFENDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
-            }
-            new ProAIPlayer(t.getID(), Position.DEFENSIVE_MIDFIELDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
-            for (int i = 0; i < 2; i++) {
-                new ProAIPlayer(t.getID(), Position.MIDFIELDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
-            }
-            for (int i = 0; i < 3; i++) {
-                new ProAIPlayer(t.getID(), Position.ATTACKER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
-            }
-
+            TeamAITeam t = new TeamAITeam(teamName, Colour.getDefaultColourForTeam(teamName), 1);
         }
-
         createFixtures();
 
-        OfflineProSavedData.getInstance().saveObject(this);
+        OfflineTeamSavedData.getInstance().saveObject(this);
 
     }
 
@@ -73,7 +58,7 @@ public class ProGame {
     public void setStartDate(Date date) { startDate = date; }
     public void changeStartDate(Date date) {
         startDate = date;
-        OfflineProSavedData.getInstance().updateObject(this);
+        OfflineTeamSavedData.getInstance().updateObject(this);
     }
 
     private int season;
@@ -81,14 +66,7 @@ public class ProGame {
     public void setSeason(int newSeason) { season  = newSeason; }
     public void changeSeason(int newSeason) {
         season = newSeason;
-        OfflineProSavedData.getInstance().updateObject(this);
-    }
-
-    public void deleteAIPlayerFromPlayersTeam() {
-        UserPlayer player = UserPlayer.getInstance();
-        ProAITeam t = player.getCurrTeam();
-        ProAIPlayer extraPlayer = OfflineProSavedData.getInstance().getAllOfflinePlayerOfPositionFromTeam(t.getID(), player.getPosition()).get(0);
-        OfflineProSavedData.getInstance().deleteObject(extraPlayer);
+        OfflineTeamSavedData.getInstance().updateObject(this);
     }
 
     void createFixtures() {
@@ -110,7 +88,7 @@ public class ProGame {
                 if (match == 0) {awayTeam = 20; }
 
                 Date matchDate = DateHelper.addDays(startDate, round);
-                new ProFixture(OfflineProSavedData.getInstance().getNumRowsFromFixtureTable(),
+                new TeamFixture(OfflineTeamSavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,
                         round,
@@ -135,7 +113,7 @@ public class ProGame {
                 if (match == 0) { homeTeam = 20; }
 
                 Date matchDate = DateHelper.addDays(startDate, round);
-                new ProFixture(OfflineProSavedData.getInstance().getNumRowsFromFixtureTable(),
+                new TeamFixture(OfflineTeamSavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,
                         round,
@@ -171,5 +149,4 @@ public class ProGame {
             }
         }
     }
-
 }

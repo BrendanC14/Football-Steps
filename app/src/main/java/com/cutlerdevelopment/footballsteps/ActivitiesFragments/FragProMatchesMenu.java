@@ -11,10 +11,11 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.cutlerdevelopment.footballsteps.Constants.Words;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProUsersPlayer;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.Fixture;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.UserPlayer;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.AppSavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProFixture;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.PlayerActivity;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineProSavedData;
 import com.cutlerdevelopment.footballsteps.R;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 import com.cutlerdevelopment.footballsteps.Utils.ViewItems.ProMatchItem;
@@ -57,7 +58,7 @@ public class FragProMatchesMenu extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_pro_matches_menu, container, false);
 
         matchesButton = this.getActivity().findViewById(R.id.playerMatchesButton);
-        ProUsersPlayer player = ProUsersPlayer.getInstance();
+        UserPlayer player = UserPlayer.getInstance();
         matchGrid = rootView.findViewById(R.id.matchGridLayout);
         playNextGameButton = this.getActivity().findViewById(R.id.playNextMatchButton);
 
@@ -66,13 +67,13 @@ public class FragProMatchesMenu extends Fragment {
         playNextGameButton.setEnabled(false);
 
         final ArrayList<ProMatchItem> myFixtureItems = new ArrayList<>();
-        List<Fixture> allFixtures = SavedData.getInstance().getAllFixtures();
+        List<ProFixture> allFixtures = OfflineProSavedData.getInstance().getAllFixtures();
         Collections.sort(allFixtures);
-        for (Fixture f : allFixtures) {
+        for (ProFixture f : allFixtures) {
             ProMatchItem item = new ProMatchItem();
             item.setMatchDate(DateHelper.formatDate(f.getDate()));
-            item.setHomeTeam(SavedData.getInstance().getTeamFromID(f.getHomeTeamID()).getName());
-            item.setAwayTeam(SavedData.getInstance().getTeamFromID(f.getAwayTeamID()).getName());
+            item.setHomeTeam(OfflineProSavedData.getInstance().getTeamFromID(f.getHomeTeamID()).getName());
+            item.setAwayTeam(OfflineProSavedData.getInstance().getTeamFromID(f.getAwayTeamID()).getName());
 
             Map<Map<Integer, Integer>, Map<Integer, Integer>> statsMap = Words.getFirstHeaderAndStat();
 
@@ -96,7 +97,7 @@ public class FragProMatchesMenu extends Fragment {
             }
 
             Date today = new Date();
-            PlayerActivity thisDatesActivity = SavedData.getInstance().getPlayerActivityOnDate(f.getDate());
+            PlayerActivity thisDatesActivity = AppSavedData.getInstance().getPlayerActivityOnDate(f.getDate());
             if (DateHelper.getDaysBetween(f.getDate(), today) < 0 && thisDatesActivity != null) {
                 item.setNumSteps(Words.getNumberWithCommas(thisDatesActivity.getSteps()));
             }

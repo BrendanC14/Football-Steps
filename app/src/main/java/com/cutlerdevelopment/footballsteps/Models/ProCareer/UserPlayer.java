@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
 import com.cutlerdevelopment.footballsteps.Constants.Position;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.Team;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
 import java.util.Date;
@@ -17,15 +15,15 @@ import java.util.Date;
  * This is so that the changes will update the db but the setters don't.
  */
 @Entity(primaryKeys = {"firstName", "surname"})
-public class ProUsersPlayer {
+public class UserPlayer {
 
-    private static ProUsersPlayer instance = null;
+    private static UserPlayer instance = null;
 
     /**
      * Returns the current instance of ProUsersPlayer. If instance not created will return null
      * @return the ProUsersPlayer instance
      */
-    public static ProUsersPlayer getInstance() {
+    public static UserPlayer getInstance() {
         if (instance != null) {
             return instance;
         }
@@ -39,7 +37,7 @@ public class ProUsersPlayer {
      * @param pos is the chosen position as an integer. Can be used with Position class
      * @param favTeamID is the chosen favourite team ID
      */
-    public ProUsersPlayer(String fname, String sname, int pos, int favTeamID) {
+    public UserPlayer(String fname, String sname, int pos, int favTeamID) {
 
         this.firstName = fname;
         this.surname = sname;
@@ -50,13 +48,13 @@ public class ProUsersPlayer {
         this.dateLastMatchPlayed = DateHelper.addDays(ProGame.getInstance().getStartDate(), -1);
 
         instance = this;
-        SavedData.getInstance().saveObject(this);
+        OfflineProSavedData.getInstance().saveObject(this);
     }
 
     /**
      * Used when loading a player for the solo career. Doesn't take any variables as takes them from RoomDB
      */
-    public ProUsersPlayer() {
+    public UserPlayer() {
 
         instance = this;
     }
@@ -68,7 +66,7 @@ public class ProUsersPlayer {
     public void setFirstName(String fname) { firstName = fname; }
     public void changeFirstName(String newName) {
         firstName = newName;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     @NonNull
@@ -77,7 +75,7 @@ public class ProUsersPlayer {
     public void setSurname(String sname) { surname = sname; }
     public void changeSurname(String newName) {
         surname = newName;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private  int age;
@@ -85,7 +83,7 @@ public class ProUsersPlayer {
     public void setAge(int newAge) { age = newAge; }
     public void changeAge(int newAge) {
         age = newAge;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int position;
@@ -94,7 +92,7 @@ public class ProUsersPlayer {
     public void changePosition(int newPos) {
         if (newPos >= 1 && newPos <= Position.NUMPOSITIONS) {
             position = newPos;
-            SavedData.getInstance().updateObject(this);
+            OfflineProSavedData.getInstance().updateObject(this);
         }
     }
 
@@ -103,10 +101,10 @@ public class ProUsersPlayer {
     public void setCurrTeamID(int newID) { currTeamID = newID; }
     public void changeCurrTeamID(int newID) {
         currTeamID = newID;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
-    public Team getCurrTeam() {
-        return SavedData.getInstance().getTeamFromID(currTeamID);
+    public ProAITeam getCurrTeam() {
+        return OfflineProSavedData.getInstance().getTeamFromID(currTeamID);
     }
 
     private int favTeamID;
@@ -114,10 +112,10 @@ public class ProUsersPlayer {
     public void setFavTeamID(int newID) { favTeamID = newID; }
     public void changeFavTeamID(int newID) {
         favTeamID = newID;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
-    public Team getFavTeam() {
-        return SavedData.getInstance().getTeamFromID(favTeamID);
+    public ProAITeam getFavTeam() {
+        return OfflineProSavedData.getInstance().getTeamFromID(favTeamID);
     }
 
     public Date dateLastMatchPlayed;
@@ -125,7 +123,7 @@ public class ProUsersPlayer {
     public void setDateLastMatchPlayed(Date date) { this.dateLastMatchPlayed = date; }
     public void changeLastMatchPlayed(Date date) {
         this.dateLastMatchPlayed = date;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int appearances;
@@ -133,7 +131,7 @@ public class ProUsersPlayer {
     public void setAppearances(int apps) { this.appearances = apps; }
     public void addAppearance() {
         this.appearances++;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int saves;
@@ -141,7 +139,7 @@ public class ProUsersPlayer {
     public void setSaves(int saves) { this.saves = saves; }
     public void addSaves(int numSaves) {
         this.saves += numSaves;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int conceded;
@@ -149,7 +147,7 @@ public class ProUsersPlayer {
     public void setConceded(int conc) { this.conceded = conc; }
     public void addConceded(int numConceded) {
         this.conceded += numConceded;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int tackles;
@@ -157,7 +155,7 @@ public class ProUsersPlayer {
     public void setTackles(int tacks) { this.tackles = tacks; }
     public void addTackles(int numTackles) {
         this.tackles += numTackles;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int passes;
@@ -165,7 +163,7 @@ public class ProUsersPlayer {
     public void setPasses(int tacks) { this.passes = tacks; }
     public void addPasses(int numPasses) {
         this.passes += numPasses;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int assists;
@@ -173,7 +171,7 @@ public class ProUsersPlayer {
     public void setAssists(int ass) { this.assists = ass; }
     public void addAssists(int numAssists) {
         this.assists += numAssists;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int goals;
@@ -181,7 +179,7 @@ public class ProUsersPlayer {
     public void setGoals(int gls) { this.goals = gls; }
     public void addGoals(int numGoals) {
         this.goals += numGoals;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int offsides;
@@ -189,7 +187,7 @@ public class ProUsersPlayer {
     public void setOffsides(int offs) { this.offsides = offs; }
     public void addOffsides(int numOffside) {
         this.offsides += numOffside;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
 

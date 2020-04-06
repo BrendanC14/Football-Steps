@@ -1,6 +1,6 @@
 package com.cutlerdevelopment.footballsteps.Constants;
 
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProUsersPlayer;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.UserPlayer;
 import com.cutlerdevelopment.footballsteps.R;
 
 import java.text.DecimalFormat;
@@ -16,6 +16,8 @@ import java.util.Map;
  */
 public class Words {
 
+    public static final String OFFLINE_PRO_CAREER_ROOM_DATABASE_NAME = "OfflineProCareer";
+    public static final String OFFLINE_TEAM_CAREER_ROOM_DATABASE_NAME = "OfflineTeamCareer";
 
     public static final List<String> teamNames = Arrays.asList("Arsenal", "Liverpool", "Manchester City", "Leicester City", "Chelsea",
             "Manchester United", "Wolves", "Sheffield United", "Tottenham Hotspur", "Burnley", "Crystal Palace", "Everton",
@@ -51,7 +53,7 @@ public class Words {
         return surnames.get(0);
     }
     public static Map<Map<Integer, Integer>, Map<Integer, Integer>> getFirstHeaderAndStat() {
-        ProUsersPlayer player = ProUsersPlayer.getInstance();
+        UserPlayer player = UserPlayer.getInstance();
         HashMap<Integer, Integer> map1 = new HashMap<>();
         HashMap<Integer, Integer> map2 = new HashMap<>();
 

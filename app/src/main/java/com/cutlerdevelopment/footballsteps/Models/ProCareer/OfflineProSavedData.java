@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Models.SharedModels;
+package com.cutlerdevelopment.footballsteps.Models.ProCareer;
 
 import android.content.Context;
 
@@ -13,10 +13,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.room.Update;
 
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProAIPlayer;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProGame;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProSettings;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProUsersPlayer;
+import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Utils.Converters;
 
 import java.util.Arrays;
@@ -28,37 +25,36 @@ import java.util.List;
  * offlinePlayeDao is an instance of DAO that belongs to the AppDatabase called db.
  * From the db you can access offlinePlayeDao where different methods have been built to save, update or retrieve data from the DB.
  */
-public class SavedData {
+public class OfflineProSavedData {
 
     public static void createSavedDataInstance(Context c) {
-        new SavedData(c);
+        new OfflineProSavedData(c);
     }
-    private static SavedData instance = null;
+    private static OfflineProSavedData instance = null;
 
-    public static SavedData getInstance() {
+    public static OfflineProSavedData getInstance() {
         if (instance != null) {
             return instance;
         }
         return null;
     }
 
-    private SavedData(Context context) {
+    private OfflineProSavedData(Context context) {
         instance = this;
         //TODO: stop allowing Main Thread Queries and figure out a better way to load a game
-        db = Room.databaseBuilder(context, AppDatabase.class, "OfflinePlayerDB").allowMainThreadQueries().build();
+        db = Room.databaseBuilder(context, AppDatabase.class, Words.OFFLINE_PRO_CAREER_ROOM_DATABASE_NAME).allowMainThreadQueries().build();
     }
 
     /**
      * App Database class is the Room Database that contains the instances of the Dao interfaces.
      */
-    @Database(entities = {ProUsersPlayer.class, Team.class, ProSettings.class,
-            ProGame.class, Fixture.class, PlayerActivity.class, ProAIPlayer.class}, version = 1)
+    @Database(entities = {UserPlayer.class, ProAITeam.class, ProSettings.class,
+            ProGame.class, ProFixture.class, ProAIPlayer.class}, version = 1)
     @TypeConverters({Converters.class})
     public static abstract class AppDatabase extends RoomDatabase {
         public abstract OfflinePlayerDao offlinePlayerDao();
         public abstract OfflineSettingsDao offlineSettingsDao();
         public abstract OfflineGameDao offlineGameDao();
-        public abstract PlayerActivityDao playerActivityDao();
         public abstract TeamDao teamDao();
         public abstract OfflineAIPlayerDao offlineAIPlayerDao();
         public abstract FixtureDao fixtureDao();
@@ -73,16 +69,16 @@ public class SavedData {
     public interface OfflinePlayerDao {
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        void insertOfflinePlayer(ProUsersPlayer player);
+        void insertOfflinePlayer(UserPlayer player);
 
         @Update
-        void updateOfflinePlayer(ProUsersPlayer player);
+        void updateOfflinePlayer(UserPlayer player);
 
         @Delete
-        void deleteOfflinePlayer(ProUsersPlayer player);
+        void deleteOfflinePlayer(UserPlayer player);
 
-        @Query("SELECT * FROM ProUsersPlayer")
-        ProUsersPlayer[] selectOfflinePlayer();
+        @Query("SELECT * FROM UserPlayer")
+        UserPlayer[] selectOfflinePlayer();
 
     }
 
@@ -116,24 +112,6 @@ public class SavedData {
         ProGame[] selectOfflineGame();
     }
 
-    @Dao public interface PlayerActivityDao {
-
-        @Insert(onConflict = OnConflictStrategy.REPLACE)
-        void insertPlayerActivity(PlayerActivity activity);
-        @Update
-        void updatePlayerActivity(PlayerActivity activity);
-        @Delete
-        void deletePlayerActivity(PlayerActivity activity);
-
-        @Query("SELECT * FROM playeractivity")
-        PlayerActivity[] selectAllPlayerActivity();
-        @Query("SELECT * FROM playeractivity WHERE date BETWEEN :date AND :date")
-        PlayerActivity selectPlayerActivityWithDate(Date date);
-        @Query("SELECT * FROM playeractivity ORDER BY date DESC LIMIT 1")
-        PlayerActivity selectLastAddedActivity();
-
-    }
-
     /**
      * The Dao interface responsible for the team table
      */
@@ -141,21 +119,21 @@ public class SavedData {
     public interface TeamDao {
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        void insertTeams(Team teams);
+        void insertTeams(ProAITeam teams);
         @Update
-        void updateTeam(Team teams);
+        void updateTeam(ProAITeam teams);
         @Delete
-        void deleteTeam(Team teams);
+        void deleteTeam(ProAITeam teams);
 
-        @Query("SELECT * FROM team")
-        Team[] selectAllTeams();
-        @Query("SELECT * FROM team WHERE league = :league")
-        Team[] selectAllTeamsInLeague(int league);
-        @Query("SELECT * FROM team WHERE id = :teamID")
-        Team selectTeamFromID(int teamID);
-        @Query("SELECT * FROM team WHERE name = :teamName")
-        Team selectTeamFromName(String teamName);
-        @Query("SELECT COUNT(id) FROM team")
+        @Query("SELECT * FROM ProAITeam")
+        ProAITeam[] selectAllTeams();
+        @Query("SELECT * FROM ProAITeam WHERE league = :league")
+        ProAITeam[] selectAllTeamsInLeague(int league);
+        @Query("SELECT * FROM ProAITeam WHERE id = :teamID")
+        ProAITeam selectTeamFromID(int teamID);
+        @Query("SELECT * FROM ProAITeam WHERE name = :teamName")
+        ProAITeam selectTeamFromName(String teamName);
+        @Query("SELECT COUNT(id) FROM ProAITeam")
         int getRowCount();
     }
 
@@ -182,23 +160,23 @@ public class SavedData {
     @Dao
     public interface FixtureDao {
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        void insertFixtures(Fixture fixture);
+        void insertFixtures(ProFixture fixture);
         @Update
-        void updateFixture(Fixture fixture);
+        void updateFixture(ProFixture fixture);
         @Delete
-        void deleteFixture(Fixture fixture);
+        void deleteFixture(ProFixture fixture);
 
-        @Query("SELECT * FROM fixture")
-        Fixture[] selectAllFixtures();
-        @Query("SELECT * FROM fixture WHERE id = :fixtureID")
-        Fixture selectFixtureFromID(int fixtureID);
-        @Query("SELECT * FROM fixture WHERE date = :date AND league = :league")
-        Fixture[] selectAllFixturesInLeagueFromDate(Date date, int league);
-        @Query("SELECT * FROM fixture WHERE homeTeamID = :teamID OR awayTeamID = :teamID")
-        Fixture[] selectAllFixturesFromTeam(int teamID);
-        @Query("SELECT * FROM fixture WHERE week = :week AND (homeTeamID = :teamID OR awayTeamID = :teamID)")
-        Fixture selectFixtureForWeekWithTeam(int week, int teamID);
-        @Query("SELECT COUNT(id) FROM fixture")
+        @Query("SELECT * FROM ProFixture")
+        ProFixture[] selectAllFixtures();
+        @Query("SELECT * FROM ProFixture WHERE id = :fixtureID")
+        ProFixture selectFixtureFromID(int fixtureID);
+        @Query("SELECT * FROM ProFixture WHERE date = :date AND league = :league")
+        ProFixture[] selectAllFixturesInLeagueFromDate(Date date, int league);
+        @Query("SELECT * FROM ProFixture WHERE homeTeamID = :teamID OR awayTeamID = :teamID")
+        ProFixture[] selectAllFixturesFromTeam(int teamID);
+        @Query("SELECT * FROM ProFixture WHERE week = :week AND (homeTeamID = :teamID OR awayTeamID = :teamID)")
+        ProFixture selectFixtureForWeekWithTeam(int week, int teamID);
+        @Query("SELECT COUNT(id) FROM ProFixture")
         int getRowCount();
     }
     /**
@@ -206,8 +184,8 @@ public class SavedData {
      * @param obj the obj to be saved
      */
     public void saveObject(Object obj) {
-        if (obj instanceof ProUsersPlayer) {
-            ProUsersPlayer player = (ProUsersPlayer) obj;
+        if (obj instanceof UserPlayer) {
+            UserPlayer player = (UserPlayer) obj;
             db.offlinePlayerDao().insertOfflinePlayer(player);
         }
         else if (obj instanceof ProSettings) {
@@ -218,20 +196,16 @@ public class SavedData {
             ProGame game = (ProGame) obj;
             db.offlineGameDao().insertOfflineGame(game);
         }
-        else if (obj instanceof PlayerActivity) {
-            PlayerActivity activity = (PlayerActivity) obj;
-            db.playerActivityDao().insertPlayerActivity(activity);
-        }
-        else if (obj instanceof Team) {
-            Team team = (Team) obj;
+        else if (obj instanceof ProAITeam) {
+            ProAITeam team = (ProAITeam) obj;
             db.teamDao().insertTeams(team);
         }
         else if (obj instanceof ProAIPlayer) {
             ProAIPlayer player = (ProAIPlayer) obj;
             db.offlineAIPlayerDao().insertOfflineAIPlayer(player);
         }
-        else if (obj instanceof Fixture) {
-            Fixture fix = (Fixture) obj;
+        else if (obj instanceof ProFixture) {
+            ProFixture fix = (ProFixture) obj;
             db.fixtureDao().insertFixtures(fix);
         }
     }
@@ -241,8 +215,8 @@ public class SavedData {
      * @param obj the object to be updated
      */
     public void updateObject(Object obj) {
-        if (obj instanceof ProUsersPlayer) {
-            ProUsersPlayer player = (ProUsersPlayer) obj;
+        if (obj instanceof UserPlayer) {
+            UserPlayer player = (UserPlayer) obj;
             db.offlinePlayerDao().updateOfflinePlayer(player);
         }
         else if (obj instanceof ProSettings) {
@@ -253,26 +227,48 @@ public class SavedData {
             ProGame game = (ProGame) obj;
             db.offlineGameDao().updateOfflineGame(game);
         }
-        else if (obj instanceof  PlayerActivity) {
-            PlayerActivity activity = (PlayerActivity) obj;
-            db.playerActivityDao().updatePlayerActivity(activity);
-        }
-        else if (obj instanceof Team) {
-            Team team = (Team) obj;
+        else if (obj instanceof ProAITeam) {
+            ProAITeam team = (ProAITeam) obj;
             db.teamDao().updateTeam(team);
         }
         else if (obj instanceof ProAIPlayer) {
             ProAIPlayer player = (ProAIPlayer) obj;
             db.offlineAIPlayerDao().updateOfflineAIPlayer(player);
         }
-        else if (obj instanceof Fixture) {
-            Fixture fix = (Fixture) obj;
+        else if (obj instanceof ProFixture) {
+            ProFixture fix = (ProFixture) obj;
             db.fixtureDao().updateFixture(fix);
         }
     }
+    public void deleteObject(Object obj) {
+        if (obj instanceof UserPlayer) {
+            UserPlayer player = (UserPlayer) obj;
+            db.offlinePlayerDao().deleteOfflinePlayer(player);
+        }
+        else if (obj instanceof ProSettings) {
+            ProSettings settings = (ProSettings) obj;
+            db.offlineSettingsDao().deleteOfflineSettings(settings);
+        }
+        else if (obj instanceof ProGame) {
+            ProGame game = (ProGame) obj;
+            db.offlineGameDao().deleteOfflineGame(game);
+        }
+        else if (obj instanceof ProAITeam) {
+            ProAITeam team = (ProAITeam) obj;
+            db.teamDao().deleteTeam(team);
+        }
+        else if (obj instanceof ProAIPlayer) {
+            ProAIPlayer player = (ProAIPlayer) obj;
+            db.offlineAIPlayerDao().deleteOfflineAIPlayer(player);
+        }
+        else if (obj instanceof ProFixture) {
+            ProFixture fix = (ProFixture) obj;
+            db.fixtureDao().deleteFixture(fix);
+        }
+    }
 
-    public ProUsersPlayer getOfflinePlayer() {
-        ProUsersPlayer[] player = db.offlinePlayerDao().selectOfflinePlayer();
+    public UserPlayer getOfflinePlayer() {
+        UserPlayer[] player = db.offlinePlayerDao().selectOfflinePlayer();
         if (player.length > 0) {
             return player[0];
         }
@@ -293,55 +289,16 @@ public class SavedData {
         return null;
     }
 
-    public void deleteObject(Object obj) {
-        if (obj instanceof ProUsersPlayer) {
-            ProUsersPlayer player = (ProUsersPlayer) obj;
-            db.offlinePlayerDao().deleteOfflinePlayer(player);
-        }
-        else if (obj instanceof ProSettings) {
-            ProSettings settings = (ProSettings) obj;
-            db.offlineSettingsDao().deleteOfflineSettings(settings);
-        }
-        else if (obj instanceof ProGame) {
-            ProGame game = (ProGame) obj;
-            db.offlineGameDao().deleteOfflineGame(game);
-        }
-        else if (obj instanceof  PlayerActivity) {
-            PlayerActivity activity = (PlayerActivity) obj;
-            db.playerActivityDao().deletePlayerActivity(activity);
-        }
-        else if (obj instanceof Team) {
-            Team team = (Team) obj;
-            db.teamDao().deleteTeam(team);
-        }
-        else if (obj instanceof ProAIPlayer) {
-            ProAIPlayer player = (ProAIPlayer) obj;
-            db.offlineAIPlayerDao().deleteOfflineAIPlayer(player);
-        }
-        else if (obj instanceof Fixture) {
-            Fixture fix = (Fixture) obj;
-            db.fixtureDao().deleteFixture(fix);
-        }
-    }
 
-    public List<PlayerActivity> getAllPlayerActivities() {
-        return Arrays.asList(db.playerActivityDao().selectAllPlayerActivity());
-    }
-    public PlayerActivity getPlayerActivityOnDate(Date date) {
-        return db.playerActivityDao().selectPlayerActivityWithDate(date);
-    }
-    public PlayerActivity getLastAddedActivity() {
-        return db.playerActivityDao().selectLastAddedActivity();
-    }
 
-    public List<Team> getAllTeams() {
+    public List<ProAITeam> getAllTeams() {
         return Arrays.asList(db.teamDao().selectAllTeams());
     }
-    public List<Team> getAllTeamsInLeague(int league) { return Arrays.asList(db.teamDao().selectAllTeamsInLeague(league));}
-    public Team getTeamFromID(int ID) {
+    public List<ProAITeam> getAllTeamsInLeague(int league) { return Arrays.asList(db.teamDao().selectAllTeamsInLeague(league));}
+    public ProAITeam getTeamFromID(int ID) {
         return db.teamDao().selectTeamFromID(ID);
     }
-    public Team getTeamFromName(String name) {
+    public ProAITeam getTeamFromName(String name) {
         return db.teamDao().selectTeamFromName(name);
     }
     public int getIDFromName(String name) {
@@ -364,11 +321,11 @@ public class SavedData {
         return db.offlineAIPlayerDao().getRowCount();
     }
 
-    public List<Fixture> getAllFixtures() { return Arrays.asList(db.fixtureDao().selectAllFixtures());}
-    public Fixture getFixtureFromID(int ID) {return db.fixtureDao().selectFixtureFromID(ID); }
-    public List<Fixture> getWeeksFixtureFromLeague(Date date, int league) { return Arrays.asList(db.fixtureDao().selectAllFixturesInLeagueFromDate(date, league)); }
-    public List<Fixture> getFixturesForTeam(int teamID) { return Arrays.asList(db.fixtureDao().selectAllFixturesFromTeam(teamID)); }
-    public Fixture getTeamsFixtureForWeek(int week, int teamID) { return db.fixtureDao().selectFixtureForWeekWithTeam(week, teamID); }
+    public List<ProFixture> getAllFixtures() { return Arrays.asList(db.fixtureDao().selectAllFixtures());}
+    public ProFixture getFixtureFromID(int ID) {return db.fixtureDao().selectFixtureFromID(ID); }
+    public List<ProFixture> getWeeksFixtureFromLeague(Date date, int league) { return Arrays.asList(db.fixtureDao().selectAllFixturesInLeagueFromDate(date, league)); }
+    public List<ProFixture> getFixturesForTeam(int teamID) { return Arrays.asList(db.fixtureDao().selectAllFixturesFromTeam(teamID)); }
+    public ProFixture getTeamsFixtureForWeek(int week, int teamID) { return db.fixtureDao().selectFixtureForWeekWithTeam(week, teamID); }
     public int getNumRowsFromFixtureTable() { return db.fixtureDao().getRowCount(); }
 
     public void resetDB() {

@@ -13,7 +13,7 @@ public class ProMatchPlayer {
         this.surname = player.getSurname();
     }
 
-    public ProMatchPlayer(ProUsersPlayer player) {
+    public ProMatchPlayer(UserPlayer player) {
 
         this.position = player.getPosition();
         this.currTeamID = player.getCurrTeamID();

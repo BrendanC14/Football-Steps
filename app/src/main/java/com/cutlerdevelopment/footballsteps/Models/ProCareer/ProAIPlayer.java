@@ -9,8 +9,6 @@ import androidx.room.PrimaryKey;
 import com.cutlerdevelopment.footballsteps.Constants.Numbers;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.Team;
 
 @Entity
 public class ProAIPlayer {
@@ -22,7 +20,7 @@ public class ProAIPlayer {
     @Ignore
     public ProAIPlayer(int clubID, int position, int stepReduction, int minReduction) {
 
-        this.ID = SavedData.getInstance().getNumRowsFromOfflineAIPlayerTable() + 1;
+        this.ID = OfflineProSavedData.getInstance().getNumRowsFromOfflineAIPlayerTable() + 1;
         this.firstName = Words.getRandomFirstName();
         this.surname = Words.getRandomSurname();
         this.currTeamID = clubID;
@@ -33,7 +31,7 @@ public class ProAIPlayer {
         this.position = position;
 
 
-        SavedData.getInstance().saveObject(this);
+        OfflineProSavedData.getInstance().saveObject(this);
     }
 
     /**
@@ -49,7 +47,7 @@ public class ProAIPlayer {
     public void setID(int id) {this.ID = id; }
     public void changeID(int id) {
         this.ID = id;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private String firstName;
@@ -57,7 +55,7 @@ public class ProAIPlayer {
     public void setFirstName(String name) {this.firstName = name; }
     public void changeFirstName(String name) {
         this.firstName = name;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private String surname;
@@ -65,7 +63,7 @@ public class ProAIPlayer {
     public void setSurname(String name) {this.surname = name; }
     public void changeSurname(String name) {
         this.firstName = name;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int age;
@@ -73,7 +71,7 @@ public class ProAIPlayer {
     public void setAge(int age) {this.age = age; }
     public void changeAge(int age) {
         this.age = age;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int position;
@@ -82,7 +80,7 @@ public class ProAIPlayer {
     public void changePosition(int newPos) {
         if (newPos >= 1 && newPos <= Position.NUMPOSITIONS) {
             position = newPos;
-            SavedData.getInstance().updateObject(this);
+            OfflineProSavedData.getInstance().updateObject(this);
         }
     }
 
@@ -91,9 +89,9 @@ public class ProAIPlayer {
     public void setCurrTeamID(int club) {this.currTeamID = club; }
     public void changeSurname(int club) {
         this.currTeamID = club;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
-    public Team getCurrTeam() { return SavedData.getInstance().getTeamFromID(currTeamID); }
+    public ProAITeam getCurrTeam() { return OfflineProSavedData.getInstance().getTeamFromID(currTeamID); }
 
     private int averageSteps;
     public int getAverageSteps() { return averageSteps; }
@@ -102,7 +100,7 @@ public class ProAIPlayer {
 
         averageSteps = (averageSteps + newAverageSteps) / 2;
 
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int averageMinutes;
@@ -112,7 +110,7 @@ public class ProAIPlayer {
 
         averageMinutes = (averageMinutes + newAverageMinutes) / 2;
 
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 
     private int appearances;
@@ -120,6 +118,6 @@ public class ProAIPlayer {
     public void setAppearances(int apps) { this.appearances = apps; }
     public void addAppearance() {
         this.appearances++;
-        SavedData.getInstance().updateObject(this);
+        OfflineProSavedData.getInstance().updateObject(this);
     }
 }

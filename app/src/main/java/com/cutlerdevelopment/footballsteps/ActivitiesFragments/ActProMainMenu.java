@@ -13,11 +13,12 @@ import android.widget.TextView;
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProUsersPlayer;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.UserPlayer;
 import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProGame;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.Fixture;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.AppSavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProFixture;
 import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProMatchEngine;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.SavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineProSavedData;
 import com.cutlerdevelopment.footballsteps.R;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
@@ -56,7 +57,7 @@ public class ActProMainMenu extends AppCompatActivity implements FragProMatchesM
         matchesButton = findViewById(R.id.playerMatchesButton);
         playNextMatchButton = findViewById(R.id.playNextMatchButton);
 
-        ProUsersPlayer player = ProUsersPlayer.getInstance();
+        UserPlayer player = UserPlayer.getInstance();
         int teamColour = player.getCurrTeam().getColour();
 
         shirtColour.setBackgroundColor(ContextCompat.getColor(this, Colour.getBackgroundColour(teamColour)));
@@ -107,8 +108,8 @@ public class ActProMainMenu extends AppCompatActivity implements FragProMatchesM
 
     public void playNextMatch(View view) {
 
-        Date nextMatchDate = DateHelper.addDays(ProUsersPlayer.getInstance().dateLastMatchPlayed, 1);
-        for (Fixture f : SavedData.getInstance().getWeeksFixtureFromLeague(nextMatchDate, 1)) {
+        Date nextMatchDate = DateHelper.addDays(UserPlayer.getInstance().dateLastMatchPlayed, 1);
+        for (ProFixture f : OfflineProSavedData.getInstance().getWeeksFixtureFromLeague(nextMatchDate, 1)) {
 
             ProMatchEngine.getInstance().playPlayersMatch(f);
 
@@ -118,8 +119,8 @@ public class ActProMainMenu extends AppCompatActivity implements FragProMatchesM
     }
 
     void checkPlayNextMatchButton() {
-        if (SavedData.getInstance().getLastAddedActivity() != null) {
-            int daysBetween = DateHelper.getDaysBetween(ProUsersPlayer.getInstance().getDateLastMatchPlayed(), SavedData.getInstance().getLastAddedActivity().getDate());
+        if (AppSavedData.getInstance().getLastAddedActivity() != null) {
+            int daysBetween = DateHelper.getDaysBetween(UserPlayer.getInstance().getDateLastMatchPlayed(), AppSavedData.getInstance().getLastAddedActivity().getDate());
 
 
             if (daysBetween < 0) {
