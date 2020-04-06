@@ -7,18 +7,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineProSavedData;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.AppSavedData;
-import com.cutlerdevelopment.footballsteps.Models.TeamCareer.OfflineTeamSavedData;
-import com.cutlerdevelopment.footballsteps.Models.TeamCareer.OfflineTeamSettings;
-import com.cutlerdevelopment.footballsteps.Models.TeamCareer.TeamGame;
-import com.cutlerdevelopment.footballsteps.Models.TeamCareer.UserTeam;
+import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMGame;
+import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMSavedData;
+import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMSettings;
+import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMUserTeam;
 import com.cutlerdevelopment.footballsteps.R;
-import com.cutlerdevelopment.footballsteps.Utils.Dialogs.NewOfflineCareerDialogFragment;
-import com.cutlerdevelopment.footballsteps.Utils.Dialogs.NewOfflineTeamDialogFragment;
+import com.cutlerdevelopment.footballsteps.Utils.Dialogs.CreateCareerDialogFragment;
+import com.cutlerdevelopment.footballsteps.Utils.Dialogs.CreateTeamDialogFragment;
 
-public class ActMainMenu extends AppCompatActivity implements NewOfflineCareerDialogFragment.NewOfflineCareerDialogListener,
-        NewOfflineTeamDialogFragment.NewOfflineTeamDialogListener {
+public class ActMainMenu extends AppCompatActivity implements CreateCareerDialogFragment.CreateCareerDialogListener,
+        CreateTeamDialogFragment.CreateTeamDialogListener {
 
     boolean teamModeSelected;
     boolean targetModeSelected;
@@ -29,9 +28,9 @@ public class ActMainMenu extends AppCompatActivity implements NewOfflineCareerDi
         setContentView(R.layout.activity_main_menu);
     }
 
-    public void showNewOfflineCareerDialog(View view) {
-        DialogFragment careerDialog = new NewOfflineCareerDialogFragment();
-        careerDialog.show(getSupportFragmentManager(), "NewOfflineCareerDialogFragment");
+    public void openCreateCareerDialog(View view) {
+        DialogFragment careerDialog = new CreateCareerDialogFragment();
+        careerDialog.show(getSupportFragmentManager(), "CreateCareerDialogFragment");
     }
 
     @Override
@@ -41,11 +40,11 @@ public class ActMainMenu extends AppCompatActivity implements NewOfflineCareerDi
         targetModeSelected = targetMode;
 
         if (teamModeSelected) {
-            DialogFragment teamDialog = new NewOfflineTeamDialogFragment();
+            DialogFragment teamDialog = new CreateTeamDialogFragment();
             Bundle args = new Bundle();
             args.putBoolean("targetMode", targetMode);
             teamDialog.setArguments(args);
-            teamDialog.show(getSupportFragmentManager(), "NewOfflineTeamDialogFragment");
+            teamDialog.show(getSupportFragmentManager(), "CreateTeamDialogFragment");
 
         }
     }
@@ -55,18 +54,18 @@ public class ActMainMenu extends AppCompatActivity implements NewOfflineCareerDi
 
         AppSavedData.createSavedDataInstance(this);
 
-        OfflineTeamSavedData.createOfflineTeamSavedData(this);
-        OfflineTeamSavedData.getInstance().resetDB();
+        TMSavedData.createOfflineTeamSavedData(this);
+        TMSavedData.getInstance().resetDB();
 
-        OfflineTeamSettings settings = new OfflineTeamSettings();
+        TMSettings settings = new TMSettings();
         settings.assignDefaultSettings(steps);
 
-        TeamGame game = new TeamGame();
+        TMGame game = new TMGame();
         game.startNewGame();
 
-        new UserTeam(name, colour);
+        new TMUserTeam(name, colour);
 
-        Intent intent = new Intent(this, ActTeamMainMenu.class);
+        Intent intent = new Intent(this, ActTMMainMenu.class);
         startActivity(intent);
 
     }

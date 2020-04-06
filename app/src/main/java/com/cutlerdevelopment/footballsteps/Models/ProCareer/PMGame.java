@@ -9,7 +9,7 @@ import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Mocks.GoogleFITAPIMock;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.AppSavedData;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.PlayerActivity;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.UserActivity;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
 import java.util.ArrayList;
@@ -19,19 +19,19 @@ import java.util.HashMap;
 import java.util.List;
 
 @Entity
-public class ProGame {
+public class PMGame {
 
 
 
-    private static ProGame instance = null;
-    public static ProGame getInstance() {
+    private static PMGame instance = null;
+    public static PMGame getInstance() {
         if (instance != null) {
             return instance;
         }
         return null;
     }
 
-    public ProGame() {
+    public PMGame() {
 
         //refreshPlayerActivity();
         instance = this;
@@ -46,24 +46,24 @@ public class ProGame {
 
 
         for (String teamName : Words.teamNames) {
-            ProAITeam t = new ProAITeam(teamName, Colour.getDefaultColourForTeam(teamName), 1);
-            new ProAIPlayer(t.getID(), Position.GOALKEEPER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
+            PMAITeam t = new PMAITeam(teamName, Colour.getDefaultColourForTeam(teamName), 1);
+            new PMAIPlayer(t.getID(), Position.GOALKEEPER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             for (int i = 0; i < 4; i++) {
-                new ProAIPlayer(t.getID(), Position.DEFENDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
+                new PMAIPlayer(t.getID(), Position.DEFENDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             }
-            new ProAIPlayer(t.getID(), Position.DEFENSIVE_MIDFIELDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
+            new PMAIPlayer(t.getID(), Position.DEFENSIVE_MIDFIELDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             for (int i = 0; i < 2; i++) {
-                new ProAIPlayer(t.getID(), Position.MIDFIELDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
+                new PMAIPlayer(t.getID(), Position.MIDFIELDER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             }
             for (int i = 0; i < 3; i++) {
-                new ProAIPlayer(t.getID(), Position.ATTACKER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
+                new PMAIPlayer(t.getID(), Position.ATTACKER, Numbers.getTeamStepBalance(teamName), Numbers.getTeamMinuteBalance(teamName));
             }
 
         }
 
         createFixtures();
 
-        OfflineProSavedData.getInstance().saveObject(this);
+        PMSavedData.getInstance().saveObject(this);
 
     }
 
@@ -73,7 +73,7 @@ public class ProGame {
     public void setStartDate(Date date) { startDate = date; }
     public void changeStartDate(Date date) {
         startDate = date;
-        OfflineProSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private int season;
@@ -81,14 +81,14 @@ public class ProGame {
     public void setSeason(int newSeason) { season  = newSeason; }
     public void changeSeason(int newSeason) {
         season = newSeason;
-        OfflineProSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     public void deleteAIPlayerFromPlayersTeam() {
-        UserPlayer player = UserPlayer.getInstance();
-        ProAITeam t = player.getCurrTeam();
-        ProAIPlayer extraPlayer = OfflineProSavedData.getInstance().getAllOfflinePlayerOfPositionFromTeam(t.getID(), player.getPosition()).get(0);
-        OfflineProSavedData.getInstance().deleteObject(extraPlayer);
+        PMUserPlayer player = PMUserPlayer.getInstance();
+        PMAITeam t = player.getCurrTeam();
+        PMAIPlayer extraPlayer = PMSavedData.getInstance().getAllOfflinePlayerOfPositionFromTeam(t.getID(), player.getPosition()).get(0);
+        PMSavedData.getInstance().deleteObject(extraPlayer);
     }
 
     void createFixtures() {
@@ -110,7 +110,7 @@ public class ProGame {
                 if (match == 0) {awayTeam = 20; }
 
                 Date matchDate = DateHelper.addDays(startDate, round);
-                new ProFixture(OfflineProSavedData.getInstance().getNumRowsFromFixtureTable(),
+                new PMFixture(PMSavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,
                         round,
@@ -135,7 +135,7 @@ public class ProGame {
                 if (match == 0) { homeTeam = 20; }
 
                 Date matchDate = DateHelper.addDays(startDate, round);
-                new ProFixture(OfflineProSavedData.getInstance().getNumRowsFromFixtureTable(),
+                new PMFixture(PMSavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,
                         round,
@@ -149,7 +149,7 @@ public class ProGame {
     public void refreshPlayerActivity() {
         Date lastActivityDate = startDate;
 
-        PlayerActivity lastActivity = AppSavedData.getInstance().getLastAddedActivity();
+        UserActivity lastActivity = AppSavedData.getInstance().getLastAddedActivity();
         if (lastActivity != null) {
             lastActivityDate = lastActivity.getDate();
         }
@@ -166,7 +166,7 @@ public class ProGame {
 
             for (HashMap.Entry<Date, HashMap<Integer, Integer>> pair : dateNumbersMap.entrySet()) {
                 for (HashMap.Entry<Integer, Integer> numberPair : pair.getValue().entrySet()) {
-                    new PlayerActivity(pair.getKey(), numberPair.getKey(), numberPair.getValue());
+                    new UserActivity(pair.getKey(), numberPair.getKey(), numberPair.getValue());
                 }
             }
         }

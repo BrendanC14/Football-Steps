@@ -44,7 +44,7 @@ public class AppSavedData {
     /**
      * App Database class is the Room Database that contains the instances of the Dao interfaces.
      */
-    @Database(entities = {PlayerActivity.class}, version = 1)
+    @Database(entities = {UserActivity.class}, version = 1)
     @TypeConverters({Converters.class})
     public static abstract class AppDatabase extends RoomDatabase {
         public abstract PlayerActivityDao playerActivityDao();
@@ -56,28 +56,28 @@ public class AppSavedData {
     public interface PlayerActivityDao {
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        void insertPlayerActivity(PlayerActivity activity);
+        void insertPlayerActivity(UserActivity activity);
         @Update
-        void updatePlayerActivity(PlayerActivity activity);
+        void updatePlayerActivity(UserActivity activity);
         @Delete
-        void deletePlayerActivity(PlayerActivity activity);
+        void deletePlayerActivity(UserActivity activity);
 
-        @Query("SELECT * FROM playeractivity")
-        PlayerActivity[] selectAllPlayerActivity();
-        @Query("SELECT * FROM playeractivity WHERE date BETWEEN :date AND :date")
-        PlayerActivity selectPlayerActivityWithDate(Date date);
-        @Query("SELECT * FROM playeractivity ORDER BY date DESC LIMIT 1")
-        PlayerActivity selectLastAddedActivity();
+        @Query("SELECT * FROM UserActivity")
+        UserActivity[] selectAllPlayerActivity();
+        @Query("SELECT * FROM UserActivity WHERE date BETWEEN :date AND :date")
+        UserActivity selectPlayerActivityWithDate(Date date);
+        @Query("SELECT * FROM UserActivity ORDER BY date DESC LIMIT 1")
+        UserActivity selectLastAddedActivity();
 
     }
 
-    public List<PlayerActivity> getAllPlayerActivities() {
+    public List<UserActivity> getAllPlayerActivities() {
         return Arrays.asList(db.playerActivityDao().selectAllPlayerActivity());
     }
-    public PlayerActivity getPlayerActivityOnDate(Date date) {
+    public UserActivity getPlayerActivityOnDate(Date date) {
         return db.playerActivityDao().selectPlayerActivityWithDate(date);
     }
-    public PlayerActivity getLastAddedActivity() {
+    public UserActivity getLastAddedActivity() {
         return db.playerActivityDao().selectLastAddedActivity();
     }
 }

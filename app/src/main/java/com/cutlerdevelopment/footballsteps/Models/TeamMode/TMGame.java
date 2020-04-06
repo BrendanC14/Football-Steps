@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Models.TeamCareer;
+package com.cutlerdevelopment.footballsteps.Models.TeamMode;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,9 +7,7 @@ import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Mocks.GoogleFITAPIMock;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.AppSavedData;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProFixture;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.PlayerActivity;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProAITeam;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.UserActivity;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
 import java.util.ArrayList;
@@ -19,17 +17,17 @@ import java.util.HashMap;
 import java.util.List;
 
 @Entity
-public class TeamGame {
+public class TMGame {
 
-    private static TeamGame instance = null;
-    public static TeamGame getInstance() {
+    private static TMGame instance = null;
+    public static TMGame getInstance() {
         if (instance != null) {
             return instance;
         }
         return null;
     }
 
-    public TeamGame() {
+    public TMGame() {
 
         //refreshPlayerActivity();
         instance = this;
@@ -44,11 +42,11 @@ public class TeamGame {
 
 
         for (String teamName : Words.teamNames) {
-            TeamAITeam t = new TeamAITeam(teamName, Colour.getDefaultColourForTeam(teamName), 1);
+            TMAITeam t = new TMAITeam(teamName, Colour.getDefaultColourForTeam(teamName), 1);
         }
         createFixtures();
 
-        OfflineTeamSavedData.getInstance().saveObject(this);
+        TMSavedData.getInstance().saveObject(this);
 
     }
 
@@ -58,7 +56,7 @@ public class TeamGame {
     public void setStartDate(Date date) { startDate = date; }
     public void changeStartDate(Date date) {
         startDate = date;
-        OfflineTeamSavedData.getInstance().updateObject(this);
+        TMSavedData.getInstance().updateObject(this);
     }
 
     private int season;
@@ -66,7 +64,7 @@ public class TeamGame {
     public void setSeason(int newSeason) { season  = newSeason; }
     public void changeSeason(int newSeason) {
         season = newSeason;
-        OfflineTeamSavedData.getInstance().updateObject(this);
+        TMSavedData.getInstance().updateObject(this);
     }
 
     void createFixtures() {
@@ -88,7 +86,7 @@ public class TeamGame {
                 if (match == 0) {awayTeam = 20; }
 
                 Date matchDate = DateHelper.addDays(startDate, round);
-                new TeamFixture(OfflineTeamSavedData.getInstance().getNumRowsFromFixtureTable(),
+                new TMFixture(TMSavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,
                         round,
@@ -113,7 +111,7 @@ public class TeamGame {
                 if (match == 0) { homeTeam = 20; }
 
                 Date matchDate = DateHelper.addDays(startDate, round);
-                new TeamFixture(OfflineTeamSavedData.getInstance().getNumRowsFromFixtureTable(),
+                new TMFixture(TMSavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,
                         round,
@@ -127,7 +125,7 @@ public class TeamGame {
     public void refreshPlayerActivity() {
         Date lastActivityDate = startDate;
 
-        PlayerActivity lastActivity = AppSavedData.getInstance().getLastAddedActivity();
+        UserActivity lastActivity = AppSavedData.getInstance().getLastAddedActivity();
         if (lastActivity != null) {
             lastActivityDate = lastActivity.getDate();
         }
@@ -144,7 +142,7 @@ public class TeamGame {
 
             for (HashMap.Entry<Date, HashMap<Integer, Integer>> pair : dateNumbersMap.entrySet()) {
                 for (HashMap.Entry<Integer, Integer> numberPair : pair.getValue().entrySet()) {
-                    new PlayerActivity(pair.getKey(), numberPair.getKey(), numberPair.getValue());
+                    new UserActivity(pair.getKey(), numberPair.getKey(), numberPair.getValue());
                 }
             }
         }

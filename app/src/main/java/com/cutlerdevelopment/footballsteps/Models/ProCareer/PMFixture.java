@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Models.TeamCareer;
+package com.cutlerdevelopment.footballsteps.Models.ProCareer;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -9,11 +9,10 @@ import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
 import java.util.Date;
 
 @Entity
-public class TeamFixture implements Comparable<TeamFixture> {
-
+public class PMFixture implements Comparable<PMFixture> {
 
     @Ignore
-    public TeamFixture(int id, int homeTeamID, int awayTeamID, int week, Date date, int league) {
+    public PMFixture(int id, int homeTeamID, int awayTeamID, int week, Date date, int league) {
         this.ID = id;
         this.homeTeamID = homeTeamID;
         this.awayTeamID = awayTeamID;
@@ -24,13 +23,13 @@ public class TeamFixture implements Comparable<TeamFixture> {
         this.homeScore = -1;
         this.awayScore = -1;
 
-        OfflineTeamSavedData.getInstance().saveObject(this);
+        PMSavedData.getInstance().saveObject(this);
     }
 
     /**
      * Used when loading a player for the solo career. Doesn't take any variables as takes them from RoomDB
      */
-    public TeamFixture() {
+    public PMFixture() {
 
     }
 
@@ -40,7 +39,7 @@ public class TeamFixture implements Comparable<TeamFixture> {
     public void setID(int id) { this.ID = id; }
     public void changeID(int id) {
         this.ID = id;
-        OfflineTeamSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private int homeTeamID;
@@ -48,7 +47,7 @@ public class TeamFixture implements Comparable<TeamFixture> {
     public void setHomeTeamID(int id) { this.homeTeamID = id; }
     public void changeHomeTeamID(int id) {
         this.homeTeamID = id;
-        OfflineTeamSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private int awayTeamID;
@@ -56,7 +55,7 @@ public class TeamFixture implements Comparable<TeamFixture> {
     public void setAwayTeamID(int id) { this.awayTeamID = id; }
     public void changeAwayTeamID(int id) {
         this.awayTeamID = id;
-        OfflineTeamSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private int homeScore;
@@ -72,14 +71,14 @@ public class TeamFixture implements Comparable<TeamFixture> {
         this.homeScore = homeScore;
         this.awayScore = awayScore;
 
-        TeamAITeam homeTeam = OfflineTeamSavedData.getInstance().getTeamFromID(homeTeamID);
-        TeamAITeam awayTeam = OfflineTeamSavedData.getInstance().getTeamFromID(awayTeamID);
+        PMAITeam homeTeam = PMSavedData.getInstance().getTeamFromID(homeTeamID);
+        PMAITeam awayTeam = PMSavedData.getInstance().getTeamFromID(awayTeamID);
 
         homeTeam.playMatch(getMatchResultForTeam(homeTeamID), homeScore, awayScore);
         awayTeam.playMatch(getMatchResultForTeam(awayTeamID), awayScore, homeScore);
 
 
-        OfflineTeamSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private int week;
@@ -87,7 +86,7 @@ public class TeamFixture implements Comparable<TeamFixture> {
     public void setWeek(int week) {this.week = week; }
     public void changeWeek(int week) {
         this.week = week;
-        OfflineTeamSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private Date date;
@@ -95,7 +94,7 @@ public class TeamFixture implements Comparable<TeamFixture> {
     public void setDate(Date date) { this.date = date; }
     public void updateDate(Date date) {
         this.date = date;
-        OfflineTeamSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private int league;
@@ -103,7 +102,7 @@ public class TeamFixture implements Comparable<TeamFixture> {
     public void setLeague(int league) {this.league = league; }
     public void changeLeague(int league) {
         this.league = league;
-        OfflineTeamSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     public int getMatchResultForTeam(int teamID) {
@@ -117,11 +116,11 @@ public class TeamFixture implements Comparable<TeamFixture> {
     }
 
     public boolean matchPlayed() {
-        return homeScore >= 0;
+         return homeScore >= 0;
     }
 
     @Override
-    public int compareTo(TeamFixture f) {
+    public int compareTo(PMFixture f) {
         return this.getDate().compareTo(f.getDate());
     }
 }

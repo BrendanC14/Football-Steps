@@ -8,7 +8,7 @@
     android:background="@drawable/dialog_rounded_background">
 
     <Button
-        android:id="@+id/newOfflineCareerTeamButton"
+        android:id="@+id/createCareerTeamButton"
         android:layout_width="150dp"
         android:layout_height="125dp"
         android:layout_marginStart="8dp"
@@ -20,16 +20,16 @@
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:paddingBottom="25dp"
-        android:text="@string/new_offline_career_team_button"
+        android:text="@string/create_career_team_button"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:fontFamily="@font/cherry_cream_soda"
-        app:layout_constraintEnd_toStartOf="@+id/newOfflineCentreDivider"
+        app:layout_constraintEnd_toStartOf="@+id/createCareerCentreDivider"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newOfflineCareerHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/createCareerHeader" />
 
     <Button
-        android:id="@+id/newOffCareerPlayerButton"
+        android:id="@+id/createCareerPlayerButton"
         style="@style/tshirt_style"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -37,50 +37,50 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/emptyshirt"
-        android:text="@string/new_offline_career_player_button"
+        android:text="@string/create_career_player_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/newOfflineCentreDivider"
-        app:layout_constraintTop_toBottomOf="@+id/newOfflineCareerHeader" />
+        app:layout_constraintStart_toEndOf="@+id/createCareerCentreDivider"
+        app:layout_constraintTop_toBottomOf="@+id/createCareerHeader" />
 
     <Button
-        android:id="@+id/newOfflineCareerTargetButton"
+        android:id="@+id/createCareerTargetButton"
         android:layout_width="150dp"
         android:layout_height="125dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/target"
-        android:text="@string/ne_offline_career_target_mode"
+        android:text="@string/create_career_target_button"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:fontFamily="@font/cherry_cream_soda"
-        app:layout_constraintEnd_toStartOf="@+id/newOfflineCentreDivider"
+        app:layout_constraintEnd_toStartOf="@+id/createCareerCentreDivider"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teamPlayerInformationText" />
+        app:layout_constraintTop_toBottomOf="@+id/createCareerTeamPlayerInfo" />
 
     <Button
-        android:id="@+id/newOfflineCareerScaledButton"
+        android:id="@+id/createCareerScaledButton"
         android:layout_width="150dp"
         android:layout_height="125dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/scaled"
-        android:text="@string/ne_offline_career_scaled_mode"
+        android:text="@string/create_career_scaled_button"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:fontFamily="@font/cherry_cream_soda"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/newOfflineCentreDivider"
-        app:layout_constraintTop_toBottomOf="@+id/teamPlayerInformationText" />
+        app:layout_constraintStart_toEndOf="@+id/createCareerCentreDivider"
+        app:layout_constraintTop_toBottomOf="@+id/createCareerTeamPlayerInfo" />
 
     <Button
-        android:id="@+id/newOffCareerConfirmButton"
+        android:id="@+id/createCareerConfirmButton"
         style="@style/button_style"
-        android:text="@string/new_offline_career_confirm_button"
+        android:text="@string/create_career_confirm_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/targetScaledInformationText" />
+        app:layout_constraintTop_toBottomOf="@+id/createCareerTargetScaledInfo" />
 
     <ImageView
-        android:id="@+id/teamModeBackground"
+        android:id="@+id/createCareerTeamBackground"
         android:layout_width="150dp"
         android:layout_height="125dp"
         android:layout_marginStart="8dp"
@@ -89,13 +89,13 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="#000000"
-        app:layout_constraintEnd_toStartOf="@+id/newOfflineCentreDivider"
+        app:layout_constraintEnd_toStartOf="@+id/createCareerCentreDivider"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newOfflineCareerHeader"
+        app:layout_constraintTop_toBottomOf="@+id/createCareerHeader"
         app:srcCompat="@drawable/blackborder" />
 
     <ImageView
-        android:id="@+id/playerModeBackground"
+        android:id="@+id/createCareerPlayerBackground"
         android:layout_width="150dp"
         android:layout_height="125dp"
         android:layout_marginStart="8dp"
@@ -106,34 +106,34 @@
         android:background="#000000"
         android:contentDescription="TODO"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/newOfflineCentreDivider"
-        app:layout_constraintTop_toBottomOf="@+id/newOfflineCareerHeader"
+        app:layout_constraintStart_toEndOf="@+id/createCareerCentreDivider"
+        app:layout_constraintTop_toBottomOf="@+id/createCareerHeader"
         app:srcCompat="@drawable/blackborder" />
 
     <ImageView
-        android:id="@+id/targetModeBackground"
+        android:id="@+id/createCareerTargetBackground"
         android:layout_width="150dp"
         android:layout_height="125dp"
         android:layout_marginTop="24dp"
         android:background="#000000"
-        app:layout_constraintEnd_toStartOf="@+id/newOfflineCentreDivider"
+        app:layout_constraintEnd_toStartOf="@+id/createCareerCentreDivider"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teamPlayerInformationText"
+        app:layout_constraintTop_toBottomOf="@+id/createCareerTeamPlayerInfo"
         app:srcCompat="@drawable/blackborder" />
 
     <ImageView
-        android:id="@+id/scaledModeBackground"
+        android:id="@+id/createCareerScaledBackground"
         android:layout_width="150dp"
         android:layout_height="125dp"
         android:layout_marginTop="24dp"
         android:background="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/newOfflineCentreDivider"
-        app:layout_constraintTop_toBottomOf="@+id/teamPlayerInformationText"
+        app:layout_constraintStart_toEndOf="@+id/createCareerCentreDivider"
+        app:layout_constraintTop_toBottomOf="@+id/createCareerTeamPlayerInfo"
         app:srcCompat="@drawable/blackborder" />
 
     <TextView
-        android:id="@+id/newOfflineCentreDivider"
+        android:id="@+id/createCareerCentreDivider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -142,15 +142,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/newOfflineCareerHeader"
+        android:id="@+id/createCareerHeader"
         style="@style/default_header_text"
-        android:text="@string/new_offline_career_header"
+        android:text="@string/create_career_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/teamPlayerInformationText"
+        android:id="@+id/createCareerTeamPlayerInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -158,19 +158,19 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:gravity="left"
+        android:gravity="start"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="@string/new_offline_career_player_mode_info"
+        android:text="@string/create_career_player_info"
         android:textSize="14sp"
         android:textStyle="italic"
         app:fontFamily="@font/cherry_cream_soda"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newOfflineCareerTeamButton" />
+        app:layout_constraintTop_toBottomOf="@+id/createCareerTeamButton" />
 
     <TextView
-        android:id="@+id/targetScaledInformationText"
+        android:id="@+id/createCareerTargetScaledInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -178,15 +178,15 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:gravity="left"
+        android:gravity="start"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="@string/new_offline_career_scaled_mode_info"
+        android:text="@string/create_career_scaled_info"
         android:textSize="14sp"
         android:textStyle="italic"
         app:fontFamily="@font/cherry_cream_soda"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newOfflineCareerTargetButton" />
+        app:layout_constraintTop_toBottomOf="@+id/createCareerTargetButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

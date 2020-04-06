@@ -20,15 +20,13 @@ import androidx.fragment.app.DialogFragment;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.Numbers;
-import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.R;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewOfflineTeamDialogFragment extends DialogFragment {
+public class CreateTeamDialogFragment extends DialogFragment {
 
     private String teamName;
     private int teamColour;
@@ -43,21 +41,21 @@ public class NewOfflineTeamDialogFragment extends DialogFragment {
 
     private boolean targetModeSelected;
 
-    public interface NewOfflineTeamDialogListener {
+    public interface CreateTeamDialogListener {
         public void teamCreated(DialogFragment dialog, String teamName, int teamColour, int stepTarget);
     }
-    NewOfflineTeamDialogListener listener;
+    CreateTeamDialogListener listener;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        listener = (NewOfflineTeamDialogListener) context;
+        listener = (CreateTeamDialogListener) context;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_new_offline_team, container, false);
+        View view = inflater.inflate(R.layout.dialog_create_team, container, false);
         // Set transparent background and no title
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -71,14 +69,14 @@ public class NewOfflineTeamDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         targetModeSelected = getArguments().getBoolean("targetMode");
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View newOfflineTeamView = inflater.inflate(R.layout.dialog_new_offline_team, null);
+        View newOfflineTeamView = inflater.inflate(R.layout.dialog_create_team, null);
 
-        teamNameTextView = newOfflineTeamView.findViewById(R.id.newOfflineTeamClubName);
-        teamColourSpinner = newOfflineTeamView.findViewById(R.id.newOfflineTeamColourSpinner);
-        stepTargetHeader = newOfflineTeamView.findViewById(R.id.newOfflineTeamNumStepsHeader);
-        stepTargetSpinner = newOfflineTeamView.findViewById(R.id.newOfflineTeamNumStepsSpinner);
-        step000s = newOfflineTeamView.findViewById(R.id.thousandsText);
-        confirmButton = newOfflineTeamView.findViewById(R.id.newOfflineTeamConfirmButton);
+        teamNameTextView = newOfflineTeamView.findViewById(R.id.createTeamTeamName);
+        teamColourSpinner = newOfflineTeamView.findViewById(R.id.createTeamColourSpinner);
+        stepTargetHeader = newOfflineTeamView.findViewById(R.id.createTeamStepsHeader);
+        stepTargetSpinner = newOfflineTeamView.findViewById(R.id.createTeamStepsSpinner);
+        step000s = newOfflineTeamView.findViewById(R.id.createTeamThousandsText);
+        confirmButton = newOfflineTeamView.findViewById(R.id.createTeamConfirmButton);
 
         stepTargetHeader.setVisibility(View.GONE);
         stepTargetSpinner.setVisibility(View.GONE);
@@ -128,7 +126,7 @@ public class NewOfflineTeamDialogFragment extends DialogFragment {
                 stepTarget = stepTargetSpinner.getSelectedItemPosition() + 1;
 
                 dismiss();
-                listener.teamCreated(NewOfflineTeamDialogFragment.this, teamName, teamColour, stepTarget);
+                listener.teamCreated(CreateTeamDialogFragment.this, teamName, teamColour, stepTarget);
             }
         });
 

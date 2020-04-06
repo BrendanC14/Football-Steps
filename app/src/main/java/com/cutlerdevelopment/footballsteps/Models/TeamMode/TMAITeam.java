@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Models.TeamCareer;
+package com.cutlerdevelopment.footballsteps.Models.TeamMode;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -8,7 +8,7 @@ import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
 
 @Entity
-public class TeamAITeam {
+public class TMAITeam {
 
     /**
      * Used when creating a new Team when a new game is created or a custom team is added
@@ -16,19 +16,19 @@ public class TeamAITeam {
      * @param colour colour of the club
      */
     @Ignore
-    public TeamAITeam(String name, int colour, int league) {
-        this.ID = OfflineTeamSavedData.getInstance().getNumRowsFromTeamTable() + 1;
+    public TMAITeam(String name, int colour, int league) {
+        this.ID = TMSavedData.getInstance().getNumRowsFromTeamTable() + 1;
         this.name = name;
         this.colour = colour;
         this.league = league;
 
-        OfflineTeamSavedData.getInstance().saveObject(this);
+        TMSavedData.getInstance().saveObject(this);
     }
 
     /**
      * Used when loading a player for the solo career. Doesn't take any variables as takes them from RoomDB
      */
-    public TeamAITeam() {
+    public TMAITeam() {
 
     }
 
@@ -43,7 +43,7 @@ public class TeamAITeam {
     public void setName(String newName) { name = newName; }
     public void changeName(String newName) {
         name = newName;
-        OfflineTeamSavedData.getInstance().updateObject(this);
+        TMSavedData.getInstance().updateObject(this);
     }
 
     private int colour;
@@ -52,7 +52,7 @@ public class TeamAITeam {
     public void changeColour(int newColour) {
         if (newColour >= 1 && newColour <= Colour.NUM_TEAM_COLOURS) {
             colour = newColour;
-            OfflineTeamSavedData.getInstance().updateObject(this);
+            TMSavedData.getInstance().updateObject(this);
         }
     }
 
@@ -61,7 +61,7 @@ public class TeamAITeam {
     public void setLeague(int newLeague) { this.league = league; }
     public void changeLeague(int newLeague) {
         this.league = newLeague;
-        OfflineTeamSavedData.getInstance().updateObject(league);
+        TMSavedData.getInstance().updateObject(league);
     }
 
     private int points;
@@ -74,7 +74,7 @@ public class TeamAITeam {
     public void setWins(int w) { this.wins = w; }
     public void addWin() {
         wins++;
-        addPoints(OfflineTeamSettings.getInstance().getPointsForWin());
+        addPoints(TMSettings.getInstance().getPointsForWin());
     }
 
     private int draws;
@@ -82,7 +82,7 @@ public class TeamAITeam {
     public void setDraws(int d) { this.draws = d; }
     public void addDraw() {
         draws++;
-        addPoints(OfflineTeamSettings.getInstance().getPointsForDraw());
+        addPoints(TMSettings.getInstance().getPointsForDraw());
     }
 
     private int losses;
@@ -90,7 +90,7 @@ public class TeamAITeam {
     public void setLosses(int l) { this.losses = l; }
     public void addLoss() {
         losses++;
-        addPoints(OfflineTeamSettings.getInstance().getPointsForLoss());
+        addPoints(TMSettings.getInstance().getPointsForLoss());
     }
 
     private int scored;
@@ -113,7 +113,7 @@ public class TeamAITeam {
         else if (matchResult == MatchResult.WIN) { addWin(); }
         else { addLoss(); }
 
-        OfflineTeamSavedData.getInstance().updateObject(this);
+        TMSavedData.getInstance().updateObject(this);
 
 
     }

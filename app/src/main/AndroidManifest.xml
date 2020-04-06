@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivitiesFragments.ActTeamMainMenu"></activity>
-        <activity android:name=".ActivitiesFragments.ActProMainMenu" />
+        <activity android:name=".ActivitiesFragments.ActTMMainMenu"></activity>
+        <activity android:name=".ActivitiesFragments.ActPMMainMenu" />
         <activity android:name=".ActivitiesFragments.ActMainMenu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

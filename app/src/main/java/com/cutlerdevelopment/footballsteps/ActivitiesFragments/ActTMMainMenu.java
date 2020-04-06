@@ -8,11 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
-import com.cutlerdevelopment.footballsteps.Models.TeamCareer.OfflineTeamSavedData;
-import com.cutlerdevelopment.footballsteps.Models.TeamCareer.UserTeam;
+import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMSavedData;
+import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMUserTeam;
 import com.cutlerdevelopment.footballsteps.R;
 
-public class ActTeamMainMenu extends AppCompatActivity {
+public class ActTMMainMenu extends AppCompatActivity {
 
     private ImageView teamColourView;
     private Button teamBadgeButton;
@@ -22,14 +22,14 @@ public class ActTeamMainMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_team_main_menu);
+        setContentView(R.layout.activity_tm_main_menu);
 
-        teamColourView = findViewById(R.id.teamMainMenuBadgeColour);
-        teamBadgeButton = findViewById(R.id.teamMainMenuBadgeButton);
-        teamNameText = findViewById(R.id.teamMainMenuTeamName);
-        teamPositionText = findViewById(R.id.teamMainMenuPosition);
+        teamColourView = findViewById(R.id.pmMenuBadgeButton);
+        teamBadgeButton = findViewById(R.id.pmMenuBadgeColour);
+        teamNameText = findViewById(R.id.pmMenuTeamName);
+        teamPositionText = findViewById(R.id.pmMenuLeaguePosition);
 
-        UserTeam team = OfflineTeamSavedData.getInstance().getOfflineTeam();
+        TMUserTeam team = TMSavedData.getInstance().getOfflineTeam();
 
         teamColourView.setBackgroundColor(getResources().getColor(Colour.getBackgroundColour(team.getColour())));
         teamNameText.setText(team.getName());

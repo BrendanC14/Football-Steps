@@ -3,7 +3,7 @@ package com.cutlerdevelopment.footballsteps.Models.ProCareer;
 import com.cutlerdevelopment.footballsteps.Constants.Numbers;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.AppSavedData;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.PlayerActivity;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.UserActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,31 +11,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class ProMatchEngine {
+public class PMMatchEngine {
 
-    private static ProMatchEngine instance = null;
-    public static ProMatchEngine getInstance() {
+    private static PMMatchEngine instance = null;
+    public static PMMatchEngine getInstance() {
         if (instance != null) {
             return instance;
         }
-        instance = new ProMatchEngine();
+        instance = new PMMatchEngine();
         return instance;
     }
 
-    public ProMatchEngine() {
+    public PMMatchEngine() {
 
         instance = this;
     }
 
-    ProFixture thisFixture;
+    PMFixture thisFixture;
 
-    private ProAITeam homeTeam;
-    private ProAITeam awayTeam;
+    private PMAITeam homeTeam;
+    private PMAITeam awayTeam;
 
-    private List<ProMatchPlayer> homeDefensivePlayers;
-    private  List<ProMatchPlayer> homeAttackingPlayers;
-    private List<ProMatchPlayer> awayDefensivePlayers;
-    private  List<ProMatchPlayer> awayAttackingPlayers;
+    private List<PMMatchPlayer> homeDefensivePlayers;
+    private  List<PMMatchPlayer> homeAttackingPlayers;
+    private List<PMMatchPlayer> awayDefensivePlayers;
+    private  List<PMMatchPlayer> awayAttackingPlayers;
 
 
     private int homeDefenseScore = 0;
@@ -46,12 +46,12 @@ public class ProMatchEngine {
     private int homeGoals;
     private int awayGoals;
 
-    public void playPlayersMatch(ProFixture f) {
+    public void playPlayersMatch(PMFixture f) {
         thisFixture = f;
-        OfflineProSavedData sd = OfflineProSavedData.getInstance();
-        UserPlayer player = UserPlayer.getInstance();
-        homeTeam = OfflineProSavedData.getInstance().getTeamFromID(f.getHomeTeamID());
-        awayTeam = OfflineProSavedData.getInstance().getTeamFromID(f.getAwayTeamID());
+        PMSavedData sd = PMSavedData.getInstance();
+        PMUserPlayer player = PMUserPlayer.getInstance();
+        homeTeam = PMSavedData.getInstance().getTeamFromID(f.getHomeTeamID());
+        awayTeam = PMSavedData.getInstance().getTeamFromID(f.getAwayTeamID());
         HashMap<Integer, String> eventSteps = new HashMap<>();
 
         homeDefensivePlayers = new ArrayList<>();
@@ -67,13 +67,13 @@ public class ProMatchEngine {
             minuteList.add(i);
         }
 
-        List<ProAIPlayer> homePlayers = sd.getAllOfflinePlayerFromTeam(homeTeam.getID());
-        List<ProAIPlayer> awayPlayers = sd.getAllOfflinePlayerFromTeam(awayTeam.getID());
+        List<PMAIPlayer> homePlayers = sd.getAllOfflinePlayerFromTeam(homeTeam.getID());
+        List<PMAIPlayer> awayPlayers = sd.getAllOfflinePlayerFromTeam(awayTeam.getID());
 
-        for (ProAIPlayer aiPlayer : homePlayers) {
+        for (PMAIPlayer aiPlayer : homePlayers) {
             addAIPlayerToLists(aiPlayer);
         }
-        for (ProAIPlayer aiPlayer : awayPlayers) {
+        for (PMAIPlayer aiPlayer : awayPlayers) {
             addAIPlayerToLists(aiPlayer);
         }
         if (player.getCurrTeamID() == homeTeam.getID() || player.getCurrTeamID() == awayTeam.getID()) {
@@ -84,8 +84,8 @@ public class ProMatchEngine {
 
         for (int i = 0; i < homeAttackScore && i < 45; i++) {
             Collections.shuffle(homeAttackingPlayers);
-            ProMatchPlayer attackingPlayer = homeAttackingPlayers.get(0);
-            ProMatchPlayer defendingPlayer = null;
+            PMMatchPlayer attackingPlayer = homeAttackingPlayers.get(0);
+            PMMatchPlayer defendingPlayer = null;
             if (awayDefensivePlayers.size() > 0) {
                 Collections.shuffle(awayDefensivePlayers);
                 defendingPlayer = awayDefensivePlayers.get(0);
@@ -131,8 +131,8 @@ public class ProMatchEngine {
 
         for (int i = 0; i < awayAttackScore && i < 45; i++) {
             Collections.shuffle(awayAttackingPlayers);
-            ProMatchPlayer attackingPlayer = awayAttackingPlayers.get(0);
-            ProMatchPlayer defendingPlayer = null;
+            PMMatchPlayer attackingPlayer = awayAttackingPlayers.get(0);
+            PMMatchPlayer defendingPlayer = null;
             if (homeDefensivePlayers.size() > 0) {
                 Collections.shuffle(homeDefensivePlayers);
                 defendingPlayer = homeDefensivePlayers.get(0);
@@ -176,12 +176,12 @@ public class ProMatchEngine {
 
 
         f.updateScores(homeGoals, awayGoals);
-        UserPlayer.getInstance().dateLastMatchPlayed = f.getDate();
+        PMUserPlayer.getInstance().dateLastMatchPlayed = f.getDate();
 
     }
 
 
-    void addAIPlayerToLists(ProAIPlayer aiPlayer) {
+    void addAIPlayerToLists(PMAIPlayer aiPlayer) {
         Random r = new Random();
         int stepAdjustment = r.nextInt(Numbers.MATCH_STEP_ADJUSTMENT * 2) - Numbers.MATCH_STEP_ADJUSTMENT;
         double stepScore = aiPlayer.getAverageSteps() + stepAdjustment;
@@ -192,7 +192,7 @@ public class ProMatchEngine {
         minuteScore /= Numbers.NUM_MINUTES_FOR_MATCH_CALC;
         int finalscore = (int)((stepScore) + (minuteScore));
 
-        ProMatchPlayer player = new ProMatchPlayer(aiPlayer);
+        PMMatchPlayer player = new PMMatchPlayer(aiPlayer);
 
         if (player.getPosition() == Position.GOALKEEPER || player.getPosition() == Position.DEFENDER) {
             if (player.getCurrTeamID() == homeTeam.getID()) { addAIPlayer(homeDefensivePlayers, player, finalscore); }
@@ -208,22 +208,22 @@ public class ProMatchEngine {
         }
     }
 
-    void addAIPlayer(List<ProMatchPlayer> list, ProMatchPlayer player, int score) {
+    void addAIPlayer(List<PMMatchPlayer> list, PMMatchPlayer player, int score) {
         for (int i = 0; i < score; i++) {
             list.add(player);
         }
     }
 
-    void addPlayerToList(UserPlayer player) {
+    void addPlayerToList(PMUserPlayer player) {
 
-        PlayerActivity activity = AppSavedData.getInstance().getPlayerActivityOnDate(thisFixture.getDate());
+        UserActivity activity = AppSavedData.getInstance().getPlayerActivityOnDate(thisFixture.getDate());
 
         double stepScore = 0;//activity.getSteps() / Numbers.NUM_STEPS_FOR_MATCH_CALC;
         double minuteScore =0;// activity.getActiveMinutes() / Numbers.NUM_MINUTES_FOR_MATCH_CALC;
 
         int finalscore = (int)((stepScore) + (minuteScore));
 
-        ProMatchPlayer matchPlayer = new ProMatchPlayer(player);
+        PMMatchPlayer matchPlayer = new PMMatchPlayer(player);
 
         if (matchPlayer.getPosition() == Position.GOALKEEPER || matchPlayer.getPosition() == Position.DEFENDER) {
             if (matchPlayer.getCurrTeamID() == homeTeam.getID()) { addPlayer(homeDefensivePlayers, matchPlayer, finalscore); }
@@ -240,7 +240,7 @@ public class ProMatchEngine {
 
     }
 
-    void addPlayer(List<ProMatchPlayer> list, ProMatchPlayer player, int score) {
+    void addPlayer(List<PMMatchPlayer> list, PMMatchPlayer player, int score) {
         for (int i = 0; i < score; i++) {
             list.add(player);
         }

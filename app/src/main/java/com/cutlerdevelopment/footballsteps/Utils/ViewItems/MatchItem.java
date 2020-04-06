@@ -4,7 +4,7 @@ import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
 
 import java.util.Date;
 
-public class ProMatchItem {
+public class MatchItem {
 
     private String matchDate;
     private String homeTeam;

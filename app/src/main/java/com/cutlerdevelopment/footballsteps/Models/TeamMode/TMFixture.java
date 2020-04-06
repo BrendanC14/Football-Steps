@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Models.ProCareer;
+package com.cutlerdevelopment.footballsteps.Models.TeamMode;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -9,10 +9,11 @@ import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
 import java.util.Date;
 
 @Entity
-public class ProFixture implements Comparable<ProFixture> {
+public class TMFixture implements Comparable<TMFixture> {
+
 
     @Ignore
-    public ProFixture(int id, int homeTeamID, int awayTeamID, int week, Date date, int league) {
+    public TMFixture(int id, int homeTeamID, int awayTeamID, int week, Date date, int league) {
         this.ID = id;
         this.homeTeamID = homeTeamID;
         this.awayTeamID = awayTeamID;
@@ -23,13 +24,13 @@ public class ProFixture implements Comparable<ProFixture> {
         this.homeScore = -1;
         this.awayScore = -1;
 
-        OfflineProSavedData.getInstance().saveObject(this);
+        TMSavedData.getInstance().saveObject(this);
     }
 
     /**
      * Used when loading a player for the solo career. Doesn't take any variables as takes them from RoomDB
      */
-    public ProFixture() {
+    public TMFixture() {
 
     }
 
@@ -39,7 +40,7 @@ public class ProFixture implements Comparable<ProFixture> {
     public void setID(int id) { this.ID = id; }
     public void changeID(int id) {
         this.ID = id;
-        OfflineProSavedData.getInstance().updateObject(this);
+        TMSavedData.getInstance().updateObject(this);
     }
 
     private int homeTeamID;
@@ -47,7 +48,7 @@ public class ProFixture implements Comparable<ProFixture> {
     public void setHomeTeamID(int id) { this.homeTeamID = id; }
     public void changeHomeTeamID(int id) {
         this.homeTeamID = id;
-        OfflineProSavedData.getInstance().updateObject(this);
+        TMSavedData.getInstance().updateObject(this);
     }
 
     private int awayTeamID;
@@ -55,7 +56,7 @@ public class ProFixture implements Comparable<ProFixture> {
     public void setAwayTeamID(int id) { this.awayTeamID = id; }
     public void changeAwayTeamID(int id) {
         this.awayTeamID = id;
-        OfflineProSavedData.getInstance().updateObject(this);
+        TMSavedData.getInstance().updateObject(this);
     }
 
     private int homeScore;
@@ -71,14 +72,14 @@ public class ProFixture implements Comparable<ProFixture> {
         this.homeScore = homeScore;
         this.awayScore = awayScore;
 
-        ProAITeam homeTeam = OfflineProSavedData.getInstance().getTeamFromID(homeTeamID);
-        ProAITeam awayTeam = OfflineProSavedData.getInstance().getTeamFromID(awayTeamID);
+        TMAITeam homeTeam = TMSavedData.getInstance().getTeamFromID(homeTeamID);
+        TMAITeam awayTeam = TMSavedData.getInstance().getTeamFromID(awayTeamID);
 
         homeTeam.playMatch(getMatchResultForTeam(homeTeamID), homeScore, awayScore);
         awayTeam.playMatch(getMatchResultForTeam(awayTeamID), awayScore, homeScore);
 
 
-        OfflineProSavedData.getInstance().updateObject(this);
+        TMSavedData.getInstance().updateObject(this);
     }
 
     private int week;
@@ -86,7 +87,7 @@ public class ProFixture implements Comparable<ProFixture> {
     public void setWeek(int week) {this.week = week; }
     public void changeWeek(int week) {
         this.week = week;
-        OfflineProSavedData.getInstance().updateObject(this);
+        TMSavedData.getInstance().updateObject(this);
     }
 
     private Date date;
@@ -94,7 +95,7 @@ public class ProFixture implements Comparable<ProFixture> {
     public void setDate(Date date) { this.date = date; }
     public void updateDate(Date date) {
         this.date = date;
-        OfflineProSavedData.getInstance().updateObject(this);
+        TMSavedData.getInstance().updateObject(this);
     }
 
     private int league;
@@ -102,7 +103,7 @@ public class ProFixture implements Comparable<ProFixture> {
     public void setLeague(int league) {this.league = league; }
     public void changeLeague(int league) {
         this.league = league;
-        OfflineProSavedData.getInstance().updateObject(this);
+        TMSavedData.getInstance().updateObject(this);
     }
 
     public int getMatchResultForTeam(int teamID) {
@@ -116,11 +117,11 @@ public class ProFixture implements Comparable<ProFixture> {
     }
 
     public boolean matchPlayed() {
-         return homeScore >= 0;
+        return homeScore >= 0;
     }
 
     @Override
-    public int compareTo(ProFixture f) {
+    public int compareTo(TMFixture f) {
         return this.getDate().compareTo(f.getDate());
     }
 }

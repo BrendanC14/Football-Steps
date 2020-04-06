@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/newOfflineTeamCentreDivider"
+        android:id="@+id/createTeamCentreDivider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,17 +16,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/newOfflineTeamHeader"
+        android:id="@+id/createTeamHeader"
         style="@style/default_header_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/new_offline_team_header"
+        android:text="@string/create_team_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/newOfflineTeamClubName"
+        android:id="@+id/createTeamTeamName"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -36,21 +36,21 @@
         android:layout_marginRight="16dp"
         android:fontFamily="@font/cherry_cream_soda"
         android:gravity="center"
-        android:hint="@string/new_offline_team_team_name_hint"
+        android:hint="@string/create_team_team_name_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newOfflineTeamHeader">
+        app:layout_constraintTop_toBottomOf="@+id/createTeamHeader">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/cherry_cream_soda"
             android:gravity="center"
-            android:hint="@string/new_offline_team_team_name_hint" />
+            android:hint="@string/create_team_team_name_hint" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Spinner
-        android:id="@+id/newOfflineTeamColourSpinner"
+        android:id="@+id/createTeamColourSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -62,52 +62,52 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newOfflineTeamClubName" />
+        app:layout_constraintTop_toBottomOf="@+id/createTeamTeamName" />
 
     <Spinner
-        android:id="@+id/newOfflineTeamNumStepsSpinner"
+        android:id="@+id/createTeamStepsSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:fontFamily="@font/cherry_cream_soda"
         android:gravity="right"
-        app:layout_constraintStart_toEndOf="@+id/newOfflineTeamCentreDivider"
-        app:layout_constraintTop_toBottomOf="@+id/newOfflineTeamColourSpinner" />
+        app:layout_constraintStart_toEndOf="@+id/createTeamCentreDivider"
+        app:layout_constraintTop_toBottomOf="@+id/createTeamColourSpinner" />
 
     <TextView
-        android:id="@+id/thousandsText"
+        android:id="@+id/createTeamThousandsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/cherry_cream_soda"
-        android:text="@string/new_offline_team_thousands"
-        app:layout_constraintBottom_toBottomOf="@+id/newOfflineTeamNumStepsSpinner"
-        app:layout_constraintStart_toEndOf="@+id/newOfflineTeamNumStepsSpinner"
-        app:layout_constraintTop_toTopOf="@+id/newOfflineTeamNumStepsSpinner" />
+        android:text="@string/create_team_thousands_text"
+        app:layout_constraintBottom_toBottomOf="@+id/createTeamStepsSpinner"
+        app:layout_constraintStart_toEndOf="@+id/createTeamStepsSpinner"
+        app:layout_constraintTop_toTopOf="@+id/createTeamStepsSpinner" />
 
     <TextView
-        android:id="@+id/newOfflineTeamNumStepsHeader"
+        android:id="@+id/createTeamStepsHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/cherry_cream_soda"
-        android:text="@string/new_offline_team_num_steps_header"
+        android:text="@string/create_team_steps_header"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/newOfflineTeamNumStepsSpinner"
-        app:layout_constraintEnd_toStartOf="@+id/newOfflineTeamNumStepsSpinner"
+        app:layout_constraintBottom_toBottomOf="@+id/createTeamStepsSpinner"
+        app:layout_constraintEnd_toStartOf="@+id/createTeamStepsSpinner"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/newOfflineTeamNumStepsSpinner" />
+        app:layout_constraintTop_toTopOf="@+id/createTeamStepsSpinner" />
 
     <Button
-        android:id="@+id/newOfflineTeamConfirmButton"
+        android:id="@+id/createTeamConfirmButton"
         style="@style/button_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/new_offline_team_confirm_button"
+        android:text="@string/create_team_confirm_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/thousandsText" />
+        app:layout_constraintTop_toBottomOf="@+id/createTeamThousandsText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

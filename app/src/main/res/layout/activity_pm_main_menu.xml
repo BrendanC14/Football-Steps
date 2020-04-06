@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/pitch"
-    tools:context=".ActivitiesFragments.ActProMainMenu">
+    tools:context=".ActivitiesFragments.ActPMMainMenu">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mainMenuTopBanner"
+        android:id="@+id/pmMenuTopBanner"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/design_default_color_background"
@@ -18,7 +18,7 @@
 
 
         <LinearLayout
-            android:id="@+id/mainMenuShirtColour"
+            android:id="@+id/pmMenuShirtColour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -30,14 +30,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
-                android:id="@+id/mainMenuClubButton"
+                android:id="@+id/pmMenuShirtButton"
                 android:layout_width="100dp"
                 android:layout_height="75dp"
                 android:background="@drawable/emptyshirt" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/mainMenuName"
+            android:id="@+id/pmMenuPlayerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -48,11 +48,11 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/mainMenuShirtColour"
+            app:layout_constraintStart_toEndOf="@+id/pmMenuShirtColour"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/mainMenuPosition"
+            android:id="@+id/pmMenuPosition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -63,11 +63,11 @@
             android:textSize="18sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/mainMenuShirtColour"
-            app:layout_constraintTop_toBottomOf="@id/mainMenuName" />
+            app:layout_constraintStart_toEndOf="@+id/pmMenuShirtColour"
+            app:layout_constraintTop_toBottomOf="@id/pmMenuPlayerName" />
 
         <TextView
-            android:id="@+id/mainMenuClub"
+            android:id="@+id/pmMenuClub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -77,19 +77,19 @@
             android:textSize="18sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/mainMenuShirtColour"
-            app:layout_constraintTop_toBottomOf="@+id/mainMenuPosition" />
+            app:layout_constraintStart_toEndOf="@+id/pmMenuShirtColour"
+            app:layout_constraintTop_toBottomOf="@+id/pmMenuPosition" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mainMenuStatsBar"
+        android:id="@+id/pmMenuStatsBanner"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="#B8B0B0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainMenuTopBanner">
+        app:layout_constraintTop_toBottomOf="@+id/pmMenuTopBanner">
 
         <TextView
             android:id="@+id/mainMenuAppsHeader"
@@ -177,7 +177,7 @@
         android:onClick="openMatchesFragment"
         android:text="@string/main_menu_matches_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainMenuStatsBar" />
+        app:layout_constraintTop_toBottomOf="@+id/pmMenuStatsBanner" />
 
     <Button
         android:id="@+id/playNextMatchButton"

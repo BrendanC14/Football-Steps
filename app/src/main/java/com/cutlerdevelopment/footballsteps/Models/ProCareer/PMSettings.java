@@ -9,15 +9,15 @@ import com.cutlerdevelopment.footballsteps.Constants.Numbers;
  * ProSettings contains all of the settings for the offline solo game
  */
 @Entity
-public class ProSettings {
+public class PMSettings {
 
-    private static ProSettings instance = null;
+    private static PMSettings instance = null;
 
     /**
      * Returns the current instance of ProSettings. If instance not created will return null
      * @return the ProSettings instance
      */
-    public static ProSettings getInstance() {
+    public static PMSettings getInstance() {
         if (instance != null) {
             return instance;
         }
@@ -27,7 +27,7 @@ public class ProSettings {
     /**
      * Creates a new instance of ProSettings.
      */
-    public ProSettings() {
+    public PMSettings() {
 
         instance = this;
     }
@@ -44,7 +44,7 @@ public class ProSettings {
         this. pointsForLoss = Numbers.POINTS_FOR_LOSS;
 
 
-        OfflineProSavedData.getInstance().saveObject(this);
+        PMSavedData.getInstance().saveObject(this);
 
     }
 
@@ -54,7 +54,7 @@ public class ProSettings {
     public void setStartingAge(int newAge) { startingAge = newAge; }
     public void changeStartingAge(int newAge) {
         startingAge = newAge;
-        OfflineProSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private int stepDifficultyModifier;
@@ -62,7 +62,7 @@ public class ProSettings {
     public void setStepDifficultyModifier(int diff) {this.stepDifficultyModifier = diff; }
     public void changeStepDifficultyModifier(int diff) {
         this.stepDifficultyModifier = diff;
-        OfflineProSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private int minuteDifficultyModifier;
@@ -70,7 +70,7 @@ public class ProSettings {
     public void setMinuteDifficultyModifier(int diff) {this.minuteDifficultyModifier = diff; }
     public void changeMinuteDifficultyModifier(int diff) {
         this.minuteDifficultyModifier = diff;
-        OfflineProSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private int pointsForWin;
@@ -78,7 +78,7 @@ public class ProSettings {
     public void setPointsForWin(int pts) { this.pointsForWin = pts; }
     public void changePointsForWin(int pts) {
         this.pointsForWin = pts;
-        OfflineProSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private int pointsForDraw;
@@ -86,7 +86,7 @@ public class ProSettings {
     public void setPointsForDraw(int pts) { this.pointsForDraw = pts; }
     public void changePointsForDraw(int pts) {
         this.pointsForDraw = pts;
-        OfflineProSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private int pointsForLoss;
@@ -94,7 +94,7 @@ public class ProSettings {
     public void setPointsForLoss(int pts) { this.pointsForLoss = pts; }
     public void changePointsForLoss(int pts) {
         this.pointsForLoss = pts;
-        OfflineProSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
 

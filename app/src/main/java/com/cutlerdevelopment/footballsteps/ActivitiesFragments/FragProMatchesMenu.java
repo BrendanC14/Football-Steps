@@ -11,15 +11,15 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.cutlerdevelopment.footballsteps.Constants.Words;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.UserPlayer;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMSavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMUserPlayer;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.AppSavedData;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProFixture;
-import com.cutlerdevelopment.footballsteps.Models.SharedModels.PlayerActivity;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineProSavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMFixture;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.UserActivity;
 import com.cutlerdevelopment.footballsteps.R;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
-import com.cutlerdevelopment.footballsteps.Utils.ViewItems.ProMatchItem;
-import com.cutlerdevelopment.footballsteps.Utils.ViewAdapters.ProMatchItemAdapter;
+import com.cutlerdevelopment.footballsteps.Utils.ViewItems.MatchItem;
+import com.cutlerdevelopment.footballsteps.Utils.ViewAdapters.MatchItemAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,7 +58,7 @@ public class FragProMatchesMenu extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_pro_matches_menu, container, false);
 
         matchesButton = this.getActivity().findViewById(R.id.playerMatchesButton);
-        UserPlayer player = UserPlayer.getInstance();
+        PMUserPlayer player = PMUserPlayer.getInstance();
         matchGrid = rootView.findViewById(R.id.matchGridLayout);
         playNextGameButton = this.getActivity().findViewById(R.id.playNextMatchButton);
 
@@ -66,14 +66,14 @@ public class FragProMatchesMenu extends Fragment {
         matchesButton.setEnabled(false);
         playNextGameButton.setEnabled(false);
 
-        final ArrayList<ProMatchItem> myFixtureItems = new ArrayList<>();
-        List<ProFixture> allFixtures = OfflineProSavedData.getInstance().getAllFixtures();
+        final ArrayList<MatchItem> myFixtureItems = new ArrayList<>();
+        List<PMFixture> allFixtures = PMSavedData.getInstance().getAllFixtures();
         Collections.sort(allFixtures);
-        for (ProFixture f : allFixtures) {
-            ProMatchItem item = new ProMatchItem();
+        for (PMFixture f : allFixtures) {
+            MatchItem item = new MatchItem();
             item.setMatchDate(DateHelper.formatDate(f.getDate()));
-            item.setHomeTeam(OfflineProSavedData.getInstance().getTeamFromID(f.getHomeTeamID()).getName());
-            item.setAwayTeam(OfflineProSavedData.getInstance().getTeamFromID(f.getAwayTeamID()).getName());
+            item.setHomeTeam(PMSavedData.getInstance().getTeamFromID(f.getHomeTeamID()).getName());
+            item.setAwayTeam(PMSavedData.getInstance().getTeamFromID(f.getAwayTeamID()).getName());
 
             Map<Map<Integer, Integer>, Map<Integer, Integer>> statsMap = Words.getFirstHeaderAndStat();
 
@@ -97,7 +97,7 @@ public class FragProMatchesMenu extends Fragment {
             }
 
             Date today = new Date();
-            PlayerActivity thisDatesActivity = AppSavedData.getInstance().getPlayerActivityOnDate(f.getDate());
+            UserActivity thisDatesActivity = AppSavedData.getInstance().getPlayerActivityOnDate(f.getDate());
             if (DateHelper.getDaysBetween(f.getDate(), today) < 0 && thisDatesActivity != null) {
                 item.setNumSteps(Words.getNumberWithCommas(thisDatesActivity.getSteps()));
             }
@@ -105,7 +105,7 @@ public class FragProMatchesMenu extends Fragment {
         }
 
 
-        ProMatchItemAdapter adapter = new ProMatchItemAdapter(getActivity().getApplicationContext(), myFixtureItems);
+        MatchItemAdapter adapter = new MatchItemAdapter(getActivity().getApplicationContext(), myFixtureItems);
         matchGrid.setAdapter(adapter);
         matchGrid.setNumColumns(2);
 

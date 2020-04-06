@@ -1,26 +1,29 @@
 <resources>
     <string name="app_name">Football Steps</string>
 
-    <string name="main_menu_new_offline_career_button">New Offline Career</string>
+    <string name="menu_create_career_button">New Career</string>
 
-    <string name="new_offline_career_header">New Offline Career</string>
-    <string name="new_offline_career_team_button">Team Mode</string>
-    <string name="new_offline_career_team_mode_info">In Team Mode you create your own club and start in League 2. The entire team\'s performance is decided by your activity.\nYou must stay with your club, but in a successful career you could also represent your national team!</string>
-    <string name="new_offline_career_player_button">Player Mode</string>
-    <string name="new_offline_career_player_mode_info">In Player Mode you create your own player and sign for your favourite club.\nOnly your player\'s performance is decided by your activity, and you will be playing with 10 AI controlled players in your team.\nAs a player, you will be subject to transfer offers, and in a successful career you could also represent your national team!</string>
-    <string name="ne_offline_career_target_mode"> Target Mode</string>
-    <string name="new_offline_career_target_mode_info">In Target Mode your performance will be judged against a target you\'ve chosen.
+    <string name="create_career_header">New Career</string>
+    <string name="create_career_team_button">Team Mode</string>
+    <string name="create_career_team_info">In Team Mode you create your own club and start in League 2. The entire team\'s performance is decided by your activity.\nYou must stay with your club, but in a successful career you could also represent your national team!</string>
+    <string name="create_career_player_button">Player Mode</string>
+    <string name="create_career_player_info">In Player Mode you create your own player and sign for your favourite club.\nOnly your player\'s performance is decided by your activity, and you will be playing with 10 AI controlled players in your team.\nAs a player, you will be subject to transfer offers, and in a successful career you could also represent your national team!</string>
+    <string name="create_career_target_button"> Target Mode</string>
+    <string name="create_career_target_info">In Target Mode your performance will be judged against a target you\'ve chosen.
         Even as you move up the leagues you will only be judged against your target.</string>
-    <string name="ne_offline_career_scaled_mode"> Scaled Mode</string>
-    <string name="new_offline_career_scaled_mode_info">In Scaled Mode your performance will be judged depending on the team you\'re facing.
+    <string name="create_career_scaled_button"> Scaled Mode</string>
+    <string name="create_career_scaled_info">In Scaled Mode your performance will be judged depending on the team you\'re facing.
         As you move up the leagues you will need to do more activity to meet expectations.</string>
-    <string name="new_offline_career_confirm_button">Start Career</string>
+    <string name="create_career_confirm_button">Start Career</string>
 
-    <string name="new_offline_team_header">New Offline Team</string>
-    <string name="new_offline_team_team_name_hint">Team Name</string>
-    <string name="new_offline_team_confirm_button">Create Team</string>
-    <string name="new_offline_team_num_steps_header">Target Steps</string>
-    <string name="new_offline_team_thousands">,000</string>
+    <string name="create_team_header">New Offline Team</string>
+    <string name="create_team_team_name_hint">Team Name</string>
+    <string name="create_team_confirm_button">Create Team</string>
+    <string name="create_team_steps_header">Target Steps</string>
+    <string name="create_team_thousands_text">,000</string>
+
+
+
 
     <string name="first_name_hint">First Name</string>
     <string name="surname_hint">Surname</string>

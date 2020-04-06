@@ -13,12 +13,12 @@ import android.widget.TextView;
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.UserPlayer;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProGame;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMGame;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMUserPlayer;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.AppSavedData;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProFixture;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProMatchEngine;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineProSavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMFixture;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMMatchEngine;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMSavedData;
 import com.cutlerdevelopment.footballsteps.R;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 
@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ActProMainMenu extends AppCompatActivity implements FragProMatchesMenu.onBackPressed {
+public class ActPMMainMenu extends AppCompatActivity implements FragProMatchesMenu.onBackPressed {
 
     LinearLayout shirtColour;
     TextView nameField;
@@ -46,18 +46,18 @@ public class ActProMainMenu extends AppCompatActivity implements FragProMatchesM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pro_main_menu);
+        setContentView(R.layout.activity_pm_main_menu);
 
-        ProGame.getInstance().refreshPlayerActivity();
+        PMGame.getInstance().refreshPlayerActivity();
 
-        shirtColour = findViewById(R.id.mainMenuShirtColour);
-        nameField = findViewById(R.id.mainMenuName);
-        positionField = findViewById(R.id.mainMenuPosition);
-        clubField = findViewById(R.id.mainMenuClub);
+        shirtColour = findViewById(R.id.pmMenuShirtColour);
+        nameField = findViewById(R.id.pmMenuPlayerName);
+        positionField = findViewById(R.id.pmMenuPosition);
+        clubField = findViewById(R.id.pmMenuClub);
         matchesButton = findViewById(R.id.playerMatchesButton);
         playNextMatchButton = findViewById(R.id.playNextMatchButton);
 
-        UserPlayer player = UserPlayer.getInstance();
+        PMUserPlayer player = PMUserPlayer.getInstance();
         int teamColour = player.getCurrTeam().getColour();
 
         shirtColour.setBackgroundColor(ContextCompat.getColor(this, Colour.getBackgroundColour(teamColour)));
@@ -108,10 +108,10 @@ public class ActProMainMenu extends AppCompatActivity implements FragProMatchesM
 
     public void playNextMatch(View view) {
 
-        Date nextMatchDate = DateHelper.addDays(UserPlayer.getInstance().dateLastMatchPlayed, 1);
-        for (ProFixture f : OfflineProSavedData.getInstance().getWeeksFixtureFromLeague(nextMatchDate, 1)) {
+        Date nextMatchDate = DateHelper.addDays(PMUserPlayer.getInstance().dateLastMatchPlayed, 1);
+        for (PMFixture f : PMSavedData.getInstance().getWeeksFixtureFromLeague(nextMatchDate, 1)) {
 
-            ProMatchEngine.getInstance().playPlayersMatch(f);
+            PMMatchEngine.getInstance().playPlayersMatch(f);
 
         }
         checkPlayNextMatchButton();
@@ -120,7 +120,7 @@ public class ActProMainMenu extends AppCompatActivity implements FragProMatchesM
 
     void checkPlayNextMatchButton() {
         if (AppSavedData.getInstance().getLastAddedActivity() != null) {
-            int daysBetween = DateHelper.getDaysBetween(UserPlayer.getInstance().getDateLastMatchPlayed(), AppSavedData.getInstance().getLastAddedActivity().getDate());
+            int daysBetween = DateHelper.getDaysBetween(PMUserPlayer.getInstance().getDateLastMatchPlayed(), AppSavedData.getInstance().getLastAddedActivity().getDate());
 
 
             if (daysBetween < 0) {
@@ -134,7 +134,7 @@ public class ActProMainMenu extends AppCompatActivity implements FragProMatchesM
 
     public void onRefreshSteps(View view) {
 
-        ProGame.getInstance().refreshPlayerActivity();
+        PMGame.getInstance().refreshPlayerActivity();
         checkPlayNextMatchButton();
 
     }

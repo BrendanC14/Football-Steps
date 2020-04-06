@@ -2,7 +2,7 @@ package com.cutlerdevelopment.footballsteps.Constants;
 
 import android.util.Pair;
 
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProSettings;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMSettings;
 
 import java.util.Random;
 
@@ -82,8 +82,8 @@ public class Numbers {
                 minuteAverage = r.nextInt(DEFAULT_LEAGUE_4__MAX_MINUTES - DEFAULT_LEAGUE_4__MIN_MINUTES) + DEFAULT_LEAGUE_4__MIN_MINUTES;
                 break;
         }
-        stepAverage += ProSettings.getInstance().getStepDifficultyModifier();
-        minuteAverage += ProSettings.getInstance().getMinuteDifficultyModifier();
+        stepAverage += PMSettings.getInstance().getStepDifficultyModifier();
+        minuteAverage += PMSettings.getInstance().getMinuteDifficultyModifier();
         Pair<Integer, Integer> pair = new Pair<>(stepAverage, minuteAverage);
         return pair;
     }

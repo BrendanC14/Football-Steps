@@ -13,17 +13,17 @@ import androidx.core.content.ContextCompat;
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
 import com.cutlerdevelopment.footballsteps.R;
-import com.cutlerdevelopment.footballsteps.Utils.ViewItems.ProMatchItem;
+import com.cutlerdevelopment.footballsteps.Utils.ViewItems.MatchItem;
 
 import java.util.ArrayList;
 
-public class ProMatchItemAdapter extends BaseAdapter {
+public class MatchItemAdapter extends BaseAdapter {
 
-    private ArrayList<ProMatchItem> singleRow;
+    private ArrayList<MatchItem> singleRow;
     private LayoutInflater thisInflater;
     private Context context;
 
-    public ProMatchItemAdapter(Context context, ArrayList<ProMatchItem> aRow) {
+    public MatchItemAdapter(Context context, ArrayList<MatchItem> aRow) {
         this.singleRow = aRow;
         this.context = context;
         thisInflater = (thisInflater.from(context));
@@ -47,7 +47,7 @@ public class ProMatchItemAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = thisInflater.inflate(R.layout.pro_match_item, parent, false);
+            convertView = thisInflater.inflate(R.layout.match_item, parent, false);
         }
 
         ConstraintLayout background = convertView.findViewById(R.id.matchFragmentItemBground);
@@ -57,7 +57,7 @@ public class ProMatchItemAdapter extends BaseAdapter {
         TextView awayScore = convertView.findViewById(R.id.matchAwayScore);
         TextView awayTeam = convertView.findViewById(R.id.matchAwayTeam);
 
-        ProMatchItem currentItem = (ProMatchItem) getItem(i);
+        MatchItem currentItem = (MatchItem) getItem(i);
 
         dateField.setText(currentItem.getMatchDate());
         homeTeam.setText(currentItem.getHomeTeam());

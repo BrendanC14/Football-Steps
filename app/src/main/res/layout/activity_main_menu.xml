@@ -8,7 +8,7 @@
     tools:context=".ActivitiesFragments.ActMainMenu">
 
     <Button
-        android:id="@+id/newOfflineGame"
+        android:id="@+id/mainMenuNewGameButton"
         style="@style/tshirt_style"
         android:layout_width="175dp"
         android:layout_height="150dp"
@@ -18,14 +18,14 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/redshirt"
-        android:onClick="showNewOfflineCareerDialog"
-        android:text="@string/main_menu_new_offline_career_button"
+        android:onClick="openCreateCareerDialog"
+        android:text="@string/menu_create_career_button"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/main_menu_new_offline_career_button" />
+        tools:text="@string/menu_create_career_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,10 +13,10 @@ import android.widget.Spinner;
 
 import com.cutlerdevelopment.footballsteps.Constants.Position;
 import com.cutlerdevelopment.footballsteps.Constants.Words;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProGame;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.UserPlayer;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProSettings;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineProSavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMSavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMGame;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMUserPlayer;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMSettings;
 import com.cutlerdevelopment.footballsteps.R;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -61,7 +61,7 @@ public class FragCreateProPlayer extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_create_pro_player, container, false);
 
-        newOfflineGame = this.getActivity().findViewById(R.id.newOfflineGame);
+        newOfflineGame = this.getActivity().findViewById(R.id.mainMenuNewGameButton);
         continueButton = rootView.findViewById(R.id.continueButton);
         firstNameField = rootView.findViewById(R.id.firstNameField);
         surnameField = rootView.findViewById(R.id.surnameField);
@@ -69,7 +69,7 @@ public class FragCreateProPlayer extends Fragment {
         positionSpinner = rootView.findViewById(R.id.positionSpinner);
         submitButton = rootView.findViewById(R.id.submitOfflinePlayer);
 
-        UserPlayer player = OfflineProSavedData.getInstance().getOfflinePlayer();
+        PMUserPlayer player = PMSavedData.getInstance().getOfflinePlayer();
         if (player != null) {
             continueButton.setVisibility(View.VISIBLE);
             continueButton.setText(getString(R.string.continue_offline_player_button, player.getFirstName(), player.getSurname()));
@@ -123,15 +123,15 @@ public class FragCreateProPlayer extends Fragment {
         position = positionSpinner.getSelectedItem().toString();
         favTeam = teamSpinner.getSelectedItem().toString();
 
-        OfflineProSavedData.getInstance().resetDB();
+        PMSavedData.getInstance().resetDB();
 
 
-        ProSettings settings = new ProSettings();
+        PMSettings settings = new PMSettings();
         settings.assignDefaultSettings();
-        ProGame game = new ProGame();
+        PMGame game = new PMGame();
         game.startNewGame();
-        new UserPlayer(firstName, surname, Position.getPositionFromShortString(position),
-                OfflineProSavedData.getInstance().getIDFromName(favTeam));
+        new PMUserPlayer(firstName, surname, Position.getPositionFromShortString(position),
+                PMSavedData.getInstance().getIDFromName(favTeam));
         game.deleteAIPlayerFromPlayersTeam();
 
         finishCallback.onFinishedListener();
@@ -141,9 +141,9 @@ public class FragCreateProPlayer extends Fragment {
 
     public void continueCareer() {
 
-        OfflineProSavedData.getInstance().getOfflinePlayer();
-        OfflineProSavedData.getInstance().getOfflineGame();
-        OfflineProSavedData.getInstance().getOfflineSettings();
+        PMSavedData.getInstance().getOfflinePlayer();
+        PMSavedData.getInstance().getOfflineGame();
+        PMSavedData.getInstance().getOfflineSettings();
 
         finishCallback.onFinishedListener();
         getFragmentManager().popBackStack();

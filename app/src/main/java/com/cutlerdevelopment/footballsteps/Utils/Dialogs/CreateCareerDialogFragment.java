@@ -19,7 +19,7 @@ import androidx.fragment.app.DialogFragment;
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.R;
 
-public class NewOfflineCareerDialogFragment extends DialogFragment {
+public class CreateCareerDialogFragment extends DialogFragment {
 
     private boolean teamModeSelected;
     private boolean targetedModeSelected;
@@ -41,20 +41,20 @@ public class NewOfflineCareerDialogFragment extends DialogFragment {
 
     private Button confirmButton;
 
-    public interface NewOfflineCareerDialogListener {
+    public interface CreateCareerDialogListener {
         public void confirmCareerSettings(DialogFragment dialog, boolean teamModeSelected, boolean targetModeSelected);
     }
 
-    NewOfflineCareerDialogListener listener;
+    CreateCareerDialogListener listener;
 
     @Override public void onAttach(Context context) {
         super.onAttach(context);
-        listener = (NewOfflineCareerDialogListener) context;
+        listener = (CreateCareerDialogListener) context;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_new_offline_team, container, false);
+        View view = inflater.inflate(R.layout.dialog_create_team, container, false);
         // Set transparent background and no title
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -66,18 +66,18 @@ public class NewOfflineCareerDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View newOfflineCareerView = inflater.inflate(R.layout.dialog_new_offline_career, null);
-        teamPlayerInfoText = newOfflineCareerView.findViewById(R.id.teamPlayerInformationText);
-        scaledTargetInfoText = newOfflineCareerView.findViewById(R.id.targetScaledInformationText);
-        teamModeButton = newOfflineCareerView.findViewById(R.id.newOfflineCareerTeamButton);
-        teamModeBackground = newOfflineCareerView.findViewById(R.id.teamModeBackground);
-        playerModeButton = newOfflineCareerView.findViewById(R.id.newOffCareerPlayerButton);
-        playerModeBackground = newOfflineCareerView.findViewById(R.id.playerModeBackground);
-        targetModeButton = newOfflineCareerView.findViewById(R.id.newOfflineCareerTargetButton);
-        targetModeBackground = newOfflineCareerView.findViewById(R.id.targetModeBackground);
-        scaledModeButton = newOfflineCareerView.findViewById(R.id.newOfflineCareerScaledButton);
-        scaledModeBackground = newOfflineCareerView.findViewById(R.id.scaledModeBackground);
-        confirmButton = newOfflineCareerView.findViewById(R.id.newOffCareerConfirmButton);
+        View newOfflineCareerView = inflater.inflate(R.layout.dialog_create_career, null);
+        teamPlayerInfoText = newOfflineCareerView.findViewById(R.id.createCareerTeamPlayerInfo);
+        scaledTargetInfoText = newOfflineCareerView.findViewById(R.id.createCareerTargetScaledInfo);
+        teamModeButton = newOfflineCareerView.findViewById(R.id.createCareerTeamButton);
+        teamModeBackground = newOfflineCareerView.findViewById(R.id.createCareerTeamBackground);
+        playerModeButton = newOfflineCareerView.findViewById(R.id.createCareerPlayerButton);
+        playerModeBackground = newOfflineCareerView.findViewById(R.id.createCareerPlayerBackground);
+        targetModeButton = newOfflineCareerView.findViewById(R.id.createCareerTargetButton);
+        targetModeBackground = newOfflineCareerView.findViewById(R.id.createCareerTargetBackground);
+        scaledModeButton = newOfflineCareerView.findViewById(R.id.createCareerScaledButton);
+        scaledModeBackground = newOfflineCareerView.findViewById(R.id.createCareerScaledBackground);
+        confirmButton = newOfflineCareerView.findViewById(R.id.createCareerConfirmButton);
 
 
         teamPlayerInfoText.setVisibility(View.GONE);
@@ -99,7 +99,7 @@ public class NewOfflineCareerDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 teamPlayerInfoText.setVisibility(View.VISIBLE);
-                teamPlayerInfoText.setText(R.string.new_offline_career_team_mode_info);
+                teamPlayerInfoText.setText(R.string.create_career_team_info);
                 teamModeBackground.setBackgroundColor(getResources().getColor(Colour.MODE_SELECTED_BACKGROUND_COLOUR));
                 playerModeBackground.setBackgroundColor(getResources().getColor(Colour.MODE_DEFAULT_BACKGROUND_COLOUR));
 
@@ -116,7 +116,7 @@ public class NewOfflineCareerDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 teamPlayerInfoText.setVisibility(View.VISIBLE);
-                teamPlayerInfoText.setText(R.string.new_offline_career_player_mode_info);
+                teamPlayerInfoText.setText(R.string.create_career_player_info);
                 playerModeBackground.setBackgroundColor(getResources().getColor(Colour.MODE_SELECTED_BACKGROUND_COLOUR));
                 teamModeBackground.setBackgroundColor(getResources().getColor(Colour.MODE_DEFAULT_BACKGROUND_COLOUR));
 
@@ -133,7 +133,7 @@ public class NewOfflineCareerDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 scaledTargetInfoText.setVisibility(View.VISIBLE);
-                scaledTargetInfoText.setText(R.string.new_offline_career_target_mode_info);
+                scaledTargetInfoText.setText(R.string.create_career_target_info);
                 targetModeBackground.setBackgroundColor(getResources().getColor(Colour.MODE_SELECTED_BACKGROUND_COLOUR));
                 scaledModeBackground.setBackgroundColor(getResources().getColor(Colour.MODE_DEFAULT_BACKGROUND_COLOUR));
 
@@ -147,7 +147,7 @@ public class NewOfflineCareerDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 scaledTargetInfoText.setVisibility(View.VISIBLE);
-                scaledTargetInfoText.setText(R.string.new_offline_career_scaled_mode_info);
+                scaledTargetInfoText.setText(R.string.create_career_scaled_info);
                 scaledModeBackground.setBackgroundColor(getResources().getColor(Colour.MODE_SELECTED_BACKGROUND_COLOUR));
                 targetModeBackground.setBackgroundColor(getResources().getColor(Colour.MODE_DEFAULT_BACKGROUND_COLOUR));
 
@@ -162,7 +162,7 @@ public class NewOfflineCareerDialogFragment extends DialogFragment {
             public void onClick(View view) {
 
                 dismiss();
-                listener.confirmCareerSettings(NewOfflineCareerDialogFragment.this, teamModeSelected, targetedModeSelected);
+                listener.confirmCareerSettings(CreateCareerDialogFragment.this, teamModeSelected, targetedModeSelected);
             }
         });
 

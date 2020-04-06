@@ -3,9 +3,9 @@ package com.cutlerdevelopment.footballsteps.Models.ProCareer;
 /**
  * This object is used in a match. The OfflinePlayers are converted into a copy of the ProMatchPlayer to be used to play.
  */
-public class ProMatchPlayer {
+public class PMMatchPlayer {
 
-    public ProMatchPlayer(ProAIPlayer player) {
+    public PMMatchPlayer(PMAIPlayer player) {
 
         this.position = player.getPosition();
         this.currTeamID = player.getCurrTeamID();
@@ -13,7 +13,7 @@ public class ProMatchPlayer {
         this.surname = player.getSurname();
     }
 
-    public ProMatchPlayer(UserPlayer player) {
+    public PMMatchPlayer(PMUserPlayer player) {
 
         this.position = player.getPosition();
         this.currTeamID = player.getCurrTeamID();

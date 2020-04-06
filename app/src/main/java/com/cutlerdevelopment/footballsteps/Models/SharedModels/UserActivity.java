@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.OfflineProSavedData;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMSavedData;
 
 import java.util.Date;
 
@@ -13,22 +13,22 @@ import java.util.Date;
  * created for each day of activity and saved in RoomDB.
  */
 @Entity
-public class PlayerActivity {
+public class UserActivity {
 
     @Ignore
-    public PlayerActivity(Date date, int steps, int activeMinutes) {
+    public UserActivity(Date date, int steps, int activeMinutes) {
 
         this.date = date;
         this.steps = steps;
         this.activeMinutes = activeMinutes;
 
-        OfflineProSavedData.getInstance().saveObject(this);
+        PMSavedData.getInstance().saveObject(this);
     }
 
     /**
      * Used when loading a player for the solo career. Doesn't take any variables as takes them from RoomDB
      */
-    public PlayerActivity() {
+    public UserActivity() {
 
     }
 
@@ -38,7 +38,7 @@ public class PlayerActivity {
     public void setDate(Date date) { this.date = date; }
     public void changeDate(Date date) {
         this.date = date;
-        OfflineProSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private int steps;
@@ -46,7 +46,7 @@ public class PlayerActivity {
     public void setSteps(int steps) { this.steps = steps; }
     public void changeSteps(int steps) {
         this.steps = steps;
-        OfflineProSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 
     private int activeMinutes;
@@ -54,6 +54,6 @@ public class PlayerActivity {
     public void setActiveMinutes(int mins) {this.activeMinutes = mins; }
     public void changeActiveMinutes(int mins) {
         this.activeMinutes = mins;
-        OfflineProSavedData.getInstance().updateObject(this);
+        PMSavedData.getInstance().updateObject(this);
     }
 }

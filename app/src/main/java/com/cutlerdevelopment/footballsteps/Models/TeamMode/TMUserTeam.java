@@ -1,4 +1,4 @@
-package com.cutlerdevelopment.footballsteps.Models.TeamCareer;
+package com.cutlerdevelopment.footballsteps.Models.TeamMode;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -7,30 +7,30 @@ import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
-import com.cutlerdevelopment.footballsteps.Models.ProCareer.ProSettings;
+import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMSettings;
 
 @Entity
-public class UserTeam {
+public class TMUserTeam {
 
-    private static UserTeam instance = null;
-    public static UserTeam getInstance() {
+    private static TMUserTeam instance = null;
+    public static TMUserTeam getInstance() {
         if (instance != null) {
             return instance;
         }
         return null;
     }
     @Ignore
-    public UserTeam(String name, int colour) {
+    public TMUserTeam(String name, int colour) {
 
         this.name = name;
         this.colour = colour;
         //TODO: Change when leagues built
         this.league = 1;
 
-        OfflineTeamSavedData.getInstance().saveObject(this);
+        TMSavedData.getInstance().saveObject(this);
     }
 
-    public UserTeam() {
+    public TMUserTeam() {
         instance = this;
     }
 
@@ -41,7 +41,7 @@ public class UserTeam {
     public void setName(String newName) { name = newName; }
     public void changeName(String newName) {
         name = newName;
-        OfflineTeamSavedData.getInstance().updateObject(this);
+        TMSavedData.getInstance().updateObject(this);
     }
 
     private int colour;
@@ -50,7 +50,7 @@ public class UserTeam {
     public void changeColour(int newColour) {
         if (newColour >= 1 && newColour <= Colour.NUM_TEAM_COLOURS) {
             colour = newColour;
-            OfflineTeamSavedData.getInstance().updateObject(this);
+            TMSavedData.getInstance().updateObject(this);
         }
     }
 
@@ -59,7 +59,7 @@ public class UserTeam {
     public void setLeague(int newLeague) { this.league = league; }
     public void changeLeague(int newLeague) {
         this.league = newLeague;
-        OfflineTeamSavedData.getInstance().updateObject(league);
+        TMSavedData.getInstance().updateObject(league);
     }
 
     private int points;
@@ -72,7 +72,7 @@ public class UserTeam {
     public void setWins(int w) { this.wins = w; }
     public void addWin() {
         wins++;
-        addPoints(ProSettings.getInstance().getPointsForWin());
+        addPoints(PMSettings.getInstance().getPointsForWin());
     }
 
     private int draws;
@@ -80,7 +80,7 @@ public class UserTeam {
     public void setDraws(int d) { this.draws = d; }
     public void addDraw() {
         draws++;
-        addPoints(ProSettings.getInstance().getPointsForDraw());
+        addPoints(PMSettings.getInstance().getPointsForDraw());
     }
 
     private int losses;
@@ -88,7 +88,7 @@ public class UserTeam {
     public void setLosses(int l) { this.losses = l; }
     public void addLoss() {
         losses++;
-        addPoints(ProSettings.getInstance().getPointsForLoss());
+        addPoints(PMSettings.getInstance().getPointsForLoss());
     }
 
     private int scored;
@@ -111,7 +111,7 @@ public class UserTeam {
         else if (matchResult == MatchResult.WIN) { addWin(); }
         else { addLoss(); }
 
-        OfflineTeamSavedData.getInstance().updateObject(this);
+        TMSavedData.getInstance().updateObject(this);
 
 
     }
