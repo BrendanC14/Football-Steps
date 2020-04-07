@@ -69,14 +69,14 @@ public class CreateTeamDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         targetModeSelected = getArguments().getBoolean("targetMode");
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View newOfflineTeamView = inflater.inflate(R.layout.dialog_create_team, null);
+        View createTeamView = inflater.inflate(R.layout.dialog_create_team, null);
 
-        teamNameTextView = newOfflineTeamView.findViewById(R.id.createTeamTeamName);
-        teamColourSpinner = newOfflineTeamView.findViewById(R.id.createTeamColourSpinner);
-        stepTargetHeader = newOfflineTeamView.findViewById(R.id.createTeamStepsHeader);
-        stepTargetSpinner = newOfflineTeamView.findViewById(R.id.createTeamStepsSpinner);
-        step000s = newOfflineTeamView.findViewById(R.id.createTeamThousandsText);
-        confirmButton = newOfflineTeamView.findViewById(R.id.createTeamConfirmButton);
+        teamNameTextView = createTeamView.findViewById(R.id.createTeamTeamName);
+        teamColourSpinner = createTeamView.findViewById(R.id.createTeamColourSpinner);
+        stepTargetHeader = createTeamView.findViewById(R.id.createTeamStepsHeader);
+        stepTargetSpinner = createTeamView.findViewById(R.id.createTeamStepsSpinner);
+        step000s = createTeamView.findViewById(R.id.createTeamThousandsText);
+        confirmButton = createTeamView.findViewById(R.id.createTeamConfirmButton);
 
         stepTargetHeader.setVisibility(View.GONE);
         stepTargetSpinner.setVisibility(View.GONE);
@@ -130,7 +130,7 @@ public class CreateTeamDialogFragment extends DialogFragment {
             }
         });
 
-        builder.setView(newOfflineTeamView);
+        builder.setView(createTeamView);
 
         return builder.create();
     }

@@ -66,18 +66,18 @@ public class CreateCareerDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View newOfflineCareerView = inflater.inflate(R.layout.dialog_create_career, null);
-        teamPlayerInfoText = newOfflineCareerView.findViewById(R.id.createCareerTeamPlayerInfo);
-        scaledTargetInfoText = newOfflineCareerView.findViewById(R.id.createCareerTargetScaledInfo);
-        teamModeButton = newOfflineCareerView.findViewById(R.id.createCareerTeamButton);
-        teamModeBackground = newOfflineCareerView.findViewById(R.id.createCareerTeamBackground);
-        playerModeButton = newOfflineCareerView.findViewById(R.id.createCareerPlayerButton);
-        playerModeBackground = newOfflineCareerView.findViewById(R.id.createCareerPlayerBackground);
-        targetModeButton = newOfflineCareerView.findViewById(R.id.createCareerTargetButton);
-        targetModeBackground = newOfflineCareerView.findViewById(R.id.createCareerTargetBackground);
-        scaledModeButton = newOfflineCareerView.findViewById(R.id.createCareerScaledButton);
-        scaledModeBackground = newOfflineCareerView.findViewById(R.id.createCareerScaledBackground);
-        confirmButton = newOfflineCareerView.findViewById(R.id.createCareerConfirmButton);
+        View createCareerView = inflater.inflate(R.layout.dialog_create_career, null);
+        teamPlayerInfoText = createCareerView.findViewById(R.id.createCareerTeamPlayerInfo);
+        scaledTargetInfoText = createCareerView.findViewById(R.id.createCareerTargetScaledInfo);
+        teamModeButton = createCareerView.findViewById(R.id.createCareerTeamButton);
+        teamModeBackground = createCareerView.findViewById(R.id.createCareerTeamBackground);
+        playerModeButton = createCareerView.findViewById(R.id.createCareerPlayerButton);
+        playerModeBackground = createCareerView.findViewById(R.id.createCareerPlayerBackground);
+        targetModeButton = createCareerView.findViewById(R.id.createCareerTargetButton);
+        targetModeBackground = createCareerView.findViewById(R.id.createCareerTargetBackground);
+        scaledModeButton = createCareerView.findViewById(R.id.createCareerScaledButton);
+        scaledModeBackground = createCareerView.findViewById(R.id.createCareerScaledBackground);
+        confirmButton = createCareerView.findViewById(R.id.createCareerConfirmButton);
 
 
         teamPlayerInfoText.setVisibility(View.GONE);
@@ -167,7 +167,7 @@ public class CreateCareerDialogFragment extends DialogFragment {
         });
 
 
-        builder.setView(newOfflineCareerView);
+        builder.setView(createCareerView);
 
         return builder.create();
 

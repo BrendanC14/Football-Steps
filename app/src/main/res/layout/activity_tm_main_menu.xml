@@ -35,10 +35,10 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:contentDescription="TODO"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="TODO" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/pmMenuTeamName"
@@ -66,6 +66,61 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/pmMenuBadgeColour"
             app:layout_constraintTop_toBottomOf="@+id/pmMenuTeamName" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tmMenuScreen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/pitch"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tmMenuTopBanner"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Button
+            android:id="@+id/tmMenuFixturesButton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/calendar"
+            android:gravity="bottom|center"
+            android:onClick="openTMFixtures"
+            android:paddingBottom="3dp"
+            android:text="@string/team_menu_fixtures_button"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:fontFamily="@font/cherry_cream_soda"
+            app:layout_constraintEnd_toStartOf="@+id/tmMenuCentreDivider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tmMenuCentreDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/results"
+            android:gravity="bottom|center"
+            android:paddingBottom="3dp"
+            android:textStyle="bold"
+            app:fontFamily="@font/cherry_cream_soda"
+            android:text="@string/team_menu_results_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tmMenuCentreDivider"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

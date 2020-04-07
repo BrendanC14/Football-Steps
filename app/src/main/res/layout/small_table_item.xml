@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center|top"
+    android:foregroundGravity="top|center"
+    android:gravity="center|top"
+    app:layout_anchorGravity="center|top"
+    app:layout_gravity="center|top">
+
+    <TextView
+        android:id="@+id/smallTableItemPosition"
+        android:layout_width="25dp"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/smallTableItemTeamName"
+        android:layout_width="130dp"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/smallTableItemGamesPlayer"
+        android:layout_width="25dp"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/smallTableItemGoalDifference"
+        android:layout_width="25dp"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/smallTableItemPoints"
+        android:layout_width="25dp"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:textSize="12sp" />
+
+</LinearLayout>

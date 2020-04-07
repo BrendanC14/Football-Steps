@@ -18,8 +18,8 @@ import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMFixture;
 import com.cutlerdevelopment.footballsteps.Models.SharedModels.UserActivity;
 import com.cutlerdevelopment.footballsteps.R;
 import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
-import com.cutlerdevelopment.footballsteps.Utils.ViewItems.MatchItem;
-import com.cutlerdevelopment.footballsteps.Utils.ViewAdapters.MatchItemAdapter;
+import com.cutlerdevelopment.footballsteps.Utils.ViewItems.FixtureItem;
+import com.cutlerdevelopment.footballsteps.Utils.ViewAdapters.FixtureItemAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,31 +66,24 @@ public class FragProMatchesMenu extends Fragment {
         matchesButton.setEnabled(false);
         playNextGameButton.setEnabled(false);
 
-        final ArrayList<MatchItem> myFixtureItems = new ArrayList<>();
+        final ArrayList<FixtureItem> myFixtureItems = new ArrayList<>();
         List<PMFixture> allFixtures = PMSavedData.getInstance().getAllFixtures();
         Collections.sort(allFixtures);
         for (PMFixture f : allFixtures) {
-            MatchItem item = new MatchItem();
+            FixtureItem item = new FixtureItem();
             item.setMatchDate(DateHelper.formatDate(f.getDate()));
-            item.setHomeTeam(PMSavedData.getInstance().getTeamFromID(f.getHomeTeamID()).getName());
-            item.setAwayTeam(PMSavedData.getInstance().getTeamFromID(f.getAwayTeamID()).getName());
+            item.setOpponentTeam(PMSavedData.getInstance().getTeamFromID(f.getAwayTeamID()).getName());
 
             Map<Map<Integer, Integer>, Map<Integer, Integer>> statsMap = Words.getFirstHeaderAndStat();
 
             for (HashMap.Entry<Map<Integer, Integer>, Map<Integer, Integer>> pairOfMaps : statsMap.entrySet()) {
                 for (HashMap.Entry<Integer, Integer> firstMap : pairOfMaps.getKey().entrySet()) {
-                    item.setPerfHeader1(getText(firstMap.getKey()));
-                    item.setPerfStat1(String.valueOf(firstMap.getValue()));
                 }
                 for (HashMap.Entry<Integer, Integer> secondMap : pairOfMaps.getValue().entrySet()) {
-                    item.setPerfHeader2(getText(secondMap.getKey()));
-                    item.setPerfStat2(String.valueOf(secondMap.getValue()));
                 }
             }
 
             if (f.matchPlayed()) {
-                item.setHomeScore(String.valueOf(f.getHomeScore()));
-                item.setAwayScore(String.valueOf(f.getAwayScore()));
                 if (f.getHomeTeamID() == player.getCurrTeamID() || f.getAwayTeamID() == player.getCurrTeamID()) {
                     //item.setResult(f.getMatchResultForTeam(player.getCurrTeamID()));
                 }
@@ -105,7 +98,7 @@ public class FragProMatchesMenu extends Fragment {
         }
 
 
-        MatchItemAdapter adapter = new MatchItemAdapter(getActivity().getApplicationContext(), myFixtureItems);
+        FixtureItemAdapter adapter = new FixtureItemAdapter(getActivity().getApplicationContext(), myFixtureItems);
         matchGrid.setAdapter(adapter);
         matchGrid.setNumColumns(2);
 

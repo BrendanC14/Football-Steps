@@ -7,7 +7,10 @@ import androidx.room.PrimaryKey;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
+import com.cutlerdevelopment.footballsteps.Constants.Words;
 import com.cutlerdevelopment.footballsteps.Models.ProCareer.PMSettings;
+
+import java.util.Random;
 
 @Entity
 public class TMUserTeam {
@@ -27,6 +30,7 @@ public class TMUserTeam {
         //TODO: Change when leagues built
         this.league = 1;
 
+        updateTeamWithUsersTeam();
         TMSavedData.getInstance().saveObject(this);
     }
 
@@ -44,6 +48,14 @@ public class TMUserTeam {
         TMSavedData.getInstance().updateObject(this);
     }
 
+    private int teamID;
+    public int getTeamID() { return teamID; }
+    public void setTeamID(int id) { this.teamID = id; }
+    public void changeTeamID(int id) {
+        this.teamID = id;
+        TMSavedData.getInstance().updateObject(this);
+    }
+
     private int colour;
     public int getColour() { return colour;}
     public void setColour(int newColour) { colour = newColour; }
@@ -56,7 +68,7 @@ public class TMUserTeam {
 
     private int league;
     public int getLeague() { return league; }
-    public void setLeague(int newLeague) { this.league = league; }
+    public void setLeague(int newLeague) { this.league = newLeague; }
     public void changeLeague(int newLeague) {
         this.league = newLeague;
         TMSavedData.getInstance().updateObject(league);
@@ -104,6 +116,16 @@ public class TMUserTeam {
     public void setConceded(int conceded) { this.conceded = conceded; }
     public void concedeGoals( int conceded) { this.conceded += conceded; }
 
+    void updateTeamWithUsersTeam() {
+
+        Random r = new Random();
+        int id =  r.nextInt(Words.teamNames.size() + 1);
+
+        TMTeam usersTeam = TMSavedData.getInstance().getTeamFromID(id);
+        this.teamID = usersTeam.getID();
+        this.league = usersTeam.getLeague();
+        usersTeam.replaceTeamWithUsersTeam(this.name, this.colour);
+    }
     public void playMatch(int matchResult, int scored, int conceded) {
         addGoals(scored);
         concedeGoals(conceded);

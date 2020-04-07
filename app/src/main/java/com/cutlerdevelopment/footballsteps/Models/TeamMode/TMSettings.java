@@ -35,7 +35,7 @@ public class TMSettings {
      */
     public void assignDefaultSettings(int stepTarget) {
 
-        this.stepTarget = stepTarget;
+        this.stepTarget = stepTarget * 1000;
         this.pointsForWin = Numbers.POINTS_FOR_WIN;
         this.pointsForDraw = Numbers.POINTS_FOR_DRAW;
         this. pointsForLoss = Numbers.POINTS_FOR_LOSS;

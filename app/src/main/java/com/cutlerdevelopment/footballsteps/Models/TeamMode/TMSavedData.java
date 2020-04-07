@@ -44,7 +44,7 @@ public class TMSavedData {
     /**
      * App Database class is the Room Database that contains the instances of the Dao interfaces.
      */
-    @Database(entities = {TMUserTeam.class, TMAITeam.class, TMSettings.class,
+    @Database(entities = {TMUserTeam.class, TMTeam.class, TMSettings.class,
             TMGame.class, TMFixture.class}, version = 1)
     @TypeConverters({Converters.class})
     public static abstract class AppDatabase extends RoomDatabase {
@@ -108,21 +108,21 @@ public class TMSavedData {
     @Dao
     public interface TeamDao {
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        void insertTeams(TMAITeam teams);
+        void insertTeams(TMTeam teams);
         @Update
-        void updateTeam(TMAITeam teams);
+        void updateTeam(TMTeam teams);
         @Delete
-        void deleteTeam(TMAITeam teams);
+        void deleteTeam(TMTeam teams);
 
-        @Query("SELECT * FROM TMAITeam")
-        TMAITeam[] selectAllTeams();
-        @Query("SELECT * FROM TMAITeam WHERE league = :league")
-        TMAITeam[] selectAllTeamsInLeague(int league);
-        @Query("SELECT * FROM TMAITeam WHERE id = :teamID")
-        TMAITeam selectTeamFromID(int teamID);
-        @Query("SELECT * FROM TMAITeam WHERE name = :teamName")
-        TMAITeam selectTeamFromName(String teamName);
-        @Query("SELECT COUNT(id) FROM TMAITeam")
+        @Query("SELECT * FROM TMTeam")
+        TMTeam[] selectAllTeams();
+        @Query("SELECT * FROM TMTeam WHERE league = :league")
+        TMTeam[] selectAllTeamsInLeague(int league);
+        @Query("SELECT * FROM TMTeam WHERE id = :teamID")
+        TMTeam selectTeamFromID(int teamID);
+        @Query("SELECT * FROM TMTeam WHERE name = :teamName")
+        TMTeam selectTeamFromName(String teamName);
+        @Query("SELECT COUNT(id) FROM TMTeam")
         int getRowCount();
     }
     @Dao
@@ -163,8 +163,8 @@ public class TMSavedData {
             TMGame game = (TMGame) obj;
             db.teamGameDao().insertTeamGame(game);
         }
-        else if (obj instanceof TMAITeam) {
-            TMAITeam team = (TMAITeam) obj;
+        else if (obj instanceof TMTeam) {
+            TMTeam team = (TMTeam) obj;
             db.teamDao().insertTeams(team);
         }
         else if (obj instanceof TMFixture) {
@@ -186,8 +186,8 @@ public class TMSavedData {
             TMGame game = (TMGame) obj;
             db.teamGameDao().updateTeamGame(game);
         }
-        else if (obj instanceof TMAITeam) {
-            TMAITeam team = (TMAITeam) obj;
+        else if (obj instanceof TMTeam) {
+            TMTeam team = (TMTeam) obj;
             db.teamDao().updateTeam(team);
         }
         else if (obj instanceof TMFixture) {
@@ -210,8 +210,8 @@ public class TMSavedData {
             TMGame game = (TMGame) obj;
             db.teamGameDao().deleteTeamGame(game);
         }
-        else if (obj instanceof TMAITeam) {
-            TMAITeam team = (TMAITeam) obj;
+        else if (obj instanceof TMTeam) {
+            TMTeam team = (TMTeam) obj;
             db.teamDao().deleteTeam(team);
         }
         else if (obj instanceof TMFixture) {
@@ -243,14 +243,14 @@ public class TMSavedData {
     }
 
 
-    public List<TMAITeam> getAllTeams() {
+    public List<TMTeam> getAllTeams() {
         return Arrays.asList(db.teamDao().selectAllTeams());
     }
-    public List<TMAITeam> getAllTeamsInLeague(int league) { return Arrays.asList(db.teamDao().selectAllTeamsInLeague(league));}
-    public TMAITeam getTeamFromID(int ID) {
+    public List<TMTeam> getAllTeamsInLeague(int league) { return Arrays.asList(db.teamDao().selectAllTeamsInLeague(league));}
+    public TMTeam getTeamFromID(int ID) {
         return db.teamDao().selectTeamFromID(ID);
     }
-    public TMAITeam getTeamFromName(String name) {
+    public TMTeam getTeamFromName(String name) {
         return db.teamDao().selectTeamFromName(name);
     }
     public int getIDFromName(String name) {

@@ -22,8 +22,29 @@
     <string name="create_team_steps_header">Target Steps</string>
     <string name="create_team_thousands_text">,000</string>
 
+    <string name="team_menu_fixtures_button">Fixtures</string>
+    <string name="team_menu_results_button">Results</string>
+
+    <string name="tm_fixtures_header">Upcoming Fixtures</string>
+    <string name="tm_fixtures_confirm_button">Done</string>
+    <string name="tm_fixtures_view_fixture_button">View Fixture</string>
+
+    <string name="fixture_item_step_header">Step Target</string>
+    <string name="fixture_item_default_score">N/A</string>
+    <string name="fixture_item_VS">VS</string>
+
+    <string name="fixture_detail_header">Fixture Details</string>
+    <string name="fixture_detail_step_target">Target</string>
+    <string name="fixture_detail_step_steps">steps</string>
+    <string name="fixture_detail_decrease_button">- Target</string>
+    <string name="fixture_detail_increase_button">+ Target</string>
+    <string name="fixture_detail_confirm_button">Save Fixture</string>
 
 
+
+
+
+    <string name="position_in_league">%1s in %2s</string>
 
     <string name="first_name_hint">First Name</string>
     <string name="surname_hint">Surname</string>
@@ -40,10 +61,8 @@
     <string name="main_menu_offsides_header">Offsd</string>
     <string name="main_menu_matches_button">Matches</string>
 
-    <string name="match_item_VS">VS</string>
     <string name="match_performance_header">Performance</string>
     <string name="steps">steps</string>
-    <string name="match_not_played_score">N/A</string>
     <string name="play_next_match_button">Play Next Match</string>
 
 </resources>

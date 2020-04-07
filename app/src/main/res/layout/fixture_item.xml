@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fixtureFragmentItemBground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="#FFFFFF"
+    android:foregroundGravity="center"
+    app:layout_anchorGravity="center"
+    app:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/fixtureItemDateField"
+        style="@style/default_header_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fixtureItemVS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:fontFamily="@font/cherry_cream_soda"
+        android:text="@string/fixture_item_VS"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fixtureItemOpponent"
+        app:layout_constraintEnd_toStartOf="@+id/fixtureItemOpponent"
+        app:layout_constraintTop_toTopOf="@+id/fixtureItemOpponent" />
+
+    <TextView
+        android:id="@+id/fixtureItemOpponent"
+        app:autoSizeMaxTextSize="100sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="2sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/default_text" />
+
+    <TextView
+        android:id="@+id/fixtureItemCentreDivider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fixtureItemStepHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:fontFamily="@font/cherry_cream_soda"
+        android:text="@string/fixture_item_step_header"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fixtureItemStepNumber"
+        app:layout_constraintEnd_toStartOf="@+id/fixtureItemStepNumber"
+        app:layout_constraintTop_toTopOf="@+id/fixtureItemStepNumber" />
+
+    <TextView
+        android:id="@+id/fixtureItemStepNumber"
+        style="@style/default_header_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fixtureItemOpponent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

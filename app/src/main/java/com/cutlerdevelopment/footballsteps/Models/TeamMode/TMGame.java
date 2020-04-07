@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 @Entity
 public class TMGame {
@@ -42,8 +43,9 @@ public class TMGame {
 
 
         for (String teamName : Words.teamNames) {
-            TMAITeam t = new TMAITeam(teamName, Colour.getDefaultColourForTeam(teamName), 1);
+            TMTeam t = new TMTeam(teamName, Colour.getDefaultColourForTeam(teamName), 1);
         }
+
         createFixtures();
 
         TMSavedData.getInstance().saveObject(this);
@@ -89,6 +91,7 @@ public class TMGame {
                 new TMFixture(TMSavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,
+                        TMSettings.getInstance().getStepTarget(),
                         round,
                         matchDate,
                         1);
@@ -114,6 +117,7 @@ public class TMGame {
                 new TMFixture(TMSavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,
+                        TMSettings.getInstance().getStepTarget(),
                         round,
                         matchDate,
                         1);

@@ -8,7 +8,7 @@ import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
 
 @Entity
-public class TMAITeam {
+public class TMTeam {
 
     /**
      * Used when creating a new Team when a new game is created or a custom team is added
@@ -16,7 +16,7 @@ public class TMAITeam {
      * @param colour colour of the club
      */
     @Ignore
-    public TMAITeam(String name, int colour, int league) {
+    public TMTeam(String name, int colour, int league) {
         this.ID = TMSavedData.getInstance().getNumRowsFromTeamTable() + 1;
         this.name = name;
         this.colour = colour;
@@ -28,7 +28,7 @@ public class TMAITeam {
     /**
      * Used when loading a player for the solo career. Doesn't take any variables as takes them from RoomDB
      */
-    public TMAITeam() {
+    public TMTeam() {
 
     }
 
@@ -58,7 +58,7 @@ public class TMAITeam {
 
     private int league;
     public int getLeague() { return league; }
-    public void setLeague(int newLeague) { this.league = league; }
+    public void setLeague(int newLeague) { this.league = newLeague; }
     public void changeLeague(int newLeague) {
         this.league = newLeague;
         TMSavedData.getInstance().updateObject(league);
@@ -106,6 +106,19 @@ public class TMAITeam {
     public void setConceded(int conceded) { this.conceded = conceded; }
     public void concedeGoals( int conceded) { this.conceded += conceded; }
 
+    public int getGoalDifference() { return scored - conceded; }
+    public int getGamesPlayed() {return wins + draws + losses;}
+
+    public void replaceTeamWithUsersTeam(String name, int colour) {
+        this.name = name;
+        this.colour = colour;
+
+        TMSavedData.getInstance().updateObject(this);
+    }
+
+    public TMTeam getTMTeam() {
+        return TMSavedData.getInstance().getTeamFromID(this.ID);
+    }
     public void playMatch(int matchResult, int scored, int conceded) {
         addGoals(scored);
         concedeGoals(conceded);

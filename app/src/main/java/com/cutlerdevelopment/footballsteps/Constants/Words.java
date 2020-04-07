@@ -97,5 +97,26 @@ public class Words {
         return df.format(num);
     }
 
+    public static String getLeagueName(int leagueID) {
+        switch (leagueID) {
+            case 1: return "Premier League";
+            case 2: return "Championship";
+            case 3: return "League 1";
+            case 4: return "League 2";
+            default: return "League";
+        }
+    }
 
+    public static String getNumberWithDateSuffix(int num) {
+        if (num >=11 && num <= 13) {
+            return num + "th";
+        }
+
+        switch (num % 10) {
+            case 1: return num + "st";
+            case 2: return num +"nd";
+            case 3: return num + "rd";
+            default: return num + "th";
+        }
+    }
 }

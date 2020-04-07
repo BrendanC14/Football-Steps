@@ -13,10 +13,11 @@ public class TMFixture implements Comparable<TMFixture> {
 
 
     @Ignore
-    public TMFixture(int id, int homeTeamID, int awayTeamID, int week, Date date, int league) {
+    public TMFixture(int id, int homeTeamID, int awayTeamID, int stepTarget,  int week, Date date, int league) {
         this.ID = id;
         this.homeTeamID = homeTeamID;
         this.awayTeamID = awayTeamID;
+        this.stepTarget = stepTarget;
         this.week = week;
         this.date = date;
         this.league = league;
@@ -59,6 +60,14 @@ public class TMFixture implements Comparable<TMFixture> {
         TMSavedData.getInstance().updateObject(this);
     }
 
+    private int stepTarget;
+    public int getStepTarget() { return stepTarget; }
+    public void setStepTarget(int target) { this.stepTarget = target; }
+    public void changeStepTarget(int target) {
+        this.stepTarget = target;
+        TMSavedData.getInstance().updateObject(this);
+    }
+
     private int homeScore;
     public int getHomeScore() { return  homeScore; }
     public void setHomeScore(int score) { this.homeScore = score; }
@@ -72,8 +81,8 @@ public class TMFixture implements Comparable<TMFixture> {
         this.homeScore = homeScore;
         this.awayScore = awayScore;
 
-        TMAITeam homeTeam = TMSavedData.getInstance().getTeamFromID(homeTeamID);
-        TMAITeam awayTeam = TMSavedData.getInstance().getTeamFromID(awayTeamID);
+        TMTeam homeTeam = TMSavedData.getInstance().getTeamFromID(homeTeamID);
+        TMTeam awayTeam = TMSavedData.getInstance().getTeamFromID(awayTeamID);
 
         homeTeam.playMatch(getMatchResultForTeam(homeTeamID), homeScore, awayScore);
         awayTeam.playMatch(getMatchResultForTeam(awayTeamID), awayScore, homeScore);
