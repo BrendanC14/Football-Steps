@@ -9,7 +9,7 @@ public class FixtureItem {
     private String opponentTeam;
     private String numSteps = "N/A";
     private int result;
-    boolean selected;
+    private boolean selected;
 
     public int getMatchID() { return matchID; }
     public void setMatchID(int id) {this.matchID = id; }

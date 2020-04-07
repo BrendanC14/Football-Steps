@@ -36,6 +36,7 @@ public class TMSettings {
     public void assignDefaultSettings(int stepTarget) {
 
         this.stepTarget = stepTarget * 1000;
+        this.daysBetweenGames = 2;
         this.pointsForWin = Numbers.POINTS_FOR_WIN;
         this.pointsForDraw = Numbers.POINTS_FOR_DRAW;
         this. pointsForLoss = Numbers.POINTS_FOR_LOSS;
@@ -51,6 +52,14 @@ public class TMSettings {
     public void setStepTarget(int target) { this.stepTarget = target; }
     public void changeStepTarget(int newTarget) {
         this.stepTarget = newTarget;
+        TMSavedData.getInstance().updateObject(this);
+    }
+
+    private int daysBetweenGames;
+    public int getDaysBetweenGames() { return daysBetweenGames; }
+    public void setDaysBetweenGames(int daysBetweenGames) { this.daysBetweenGames = daysBetweenGames; }
+    public void changeDaysBetweenGames(int daysBetweenGames) {
+        this.daysBetweenGames = daysBetweenGames;
         TMSavedData.getInstance().updateObject(this);
     }
 

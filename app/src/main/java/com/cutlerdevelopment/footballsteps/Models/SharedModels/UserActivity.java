@@ -22,7 +22,7 @@ public class UserActivity {
         this.steps = steps;
         this.activeMinutes = activeMinutes;
 
-        PMSavedData.getInstance().saveObject(this);
+        AppSavedData.getInstance().saveObject(this);
     }
 
     /**

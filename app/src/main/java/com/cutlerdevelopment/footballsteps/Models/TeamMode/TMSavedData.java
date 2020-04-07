@@ -142,6 +142,10 @@ public class TMSavedData {
         TMFixture[] selectAllFixturesInLeagueFromDate(Date date, int league);
         @Query("SELECT * FROM TMFixture WHERE homeTeamID = :teamID OR awayTeamID = :teamID")
         TMFixture[] selectAllFixturesFromTeam(int teamID);
+        @Query("SELECT * FROM TMFixture WHERE homeScore = -1 AND (homeTeamID = :teamID OR awayTeamID = :teamID)")
+        TMFixture[] selectAllUpcomingFixturesFromTeam(int teamID);
+        @Query("SELECT * FROM TMFixture WHERE homeScore > -1 AND (homeTeamID = :teamID OR awayTeamID = :teamID)")
+        TMFixture[] selectAllResultsFromTeam(int teamID);
         @Query("SELECT * FROM TMFixture WHERE week = :week AND (homeTeamID = :teamID OR awayTeamID = :teamID)")
         TMFixture selectFixtureForWeekWithTeam(int week, int teamID);
         @Query("SELECT COUNT(id) FROM TMFixture")
@@ -267,6 +271,8 @@ public class TMSavedData {
     public List<TMFixture> getFixturesForTeam(int teamID) { return Arrays.asList(db.fixtureDao().selectAllFixturesFromTeam(teamID)); }
     public TMFixture getTeamsFixtureForWeek(int week, int teamID) { return db.fixtureDao().selectFixtureForWeekWithTeam(week, teamID); }
     public int getNumRowsFromFixtureTable() { return db.fixtureDao().getRowCount(); }
+    public List<TMFixture> getAllUpcomingFixturesForTeam(int teamID) { return Arrays.asList(db.fixtureDao().selectAllUpcomingFixturesFromTeam(teamID)); }
+    public List<TMFixture> getAllResultsForTeam(int teamID) { return Arrays.asList(db.fixtureDao().selectAllResultsFromTeam(teamID)); }
 
     public void resetDB() {
         db.clearAllTables();

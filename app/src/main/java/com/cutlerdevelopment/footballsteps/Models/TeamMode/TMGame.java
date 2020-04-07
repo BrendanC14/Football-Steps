@@ -48,6 +48,7 @@ public class TMGame {
 
         createFixtures();
 
+        refreshPlayerActivity();
         TMSavedData.getInstance().saveObject(this);
 
     }
@@ -72,7 +73,7 @@ public class TMGame {
     void createFixtures() {
 
         List<Integer> availableWeeks = new ArrayList<>();
-        for (int i = 0; i < 19; i++) {
+        for (int i = 1; i < 20; i++) {
             availableWeeks.add(i);
         }
         Collections.shuffle(availableWeeks);
@@ -87,7 +88,8 @@ public class TMGame {
 
                 if (match == 0) {awayTeam = 20; }
 
-                Date matchDate = DateHelper.addDays(startDate, round);
+                int numDays = round * TMSettings.getInstance().getDaysBetweenGames() + 1;
+                Date matchDate = DateHelper.addDays(startDate, numDays);
                 new TMFixture(TMSavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,
@@ -113,7 +115,8 @@ public class TMGame {
 
                 if (match == 0) { homeTeam = 20; }
 
-                Date matchDate = DateHelper.addDays(startDate, round);
+                int numDays = round * TMSettings.getInstance().getDaysBetweenGames() + 1;
+                Date matchDate = DateHelper.addDays(startDate, numDays);
                 new TMFixture(TMSavedData.getInstance().getNumRowsFromFixtureTable(),
                         homeTeam,
                         awayTeam,

@@ -114,6 +114,7 @@ public class TMFixture implements Comparable<TMFixture> {
         this.league = league;
         TMSavedData.getInstance().updateObject(this);
     }
+    public boolean isTeamInvolved(int ID) { return this.homeTeamID == ID || this.awayTeamID == ID; }
 
     public int getMatchResultForTeam(int teamID) {
         if (homeScore < 0) { return -1; }

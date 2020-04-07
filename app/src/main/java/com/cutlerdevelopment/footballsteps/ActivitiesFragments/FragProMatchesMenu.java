@@ -98,9 +98,9 @@ public class FragProMatchesMenu extends Fragment {
         }
 
 
-        FixtureItemAdapter adapter = new FixtureItemAdapter(getActivity().getApplicationContext(), myFixtureItems);
-        matchGrid.setAdapter(adapter);
-        matchGrid.setNumColumns(2);
+       //FixtureItemAdapter adapter = new FixtureItemAdapter(getActivity().getApplicationContext(), myFixtureItems, this);
+       // matchGrid.setAdapter(adapter);
+        //matchGrid.setNumColumns(2);
 
         return rootView;
 

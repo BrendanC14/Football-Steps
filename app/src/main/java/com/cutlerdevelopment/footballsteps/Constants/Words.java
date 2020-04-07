@@ -18,6 +18,7 @@ public class Words {
 
     public static final String OFFLINE_PRO_CAREER_ROOM_DATABASE_NAME = "OfflineProCareer";
     public static final String OFFLINE_TEAM_CAREER_ROOM_DATABASE_NAME = "OfflineTeamCareer";
+    public static final String USER_ACTIVITY_ROOM_DATABASE_NAME = "UserActivity";
 
     public static final List<String> teamNames = Arrays.asList("Arsenal", "Liverpool", "Manchester City", "Leicester City", "Chelsea",
             "Manchester United", "Wolves", "Sheffield United", "Tottenham Hotspur", "Burnley", "Crystal Palace", "Everton",

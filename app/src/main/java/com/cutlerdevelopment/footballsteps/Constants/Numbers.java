@@ -13,7 +13,7 @@ public class Numbers {
 
     //Mocks
     public static final int MOCK_MIN_STEPS = 5000;
-    public static final int MOCK_MAX_STEPS = 20000;
+    public static final int MOCK_MAX_STEPS = 10000;
     public static final int MOCK_MIN_AMINUTES = 30;
     public static final int MOCK_MAX_AMINUTES = 120;
 
@@ -23,6 +23,7 @@ public class Numbers {
     public static final int POINTS_FOR_WIN = 3;
     public static final int POINTS_FOR_DRAW = 1;
     public static final int POINTS_FOR_LOSS = 0;
+    public static final int TM_PERC_FOR_GOAL = 10;
 
     public static final int NUM_STEPS_FOR_MATCH_CALC = 2000;
     public static final int NUM_MINUTES_FOR_MATCH_CALC = 30;

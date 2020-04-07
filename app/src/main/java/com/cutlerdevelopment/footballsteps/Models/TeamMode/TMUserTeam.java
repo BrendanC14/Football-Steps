@@ -119,7 +119,7 @@ public class TMUserTeam {
     void updateTeamWithUsersTeam() {
 
         Random r = new Random();
-        int id =  r.nextInt(Words.teamNames.size() + 1);
+        int id =  r.nextInt(Words.teamNames.size()) + 1;
 
         TMTeam usersTeam = TMSavedData.getInstance().getTeamFromID(id);
         this.teamID = usersTeam.getID();

@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
 import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMFixture;
+import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMMatchEngine;
 import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMSavedData;
 import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMSettings;
 import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMUserTeam;
@@ -26,11 +27,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TMFixturesDialogFragment extends DialogFragment implements TMFixtureDetailDialogFragment.TMFixtureChangedListener {
+public class TMFixturesDialogFragment extends DialogFragment implements TMFixtureDetailDialogFragment.TMFixtureChangedListener,
+        FixtureItemAdapter.TMPlayMatchListener {
 
     private GridView fixtureGridView;
     private Button viewFixtureButton;
     private Button confirmButton;
+    private Button playMatchButton;
 
     private FixtureItem currentSelectedItem;
 
@@ -48,33 +51,35 @@ public class TMFixturesDialogFragment extends DialogFragment implements TMFixtur
         fixtureGridView = tmFixturesView.findViewById(R.id.tmFixturesGridView);
         viewFixtureButton = tmFixturesView.findViewById(R.id.tmFixturesViewFixtureButton);
         confirmButton = tmFixturesView.findViewById(R.id.tmFixturesDoneButton);
-
+        playMatchButton = tmFixturesView.findViewById(R.id.fixtureItemPlayButton);
 
         viewFixtureButton.setEnabled(false);
 
         final ArrayList<FixtureItem> myFixtureItems = new ArrayList<>();
-        List<TMFixture> allFixtures = TMSavedData.getInstance().getFixturesForTeam(TMUserTeam.getInstance().getTeamID());
+        List<TMFixture> allFixtures = TMSavedData.getInstance().getAllUpcomingFixturesForTeam(TMUserTeam.getInstance().getTeamID());
         Collections.sort(allFixtures);
         for (TMFixture f : allFixtures) {
-            if (!f.matchPlayed()) {
-                FixtureItem item = new FixtureItem();
-                item.setMatchID(f.getID());
-                item.setMatchDate(DateHelper.formatDate(f.getDate()));
+            FixtureItem item = new FixtureItem();
+            item.setMatchID(f.getID());
+            item.setMatchDate(DateHelper.formatDate(f.getDate()));
 
-                int userID = TMUserTeam.getInstance().getTeamID();
-                int opponentID;
-                if (f.getHomeTeamID() == userID) { opponentID = f.getAwayTeamID(); }
-                else { opponentID = f.getHomeTeamID(); }
-
-                item.setOpponentTeam(TMSavedData.getInstance().getTeamFromID(opponentID).getName());
-
-                item.setNumSteps(String.valueOf(f.getStepTarget()));
-
-                myFixtureItems.add(item);
+            int userID = TMUserTeam.getInstance().getTeamID();
+            int opponentID;
+            if (f.getHomeTeamID() == userID) {
+                opponentID = f.getAwayTeamID();
+            } else {
+                opponentID = f.getHomeTeamID();
             }
+
+            item.setOpponentTeam(TMSavedData.getInstance().getTeamFromID(opponentID).getName());
+
+            item.setNumSteps(String.valueOf(f.getStepTarget()));
+
+            myFixtureItems.add(item);
+
         }
 
-        adapter = new FixtureItemAdapter(getActivity().getApplicationContext(), myFixtureItems);
+        adapter = new FixtureItemAdapter(getActivity().getApplicationContext(), myFixtureItems, this);
         fixtureGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -134,5 +139,10 @@ public class TMFixturesDialogFragment extends DialogFragment implements TMFixtur
     public void tmFixtureChanged(int newSteps) {
         currentSelectedItem.setNumSteps(String.valueOf(newSteps));
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void playMatch(int matchID) {
+        TMMatchEngine.playUserMatch(TMSavedData.getInstance().getFixtureFromID(matchID));
     }
 }

@@ -16,6 +16,7 @@ import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMTeam;
 import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMUserTeam;
 import com.cutlerdevelopment.footballsteps.R;
 import com.cutlerdevelopment.footballsteps.Utils.Dialogs.TMFixturesDialogFragment;
+import com.cutlerdevelopment.footballsteps.Utils.Dialogs.TMLeagueTableDialogFragment;
 import com.cutlerdevelopment.footballsteps.Utils.LeagueTableHelper;
 
 import java.util.List;
@@ -49,5 +50,11 @@ public class ActTMMainMenu extends AppCompatActivity {
 
         DialogFragment careerDialog = new TMFixturesDialogFragment();
         careerDialog.show(getSupportFragmentManager(), "TMFixturesDialogFragment");
+    }
+
+    public void openTMLeagueTable(View view) {
+
+        DialogFragment leagueDialog = new TMLeagueTableDialogFragment();
+        leagueDialog.show(getSupportFragmentManager(), "TMLeagueTableDialogFragment");
     }
 }

@@ -9,14 +9,18 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 
 import com.cutlerdevelopment.footballsteps.Constants.Colour;
-import com.cutlerdevelopment.footballsteps.Constants.MatchResult;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.AppSavedData;
+import com.cutlerdevelopment.footballsteps.Models.SharedModels.UserActivity;
+import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMFixture;
+import com.cutlerdevelopment.footballsteps.Models.TeamMode.TMSavedData;
 import com.cutlerdevelopment.footballsteps.R;
+import com.cutlerdevelopment.footballsteps.Utils.DateHelper;
 import com.cutlerdevelopment.footballsteps.Utils.ViewItems.FixtureItem;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import static androidx.core.content.ContextCompat.getColor;
 
@@ -28,11 +32,18 @@ public class FixtureItemAdapter extends BaseAdapter {
 
     ConstraintLayout background;
 
-    public FixtureItemAdapter(Context context, ArrayList<FixtureItem> aRow) {
+    public FixtureItemAdapter(Context context, ArrayList<FixtureItem> aRow, TMPlayMatchListener listener) {
         this.singleRow = aRow;
         this.context = context;
+        this.listener = listener;
         thisInflater = (thisInflater.from(context));
     }
+
+    public interface TMPlayMatchListener {
+        public void playMatch(int matchID);
+    }
+
+    TMPlayMatchListener listener;
 
     @Override
     public int getCount() {
@@ -59,6 +70,7 @@ public class FixtureItemAdapter extends BaseAdapter {
         TextView dateField = convertView.findViewById(R.id.fixtureItemDateField);
         TextView awayTeam = convertView.findViewById(R.id.fixtureItemOpponent);
         TextView stepNumber = convertView.findViewById(R.id.fixtureItemStepNumber);
+        Button playButton = convertView.findViewById(R.id.fixtureItemPlayButton);
 
         final FixtureItem currentItem = (FixtureItem) getItem(i);
 
@@ -74,16 +86,21 @@ public class FixtureItemAdapter extends BaseAdapter {
             background.setBackgroundColor(getColor(context, Colour.WHITE_COLOUR));
         }
 
+        playButton.setVisibility(View.GONE);
+        UserActivity activity = AppSavedData.getInstance().getLastAddedActivity();
+        if (activity != null) {
 
-
-        if (currentItem.getResult() == MatchResult.WIN) {
-            background.setBackgroundColor(getColor(context, Colour.WIN_BGROUND_COLOUR));
-        }
-        else if (currentItem.getResult() == MatchResult.DRAW) {
-            background.setBackgroundColor(getColor(context, Colour.DRAW_BGROUND_COLOUR));
-        }
-        else if (currentItem.getResult() == MatchResult.LOSE) {
-            background.setBackgroundColor(getColor(context, Colour.LOSE_BGROUND_COLOUR));
+            TMFixture f = TMSavedData.getInstance().getFixtureFromID(currentItem.getMatchID());
+            boolean activityExists = DateHelper.getDaysBetween(activity.getDate(), f.getDate()) > 0;
+            if (activityExists) {
+                playButton.setVisibility(View.VISIBLE);
+                playButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        listener.playMatch(currentItem.getMatchID());
+                    }
+                });
+            }
         }
 
         return convertView;

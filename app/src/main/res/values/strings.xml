@@ -39,7 +39,7 @@
     <string name="fixture_detail_decrease_button">- Target</string>
     <string name="fixture_detail_increase_button">+ Target</string>
     <string name="fixture_detail_confirm_button">Save Fixture</string>
-
+    <string name="fixture_detail_play_match">Play Match</string>
 
 
 

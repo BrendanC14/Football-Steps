@@ -71,6 +71,19 @@ public class AppSavedData {
 
     }
 
+    public void saveObject(UserActivity activity) {
+        db.playerActivityDao().insertPlayerActivity(activity);
+    }
+
+    public void updateObject(UserActivity activity) {
+        db.playerActivityDao().updatePlayerActivity(activity);
+    }
+
+
+    public void deleteObject(UserActivity activity) {
+        db.playerActivityDao().deletePlayerActivity(activity);
+    }
+
     public List<UserActivity> getAllPlayerActivities() {
         return Arrays.asList(db.playerActivityDao().selectAllPlayerActivity());
     }
@@ -79,5 +92,8 @@ public class AppSavedData {
     }
     public UserActivity getLastAddedActivity() {
         return db.playerActivityDao().selectLastAddedActivity();
+    }
+    public void resetDB() {
+        db.clearAllTables();
     }
 }

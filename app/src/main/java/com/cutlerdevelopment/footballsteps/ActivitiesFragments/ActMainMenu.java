@@ -53,6 +53,8 @@ public class ActMainMenu extends AppCompatActivity implements CreateCareerDialog
     public void teamCreated(DialogFragment dialog, String name, int colour, int steps) {
 
         AppSavedData.createSavedDataInstance(this);
+        //TODO: ABSOLUTELY REMOVE
+        AppSavedData.getInstance().resetDB();
 
         TMSavedData.createOfflineTeamSavedData(this);
         TMSavedData.getInstance().resetDB();

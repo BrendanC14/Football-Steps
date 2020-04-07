@@ -16,11 +16,11 @@ public class LeagueTableHelper {
         Collections.sort(allTeams, new Comparator<TMTeam>() {
             @Override
             public int compare(TMTeam tmTeam, TMTeam t1) {
-                int value1 = tmTeam.getPoints() - t1.getPoints();
+                int value1 = t1.getPoints() - tmTeam.getPoints();
                 if (value1 == 0) {
-                    int value2 = tmTeam.getGoalDifference() - t1.getGoalDifference();
+                    int value2 = t1.getGoalDifference() - tmTeam.getGoalDifference();
                     if (value2 == 0) {
-                        int value3 = tmTeam.getWins() - t1.getWins();
+                        int value3 = t1.getWins() - tmTeam.getWins();
                         if (value3 == 0) {
                             return tmTeam.getName().compareTo(t1.getName());
                         }
